@@ -1,0 +1,41 @@
+{
+  "showintro": false,
+  "intro": "",
+  "images": [
+    {
+      "id": "9",
+      "imageboardid": "1",
+      "title": "",
+      "url": "http:\/\/localhost:8000\/mod\/forum\/view.php?id=136",
+      "xposition": "150",
+      "yposition": "100",
+      "targetwidth": "80",
+      "targetheight": "0",
+      "imageurl": {},
+      "nr": 0
+    },
+    {
+      "id": "10",
+      "imageboardid": "1",
+      "title": "",
+      "url": "",
+      "xposition": "400",
+      "yposition": "200",
+      "targetwidth": "0",
+      "targetheight": "0",
+      "imageurl": {},
+      "nr": 1
+    }
+  ],
+  "hasimages": true,
+  "cmid": "140",
+  "canvaswidth": "500",
+  "autocanvaswidth": false,
+  "canvasheight": "600",
+  "autocanvasheight": false,
+  "backgroundimage": {},
+  "capababilityforgrid": true,
+  "showborders": true,
+  "bordercolor": "#2D57FA",
+  "gridcolor": "#B7009E"
+}
