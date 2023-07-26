@@ -79,7 +79,7 @@ jobs:
           MOODLE_BRANCH: ${{ matrix.moodlebranch }}
 
       - name: Install plugins
-        run: moodle-plugin-ci add-plugin grabs/moodle-mod_unilabel
+        run: moodle-plugin-ci add-plugin --branch $MOODLE_BRANCH grabs/moodle-mod_unilabel
              moodle-plugin-ci install
 
       - name: Run phplint
