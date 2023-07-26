@@ -1,6 +1,6 @@
 name: release branch test
 
-on: [push, pull_request]f
+on: [push, pull_request]
 
 jobs:
   citest:
