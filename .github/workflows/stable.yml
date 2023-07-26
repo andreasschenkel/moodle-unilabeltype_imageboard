@@ -78,6 +78,10 @@ jobs:
           DB: ${{ matrix.database }}
           MOODLE_BRANCH: ${{ matrix.moodlebranch }}
 
+      - name: Install plugins
+        run: moodle-plugin-ci add-plugin grabs/moodle-mod_unilabel
+             moodle-plugin-ci install
+
       - name: Run phplint
         if: ${{ always() }}
         run: moodle-plugin-ci phplint
