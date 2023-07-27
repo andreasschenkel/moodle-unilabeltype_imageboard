@@ -394,51 +394,69 @@
             </script>
         {{/images}}
 
-        Bilderliste und deren Links falls vorhanden:<br>
-        {{#images}}
-            {{#url}}
-                {{#imageurl}}
-                <a href="{{{url}}}">
-                    <div class="row" style="margin-left:20px; max-width: 500px;">
-                        <div class="mr-1">
-                            {{nr}}
-                        </div>
-                        <div>
-                            <img src="{{{imageurl}}}" width="40px" style="margin-right: 5px;" alt="{{{title}}}"></img>
-                            {{{title}}}
-                        </div>
-                    </div>
-                </a>
-                {{/imageurl}}
-                {{^imageurl}}
-                    <a href="{{{url}}}">
-                    <div class="row" style="margin-left:20px; max-width: 500px;">
-                        <div class="mr-1">
-                            {{nr}}
-                        </div>
-                        <div class="border" style="width: 40px; height: 40px; margin-right: 5px;">
-                        </div>
-                        <div>
-                            {{{title}}}
-                        </div>
-                    </div>
-                    </a>
-                {{/imageurl}}
-            {{/url}}
 
-            {{^url}}
-                <div class="row" style="margin-left:20px; max-width: 500px;">
-                    <div class="mr-1">
-                        {{nr}}
-                    </div>
-                    <div>
-                        <img src="{{{imageurl}}}" width="40px;" style="margin-right: 5px;" alt="{{{title}}}"></img>
-                        {{{title}}}
-                    </div>
-                </div>
-            {{/url}}
 
-        {{/images}}
+
+        <p>
+            <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample{{cmid}}" aria-expanded="false" aria-controls="collapseExample">
+                Bilderliste und deren Links falls vorhanden:
+            </button>
+        </p>
+        <div class="collapse" id="collapseExample{{cmid}}">
+            <div class="card card-body">
+                Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
+                {{#images}}
+                    {{#url}}
+                        {{#imageurl}}
+                            <a href="{{{url}}}">
+                                <div class="row" style="margin-left:20px; max-width: 500px;">
+                                    <div class="mr-1">
+                                        {{nr}}
+                                    </div>
+                                    <div>
+                                        <img src="{{{imageurl}}}" width="40px" style="margin-right: 5px;" alt="{{{title}}}"></img>
+                                        {{{title}}}
+                                    </div>
+                                </div>
+                            </a>
+                        {{/imageurl}}
+                        {{^imageurl}}
+                            <a href="{{{url}}}">
+                                <div class="row" style="margin-left:20px; max-width: 500px;">
+                                    <div class="mr-1">
+                                        {{nr}}
+                                    </div>
+                                    <div class="border" style="width: 40px; height: 40px; margin-right: 5px;">
+                                    </div>
+                                    <div>
+                                        {{{title}}}
+                                    </div>
+                                </div>
+                            </a>
+                        {{/imageurl}}
+                    {{/url}}
+
+                    {{^url}}
+                        <div class="row" style="margin-left:20px; max-width: 500px;">
+                            <div class="mr-1">
+                                {{nr}}
+                            </div>
+                            <div>
+                                <img src="{{{imageurl}}}" width="40px;" style="margin-right: 5px;" alt="{{{title}}}"></img>
+                                {{{title}}}
+                            </div>
+                        </div>
+                    {{/url}}
+
+                {{/images}}
+
+
+
+            </div>
+        </div>
+
+
+
     </div>
     <br><br>
 {{/hasimages}}
