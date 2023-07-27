@@ -1,4 +1,4 @@
-@mod @mod_unilabel @unilabeltype_imageboard
+@mod @mod_unilabel @unilabeltype @unilabeltype_imageboard
 Feature: Modify content of the unilabeltype imageboard
 
   Background:
