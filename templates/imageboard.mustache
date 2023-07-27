@@ -96,7 +96,7 @@
      * An event listener is added so if the window is resized an the width is not enought the canvas is resized and so
      * the images have to be redrawn with resized width.
      *
-     * @param tileid
+     * @param imageid
      * @param imageurl
      * @param targetwidth
      * @param targetheight
@@ -105,15 +105,15 @@
      * @param url
      * @param border
      */
-    function drawImage{{cmid}}(tileid, title, imageurl, targetwidth, targetheight, xposition, yposition, url, showborders) {
+    function drawImage{{cmid}}(imageid, title, imageurl, targetwidth, targetheight, xposition, yposition, url, showborders) {
         const myCanvas = document.getElementById("unilabeltype-imageboard-canvas-{{cmid}}");
         const myContext = myCanvas.getContext("2d");
         const img = new Image();
         font = "20px Arial";
-        titleheight = 30;
         const fillstylebackground = '#f50';
         img.src = imageurl;
         widthfactor = 1;
+        let titleheight = 0;
         img.onload = () => {
             // Calculate a resize faktor if not enough width exists to display the canvas
             if ({{{canvaswidth}}} > getWidth()) {
@@ -150,6 +150,7 @@
             }
             // Title
             if (title != '') {
+                titleheight = 30
                 myContext.fillStyle = fillstylebackground;
                 myContext.fillRect(xposition * widthfactor - 1, yposition * widthfactor - (titleheight+1), (targetwidth * widthfactor) + 1, titleheight);
                 myContext.fillStyle = '#fff';
@@ -200,7 +201,13 @@
         }, false);
     }
 
-
+    /**
+     *
+     * @param title
+     * @param xposition
+     * @param yposition
+     * @param url
+     */
     function drawText{{cmid}}(title, xposition, yposition, url) {
         setTimeout(function() {
             //alert(title);
@@ -259,7 +266,7 @@
                     myContext.fillText(title, xposition*widthfactor + 3, yposition*widthfactor+20);
                 }
             }, false);
-        }, 100, title, xposition, yposition, url);
+        }, 200, title, xposition, yposition, url);
     }
 
     /**
@@ -380,7 +387,9 @@
                 {{/imageurl}}
 
                 {{^imageurl}}
-                    drawText{{cmid}}('{{title}}', {{{xposition}}}, {{{yposition}}}, "{{{url}}}");
+                    {{#title}}
+                        drawText{{cmid}}('{{title}}', {{{xposition}}}, {{{yposition}}}, "{{{url}}}");
+                    {{/title}}
                 {{/imageurl}}
             </script>
         {{/images}}
