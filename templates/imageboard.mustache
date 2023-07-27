@@ -149,11 +149,14 @@
                 drawBorder(myContext, xposition * widthfactor, yposition * widthfactor, targetwidth * widthfactor, targetheight * widthfactor, fill, '{{{bordercolor}}}', 0);
             }
             // Title
-            myContext.fillStyle = fillstylebackground;
-            myContext.fillRect(xposition * widthfactor - 1, yposition * widthfactor - (titleheight+1), (targetwidth * widthfactor) + 1, titleheight);
-            myContext.fillStyle = '#fff';
-            myContext.font = font;
-            myContext.fillText(title, xposition * widthfactor, yposition * widthfactor - 10);
+            if (title != '') {
+                myContext.fillStyle = fillstylebackground;
+                myContext.fillRect(xposition * widthfactor - 1, yposition * widthfactor - (titleheight+1), (targetwidth * widthfactor) + 1, titleheight);
+                myContext.fillStyle = '#fff';
+                myContext.font = font;
+                myContext.fillText(title, xposition * widthfactor, yposition * widthfactor - 10);
+            }
+
 
             // Add event listener for `click` events.
             myCanvas.addEventListener('click', function(event) {
@@ -186,11 +189,13 @@
                     drawBorder(myContext, xposition * widthfactor, yposition * widthfactor, targetwidth * widthfactor, targetheight * widthfactor , fill, '{{{bordercolor}}}', 0);
                 }
                 // Title
-                myContext.fillStyle = fillstylebackground;
-                myContext.fillRect(xposition * widthfactor - 1, yposition * widthfactor - (titleheight+1), (targetwidth * widthfactor) + 1, titleheight);
-                myContext.fillStyle = '#fff';
-                myContext.font = font;
-                myContext.fillText(title, xposition * widthfactor, yposition * widthfactor - 10);
+                if (title != '') {
+                    myContext.fillStyle = fillstylebackground;
+                    myContext.fillRect(xposition * widthfactor - 1, yposition * widthfactor - (titleheight+1), (targetwidth * widthfactor) + 1, titleheight);
+                    myContext.fillStyle = '#fff';
+                    myContext.font = font;
+                    myContext.fillText(title, xposition * widthfactor, yposition * widthfactor - 10);
+                }
             }
         }, false);
     }
