@@ -18,9 +18,9 @@ const docReady = (callback) => {
 };
 
 
-const createimageboard = (cmid, canvaswidth, canvasheight, images) => {
+const createimageboard = (cmid, canvaswidth, canvasheight) => {
     drawthecanvas(cmid, canvaswidth, canvasheight);
-    drawAllImages(cmid, images);
+    drawAllImages(cmid);
 };
 
 
@@ -85,10 +85,9 @@ function getWidth() {
  * @param {string} cmid
  * @param {array} images
  */
-function drawAllImages(cmid, images) {
-    alert("1. drawAllImages images=" +images);
-    Array.prototype.forEach(images, image => {
-        drawOneImage(cmid,image);
+function drawAllImages(cmid) {
+    document.querySelectorAll('.imageboardimage').forEach(image => {
+        drawOneImage(cmid, image.dataset);
     });
 
 }
@@ -98,9 +97,8 @@ function drawAllImages(cmid, images) {
  * @param {img} image
  */
 function drawOneImage(cmid, image) {
-    alert('1. drawOneImage');
-    let dummy = image['id'];
-    alert('dummy=' + dummy);
-    alert("xxxxxdrawOneimage       cmid=" + cmid + " image=" + image);
+
+    console.log(image);
+    // TODO jetzt mit den Daten das Bild zeichnen
 
 }

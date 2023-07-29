@@ -321,7 +321,7 @@ class content_type extends \mod_unilabel\content_type {
 
             // Check if the user can edit the unilabel.
             // Then there should be a 50x50px grid visible that can be help for better positioning the images.
-            $context = get_context_instance(CONTEXT_MODULE, $cm->id);
+            $context = \context_module::instance($cm->id);
             $capababilityforgrid = has_capability('mod/unilabel:edit', $context, $USER->id, true);
 
             $showborders = $this->config->default_showborders == '1';
@@ -330,10 +330,15 @@ class content_type extends \mod_unilabel\content_type {
             // Todo: Maybe bordercolor should be configurable for each image.
             // Todo: Maybe gridcolor should be configurable for each canvas.
 
+            $images = [];
+            foreach($this->images as $image) {
+                $image->imageurl = $image->imageurl->out();
+                $images[] = $image;
+            }
             $content = [
                 'showintro' => $showintro,
                 'intro' => $showintro ? $intro : '',
-                'images' => array_values($this->images),
+                'images' => $images,
                 'hasimages' => count($this->images) > 0,
                 'cmid' => $cm->id,
                 'canvaswidth' => $unilabeltyperecord->canvaswidth,
@@ -347,8 +352,11 @@ class content_type extends \mod_unilabel\content_type {
                 'gridcolor' => $gridcolor
             ];
         }
+
+
+        global $OUTPUT;
         // Be able to create a json: $content_as_json = json_encode($content);.
-        $content = $renderer->render_from_template('unilabeltype_imageboard/imageboard', $content);
+        $content = $OUTPUT->render_from_template('unilabeltype_imageboard/imageboard', $content);
 
         return $content;
     }
