@@ -3,6 +3,12 @@
     {{{intro}}}
 {{/showintro}}
 
+{{#images}}
+    <div class="imageboardimage" data-id="{{id}}" data-title="{{title}}" data-imageboardid="{{imageboardid}}" data-url="{{url}}"
+         data-xposition="{{xposition}}" data-yposition="{{yposition}}" data-targetwidth="{{targetwidth}}"
+         data-targetheight="{{targetheight}}" data-imageurl="{{imageurl}}"></div>
+{{/images}}
+
 <canvas id="unilabeltype-imageboard-canvas-{{cmid}}">
     This canvas includes some images that can be clicked to jump to different urls ...
 </canvas>
@@ -12,7 +18,7 @@
 {{#js}}
     require(['unilabeltype_imageboard/imageboardrenderer'],
         function(imageboardrenderer) {
-            imageboardrenderer.init({{cmid}}, {{canvaswidth}}, {{canvasheight}}, {{{images}}});
+            imageboardrenderer.init({{cmid}}, {{canvaswidth}}, {{canvasheight}});
         }
     );
 {{/js}}
