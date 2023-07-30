@@ -312,8 +312,7 @@ class content_type extends \mod_unilabel\content_type {
         if (!$unilabeltyperecord = $this->load_unilabeltype_record($unilabel->id)) {
             $content = [
                 'intro' => get_string('nocontent', 'unilabeltype_imageboard'),
-                'cmid' => $cm->id,
-                'hasimages' => false,
+                'cmid' => $cm->id
             ];
         } else {
             $intro = $this->format_intro($unilabel, $cm);
@@ -332,19 +331,20 @@ class content_type extends \mod_unilabel\content_type {
 
             $images = [];
             foreach($this->images as $image) {
-                $image->imageurl = $image->imageurl->out();
+                if ($image->imageurl != '') {
+                    $image->imageurl = $image->imageurl->out();
+                } else {
+                    $image->imageurl = '';
+                }
                 $images[] = $image;
             }
             $content = [
                 'showintro' => $showintro,
                 'intro' => $showintro ? $intro : '',
                 'images' => $images,
-                'hasimages' => count($this->images) > 0,
                 'cmid' => $cm->id,
                 'canvaswidth' => $unilabeltyperecord->canvaswidth,
-                'autocanvaswidth' => empty($unilabeltyperecord->canvaswidth),
                 'canvasheight' => $unilabeltyperecord->canvasheight,
-                'autocanvasheight' => empty($unilabeltyperecord->canvasheight),
                 'backgroundimage' => $unilabeltyperecord->backgroundimage,
                 'capababilityforgrid' => $capababilityforgrid,
                 'showborders' => $showborders,
@@ -530,10 +530,9 @@ class content_type extends \mod_unilabel\content_type {
      * @param \stdClass $tile
      * @return string
      */
-    private function get_imageurl_for_image($tile) {
+    private function get_imageurl_for_image($image) {
         $fs = get_file_storage();
-
-        $files = $fs->get_area_files($this->context->id, 'unilabeltype_imageboard', 'image', $tile->id, '', $includedirs = false);
+        $files = $fs->get_area_files($this->context->id, 'unilabeltype_imageboard', 'image', $image->id, '', $includedirs = false);
         if (!$file = array_shift($files)) {
             return '';
         }
@@ -541,7 +540,7 @@ class content_type extends \mod_unilabel\content_type {
             $this->context->id,
             'unilabeltype_imageboard',
             'image',
-            $tile->id,
+            $image->id,
             '/',
             $file->get_filename()
         );

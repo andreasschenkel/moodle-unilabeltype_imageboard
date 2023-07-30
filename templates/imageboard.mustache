@@ -3,10 +3,31 @@
     {{{intro}}}
 {{/showintro}}
 
+<!-- store the data for this board -->
+<div class="imageboard-{{cmid}}"
+    data-id="{{cmid}}"
+    data-canvaswidth="{{canvaswidth}}"
+    data-canvasheight="{{canvasheight}}"
+    data-backgroundimage="{{backgroundimage}}"
+    data-capababilityforgrid="{{capababilityforgrid}}"
+    data-showborders="{{showborders}}"
+    data-bordercolor="{{bordercolor}}"
+    data-gridcolor="{{gridcolor}}">
+</div>
+
+<!-- store each images data -->
 {{#images}}
-    <div class="imageboardimage" data-id="{{id}}" data-title="{{title}}" data-imageboardid="{{imageboardid}}" data-url="{{url}}"
-         data-xposition="{{xposition}}" data-yposition="{{yposition}}" data-targetwidth="{{targetwidth}}"
-         data-targetheight="{{targetheight}}" data-imageurl="{{imageurl}}"></div>
+    <div class="imageboardimage-{{cmid}}"
+         data-id="{{id}}"
+         data-imageboardid="{{imageboardid}}"
+         data-title="{{title}}"
+         data-url="{{url}}"
+         data-xposition="{{xposition}}"
+         data-yposition="{{yposition}}"
+         data-targetwidth="{{targetwidth}}"
+         data-targetheight="{{targetheight}}"
+         data-imageurl="{{imageurl}}">
+    </div>
 {{/images}}
 
 <canvas id="unilabeltype-imageboard-canvas-{{cmid}}">
@@ -18,7 +39,7 @@
 {{#js}}
     require(['unilabeltype_imageboard/imageboardrenderer'],
         function(imageboardrenderer) {
-            imageboardrenderer.init({{cmid}}, {{canvaswidth}}, {{canvasheight}});
+            imageboardrenderer.init({{cmid}});
         }
     );
 {{/js}}
