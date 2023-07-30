@@ -13,19 +13,18 @@ const docReady = (callback) => {
     }
 };
 
-
-
-// This is the function that do all the stuff after document.readyState === "complete" || document.readyState === "interactive"
+/**
+ * This is the function that do all the stuff after document.readyState === "complete" || document.readyState === "interactive"
+ * @param {string} cmid
+ */
 const createimageboard = (cmid) => {
     // First draw the canvas
     drawCanvas(cmid);
     // Second add the backgroundimage
-    // ToDo: backgroundimage still does not work
     drawBackgroundimage(cmid);
     // Third add the images (this also draws the borders and adds click-eventlistener)
     drawAllImages(cmid);
 };
-
 
 /**
  * This function draws the canvas for the unilabel subplugin.
@@ -41,25 +40,19 @@ function drawCanvas(cmid) {
     // Read the desired width and hight of the canvas
     const canvaswidth = document.querySelector('.imageboard-'+cmid).getAttribute('data-canvaswidth');
     const canvasheight = document.querySelector('.imageboard-'+cmid).getAttribute('data-canvasheight');
-
-    //alert("drawCanvas     cmid=" + cmid + "    canvaswidth="+canvaswidth + "    canvasheight="+canvasheight);
-
     let newcanvaswidth = 1;
     let widthfactor = 1;
     let newcanvasheight = 1;
     if (canvaswidth > getWidth()) {
-        //alert("canvas passt nicht");
         newcanvaswidth = getWidth() * 0.90;
         widthfactor = newcanvaswidth / canvaswidth;
         newcanvasheight = canvasheight * widthfactor ;
         myContext.canvas.width = newcanvaswidth;
         myContext.canvas.height = newcanvasheight;
     } else {
-        //alert("canvas passt");
         myContext.canvas.width = canvaswidth;
         myContext.canvas.height = canvasheight;
     }
-
     window.addEventListener("resize", function() {
         if (canvaswidth > getWidth()) {
             newcanvaswidth = getWidth() * 0.90;
@@ -107,8 +100,6 @@ function drawAllImages(cmid) {
             showborders,
             bordercolor,
             image.dataset);
-        //alert("jetzt der background");
-
     });
 }
 
@@ -126,10 +117,6 @@ function drawOneImage(cmid,
                       showborders,
                       bordercolor,
                       image) {
-    //let imageboardid = image.imageboardid;
-    // über imageboardid ist das bild einem board zuweisbar.
-    // alternativ kann aber auch die eindeutige cmid genutzt werden, um das board zu referenzieren
-    //let imageid = image.imageid;
     let title = image.title;
     let url = image.url;
     let imageurl = image.imageurl;
@@ -147,122 +134,118 @@ function drawOneImage(cmid,
     let widthfactor = 1;
     let titleheight = 0;
 
-    alert("todo: Add timeout so that images ");
+        // Calculate a resize faktor if not enough width exists to display the canvas
+        if (canvaswidth > getWidth()) {
+            // Calculate a factor the width has to be scaled in order to let the canvas fit on the screen
+            widthfactor =  getWidth() * 0.90 / canvaswidth;
+        }
 
-    // Calculate a resize faktor if not enough width exists to display the canvas
-    if (canvaswidth > getWidth()) {
-        // Calculate a factor the width has to be scaled in order to let the canvas fit on the screen
-        widthfactor =  getWidth() * 0.90 / canvaswidth;
-    }
-
-    if (targetwidth != 0 && targetheight != 0) {
-    } else {
-        if (targetheight == 0) {
-            if (targetwidth == 0) {
-                targetwidth = img.width;
-                targetheight = img.height;
-            } else {
-                let faktor = targetwidth / img.width;
-                targetheight = img.height * faktor;
-            }
+        if (targetwidth != 0 && targetheight != 0) {
         } else {
             if (targetheight == 0) {
-                targetwidth = img.width;
-                targetheight = img.height;
+                if (targetwidth == 0) {
+                    targetwidth = img.width;
+                    targetheight = img.height;
+                } else {
+                    let faktor = targetwidth / img.width;
+                    targetheight = img.height * faktor;
+                }
             } else {
-                let faktor = targetheight / img.height;
-                targetwidth = img.width * faktor;
+                if (targetheight == 0) {
+                    targetwidth = img.width;
+                    targetheight = img.height;
+                } else {
+                    let faktor = targetheight / img.height;
+                    targetwidth = img.width * faktor;
+                }
             }
         }
-    }
-
-    myContext.drawImage(img,
-        xposition * widthfactor,
-        yposition * widthfactor,
-        targetwidth * widthfactor,
-        targetheight * widthfactor);
-
-    if (showborders) {
-        let fill = false;
-        drawBorder(myContext,
+    img.onload = function() {
+        myContext.drawImage(img,
             xposition * widthfactor,
             yposition * widthfactor,
             targetwidth * widthfactor,
-            targetheight * widthfactor,
-            fill,
-            bordercolor,
-            1);
-    }
+            targetheight * widthfactor);
 
-    // Title
-    if (title != '') {
-        titleheight = 30;
-        myContext.fillStyle = fillstylebackground;
-        myContext.fillRect(xposition * widthfactor - 1,
-            yposition * widthfactor - (titleheight+1),
-            (targetwidth * widthfactor) + 1,
-            titleheight);
-        myContext.fillStyle = '#fff';
-        myContext.font = font;
-        myContext.fillText(title, xposition * widthfactor, yposition * widthfactor - 10);
-    }
-
-// Add event listener for `click` events.
-    myCanvas.addEventListener('click', function(event) {
-        const rect = myCanvas.getBoundingClientRect();
-        const x = event.clientX - rect.left;
-        const y = event.clientY - rect.top;
-        if ((x > xposition * widthfactor && (x < xposition * widthfactor + targetwidth * widthfactor))
-            && (y > yposition * widthfactor - titleheight && (y < yposition * widthfactor + targetheight * widthfactor))) {
-            if (url){
-                //window.open(url); // Use this to open in new tab
-                window.location = url; // Use this to open in current window
-            }
-        } else {
-            //{{#capababilityforgrid}}
-            const capababilityforgrid = document.querySelector('.imageboard-'+cmid).getAttribute('data-capababilityforgrid');
-            if (capababilityforgrid == '1') {
-                drawGrid(cmid);
-            }
-        }
-    }, false);
-
-    // Now add eventlistener to resize canvas and images when needed.
-    window.addEventListener("resize", function() {
-        if (canvaswidth > getWidth()) {
-            widthfactor = getWidth() * 0.90 / canvaswidth;
-            myContext.drawImage(img,
+    };
+        if (showborders) {
+            let fill = false;
+            drawBorder(myContext,
                 xposition * widthfactor,
                 yposition * widthfactor,
                 targetwidth * widthfactor,
-                targetheight * widthfactor
-            );
-            if (showborders) {
-                var fill = false;
-                drawBorder(myContext, xposition * widthfactor,
+                targetheight * widthfactor,
+                fill,
+                bordercolor,
+                1);
+        }
+
+        // Title
+        if (title != '') {
+            titleheight = 30;
+            myContext.fillStyle = fillstylebackground;
+            myContext.fillRect(xposition * widthfactor - 1,
+                yposition * widthfactor - (titleheight+1),
+                (targetwidth * widthfactor) + 1,
+                titleheight);
+            myContext.fillStyle = '#fff';
+            myContext.font = font;
+            myContext.fillText(title, xposition * widthfactor, yposition * widthfactor - 10);
+        }
+
+        // Add event listener for `click` events.
+        myCanvas.addEventListener('click', function(event) {
+            const rect = myCanvas.getBoundingClientRect();
+            const x = event.clientX - rect.left;
+            const y = event.clientY - rect.top;
+            if ((x > xposition * widthfactor && (x < xposition * widthfactor + targetwidth * widthfactor))
+                && (y > yposition * widthfactor - titleheight && (y < yposition * widthfactor + targetheight * widthfactor))) {
+                if (url){
+                    //window.open(url); // Use this to open in new tab
+                    window.location = url; // Use this to open in current window
+                }
+            } else {
+                const capababilityforgrid = document.querySelector('.imageboard-'+cmid).getAttribute('data-capababilityforgrid');
+                if (capababilityforgrid == '1') {
+                    drawGrid(cmid);
+                }
+            }
+        }, false);
+
+        // Now add eventlistener to resize canvas and images when needed.
+        window.addEventListener("resize", function() {
+            if (canvaswidth > getWidth()) {
+                widthfactor = getWidth() * 0.90 / canvaswidth;
+                myContext.drawImage(img,
+                    xposition * widthfactor,
                     yposition * widthfactor,
                     targetwidth * widthfactor,
-                    targetheight * widthfactor,
-                    fill, bordercolor,
-                    1
+                    targetheight * widthfactor
                 );
+                if (showborders) {
+                    var fill = false;
+                    drawBorder(myContext, xposition * widthfactor,
+                        yposition * widthfactor,
+                        targetwidth * widthfactor,
+                        targetheight * widthfactor,
+                        fill, bordercolor,
+                        1
+                    );
+                }
+                // Title
+                if (title != '') {
+                    myContext.fillStyle = fillstylebackground;
+                    myContext.fillRect(xposition * widthfactor - 1,
+                        yposition * widthfactor - (titleheight+1),
+                        (targetwidth * widthfactor) + 1,
+                        titleheight);
+                    myContext.fillStyle = '#fff';
+                    myContext.font = font;
+                    myContext.fillText(title, xposition * widthfactor, yposition * widthfactor - 10);
+                }
             }
-            // Title
-            if (title != '') {
-                myContext.fillStyle = fillstylebackground;
-                myContext.fillRect(xposition * widthfactor - 1,
-                    yposition * widthfactor - (titleheight+1),
-                    (targetwidth * widthfactor) + 1,
-                    titleheight);
-                myContext.fillStyle = '#fff';
-                myContext.font = font;
-                myContext.fillText(title, xposition * widthfactor, yposition * widthfactor - 10);
-            }
-        }
-    }, false);
+        }, false);
 }
-
-
 
 /**
  *
@@ -292,9 +275,6 @@ function drawBorder(ctx, x, y, width, height, fill, strokeStyle, strokeWidth) {
         ctx.stroke();
     }
 }
-
-
-
 
 /**
  * Draw a grid on the canvas to support a better positioning of images.
@@ -330,20 +310,29 @@ function drawGrid(cmid) {
  * @param {string} cmid
  */
 function drawBackgroundimage(cmid) {
-    const backgroundimageurl = document.querySelector('.imageboard-'+cmid).getAttribute('data-backgroundimage');
-
-    var backgroundImage = new Image();
-    backgroundImage.src = backgroundimageurl;
-
     const myCanvas = document.getElementById("unilabeltype-imageboard-canvas-"+cmid);
     const myContext = myCanvas.getContext("2d");
+    var backgroundImage = new Image();
+    backgroundImage.src = document.querySelector('.imageboard-'+cmid).getAttribute('data-backgroundimage');
+    backgroundImage.onload = function() {
+        var canvaswidth = document.querySelector('.imageboard-'+cmid).getAttribute('data-canvaswidth');
+        var newcanvaswidth = 0;
+        if (canvaswidth > getWidth()) {
+            newcanvaswidth = getWidth() * 0.90;
+        } else {
+            newcanvaswidth = canvaswidth;
+        }
+        myContext.drawImage(backgroundImage, 0, 0, newcanvaswidth, backgroundImage.height * newcanvaswidth / backgroundImage.width);
 
-    var canvaswidth = document.querySelector('.imageboard-'+cmid).getAttribute('data-canvaswidth');
-    var canvasheight = document.querySelector('.imageboard-'+cmid).getAttribute('data-canvasheight');
-    canvaswidth = 400;
-    canvasheight = 300;
-    // todo ... timeout instead alert
-    // resize backround when resisizeing canvas
-    alert("backgroundimageurl="+backgroundimageurl);
-    myContext.drawImage(backgroundImage, 0,0,canvaswidth, canvasheight);
+        window.addEventListener("resize", function() {
+            if (canvaswidth > getWidth()) {
+                newcanvaswidth = getWidth() * 0.90;
+                myContext.drawImage(backgroundImage,
+                    0,
+                    0,
+                    newcanvaswidth,
+                    backgroundImage.height * newcanvaswidth / backgroundImage.width);
+            }
+        });
+    };
 }
