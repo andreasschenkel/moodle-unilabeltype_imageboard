@@ -24,7 +24,18 @@ const createimageboard = (cmid) => {
     drawBackgroundimage(cmid);
     // Third add the images (this also draws the borders and adds click-eventlistener)
     drawAllImages(cmid);
+    window.addEventListener("resize", function() {
+        // First draw the canvas
+        drawCanvas(cmid);
+        // Second add the backgroundimage
+        drawBackgroundimage(cmid);
+        // Third add the images (this also draws the borders and adds click-eventlistener)
+        drawAllImages(cmid);
+        // ToDo: Check if it is better to now create the clickable areas instead of adding them in
+        // the drawAllImages espaccaly in drawOneImage function
+    });
 };
+
 
 /**
  * This function draws the canvas for the unilabel subplugin.
@@ -40,9 +51,12 @@ function drawCanvas(cmid) {
     // Read the desired width and hight of the canvas
     const canvaswidth = document.querySelector('.imageboard-'+cmid).getAttribute('data-canvaswidth');
     const canvasheight = document.querySelector('.imageboard-'+cmid).getAttribute('data-canvasheight');
+    // Initialize variables
     let newcanvaswidth = 1;
     let widthfactor = 1;
     let newcanvasheight = 1;
+
+    // Check if the browser width is big enough for the canvaswidth or if not then calculate 90% as "newcanvaswidth"
     if (canvaswidth > getWidth()) {
         newcanvaswidth = getWidth() * 0.90;
         widthfactor = newcanvaswidth / canvaswidth;
@@ -53,6 +67,7 @@ function drawCanvas(cmid) {
         myContext.canvas.width = canvaswidth;
         myContext.canvas.height = canvasheight;
     }
+    /*
     window.addEventListener("resize", function() {
         if (canvaswidth > getWidth()) {
             newcanvaswidth = getWidth() * 0.90;
@@ -63,6 +78,7 @@ function drawCanvas(cmid) {
         } else {
         }
     }, false);
+    */
 }
 
 
@@ -167,7 +183,7 @@ function drawOneImage(cmid,
             targetwidth * widthfactor,
             targetheight * widthfactor);
 
-    };
+
         if (showborders) {
             let fill = false;
             drawBorder(myContext,
@@ -211,8 +227,10 @@ function drawOneImage(cmid,
                 }
             }
         }, false);
+    };
 
         // Now add eventlistener to resize canvas and images when needed.
+        /*
         window.addEventListener("resize", function() {
             if (canvaswidth > getWidth()) {
                 widthfactor = getWidth() * 0.90 / canvaswidth;
@@ -245,6 +263,8 @@ function drawOneImage(cmid,
                 }
             }
         }, false);
+
+         */
 }
 
 /**
@@ -323,7 +343,7 @@ function drawBackgroundimage(cmid) {
             newcanvaswidth = canvaswidth;
         }
         myContext.drawImage(backgroundImage, 0, 0, newcanvaswidth, backgroundImage.height * newcanvaswidth / backgroundImage.width);
-
+/*
         window.addEventListener("resize", function() {
             if (canvaswidth > getWidth()) {
                 newcanvaswidth = getWidth() * 0.90;
@@ -334,5 +354,6 @@ function drawBackgroundimage(cmid) {
                     backgroundImage.height * newcanvaswidth / backgroundImage.width);
             }
         });
+ */
     };
 }
