@@ -66,41 +66,28 @@
     {{{intro}}}
 {{/showintro}}
 
-<!-- store the data for this board -->
-<div class="imageboard-{{cmid}}"
-    data-id="{{cmid}}"
-    data-canvaswidth="{{canvaswidth}}"
-    data-canvasheight="{{canvasheight}}"
-    data-backgroundimage="{{backgroundimage}}"
-    data-capababilityforgrid="{{capababilityforgrid}}"
-    data-showborders="{{showborders}}"
-    data-bordercolor="{{bordercolor}}"
-    data-gridcolor="{{gridcolor}}">
-</div>
-
-<!-- store each images data -->
+<div id="unilabeltype-imageboard-{{cmid}}" style="position: relative; background: url('{{backgroundimage}}'); width: {{canvaswidth}}px; height: {{canvasheight}}px; background-size: cover;">
 {{#images}}
-    <div class="imageboardimage-{{cmid}}"
-         data-id="{{id}}"
-         data-imageboardid="{{imageboardid}}"
-         data-title="{{title}}"
-         data-url="{{url}}"
-         data-xposition="{{xposition}}"
-         data-yposition="{{yposition}}"
-         data-targetwidth="{{targetwidth}}"
-         data-targetheight="{{targetheight}}"
-         data-imageurl="{{imageurl}}">
+        <a href="{{url}}">
+            <div style="position: absolute; left: {{xposition}}px; top: calc({{yposition}}px - 34px); color: #fff; background-color: #3399ff; font-size: 24px;">
+                {{title}}
+            </div>
+
+
+            <div style="position: absolute; left: {{xposition}}px; top:{{yposition}}px; {{#hastargetwidth}}width: {{targetwidth}}px;{{/hastargetwidth}}
+                {{#hastargetheight}}height: {{targetheight}}px; {{/hastargetheight}}">
+
+                <img src="{{imageurl}}"
+                     style="object-fit: contain; width: 100%; height: 100%; {{#showborders}} border: solid 1px {{bordercolor}}; {{/showborders}}">
+        </a>
     </div>
 {{/images}}
-
-<canvas id="unilabeltype-imageboard-canvas-{{cmid}}">
-    This canvas includes some images that can be clicked to jump to different urls ...
-</canvas>
+</div>
 
 {{#js}}
     require(['unilabeltype_imageboard/imageboardrenderer'],
-        function(imageboardrenderer) {
-            imageboardrenderer.init({{cmid}});
-        }
+    function(imageboardrenderer) {
+    imageboardrenderer.init({{cmid}}, {{canvaswidth}});
+    }
     );
 {{/js}}

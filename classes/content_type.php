@@ -336,6 +336,14 @@ class content_type extends \mod_unilabel\content_type {
                 } else {
                     $image->imageurl = '';
                 }
+                // wenn widht oder height = 0 dann berechen
+                if (!empty($image->targetwidth)) {
+                    $image->hastargetwidth = true;
+                }
+                if (!empty($image->targetheight)) {
+                    $image->hastargetheight = true;
+                }
+
                 $images[] = $image;
             }
             $content = [
