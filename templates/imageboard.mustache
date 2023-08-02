@@ -66,22 +66,94 @@
     {{{intro}}}
 {{/showintro}}
 
-<div id="unilabeltype-imageboard-{{cmid}}" style="position: relative; background: url('{{backgroundimage}}'); width: {{canvaswidth}}px; height: {{canvasheight}}px; background-size: cover;">
-{{#images}}
+<div id="unilabeltype-imageboard-{{cmid}}"
+     style="position: relative;
+             background: url('{{backgroundimage}}');
+             width: {{canvaswidth}}px;
+             height: {{canvasheight}}px;
+             background-size: cover;">
+    {{#images}}
         <a href="{{url}}">
-            <div style="position: absolute; left: {{xposition}}px; top: calc({{yposition}}px - 34px); color: #fff; background-color: #3399ff; font-size: 24px;">
+            <div style="position: absolute;
+                    left: {{xposition}}px;
+                    top: calc({{yposition}}px - 36px);
+                    color: #fff; background-color: #3399ff;
+                    font-size: 24px;">
                 {{title}}
             </div>
 
+            {{#imageurl}}
+                <div style="position: absolute;
+                        left: {{xposition}}px;
+                        top:{{yposition}}px;
+                    {{#hastargetwidth}}width: {{targetwidth}}px; {{/hastargetwidth}}
+                    {{#hastargetheight}}height: {{targetheight}}px; {{/hastargetheight}}">
 
-            <div style="position: absolute; left: {{xposition}}px; top:{{yposition}}px; {{#hastargetwidth}}width: {{targetwidth}}px;{{/hastargetwidth}}
-                {{#hastargetheight}}height: {{targetheight}}px; {{/hastargetheight}}">
-
-                <img src="{{imageurl}}"
-                     style="object-fit: contain; width: 100%; height: 100%; {{#showborders}} border: solid 1px {{bordercolor}}; {{/showborders}}">
+                    <img src="{{imageurl}}"
+                         style="object-fit: contain;
+                                 width: 100%;
+                                 height: 100%;
+                             {{#showborders}} border: solid 1px {{bordercolor}}; {{/showborders}}">
+                </div>
+            {{/imageurl}}
         </a>
+    {{/images}}
+</div>
+
+<div class="unilabel-imageboard-list">
+    <p class="unilabel-imageboard-list-button">
+        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample{{cmid}}"
+                aria-expanded="false" aria-controls="collapseExample">
+            Bilderliste und deren Links falls vorhanden:
+        </button>
+    </p>
+    <div class="collapse" id="collapseExample{{cmid}}">
+        <div class="card card-body">
+            {{#images}}
+                {{#url}}
+                    {{#imageurl}}
+                        <a href="{{{url}}}">
+                            <div class="row" style="margin-left:20px; max-width: 500px;">
+                                <div class="unilabel-imageboard-list-nr">
+                                    {{nr}}
+                                </div>
+                                <div>
+                                    <img src="{{{imageurl}}}" width="40px" style="margin-right: 5px;"
+                                         alt="{{{title}}}"></img>
+                                    {{{title}}}
+                                </div>
+                            </div>
+                        </a>
+                    {{/imageurl}}
+                    {{^imageurl}}
+                        <a href="{{{url}}}">
+                            <div class="row" style="margin-left:20px; max-width: 500px;">
+                                <div class="unilabel-imageboard-list-nr">
+                                    {{nr}}
+                                </div>
+                                <div class="border" style="width: 40px; height: 40px; margin-right: 5px;">
+                                </div>
+                                <div class="unilabel-imageboard-list-title">
+                                    {{{title}}}
+                                </div>
+                            </div>
+                        </a>
+                    {{/imageurl}}
+                {{/url}}
+                {{^url}}
+                    <div class="row" style="margin-left:20px; max-width: 500px;">
+                        <div class="unilabel-imageboard-list-nr">
+                            {{nr}}
+                        </div>
+                        <div>
+                            <img src="{{{imageurl}}}" width="40px;" style="margin-right: 5px;" alt="{{{title}}}"></img>
+                            {{{title}}}
+                        </div>
+                    </div>
+                {{/url}}
+            {{/images}}
+        </div>
     </div>
-{{/images}}
 </div>
 
 {{#js}}

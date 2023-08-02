@@ -48,10 +48,10 @@ $string['image'] = 'Image';
 $string['imagenr'] = 'Image {$a}';
 $string['images'] = 'Images';
 $string['targetwidth'] = 'Target image width an image should be resized to';
-$string['targetwidth_help'] = 'Values different from 0 will be used. If both are 0, then the original imagesize will be uses';
+$string['targetwidth_help'] = 'Values different from 0 will be used. If both are 0, then the original imagesize will be used';
 
 $string['targetheight'] = 'Target image height an image should be resized to';
-$string['targetheight_help'] = 'Values different from 0 will be used. If both are 0, then the original imagesize will be uses';
+$string['targetheight_help'] = 'Values different from 0 will be used. If both are 0, then the original imagesize will be used';
 
 $string['nocontent'] = 'No content';
 $string['pluginname'] = 'imageboard';
@@ -67,6 +67,6 @@ $string['default_showborders_desc'] = 'If activated then the added images have b
 $string['title'] = 'Title';
 $string['url'] = 'Url';
 $string['url_help'] = 'By defining a url the image becomes a clickable button linked to the defined url.';
-$string['xposition'] = 'x-position of the upper left corner';
-$string['yposition'] = 'y-position of the upper left corner';
+$string['xposition'] = 'x-position upper left corner';
+$string['yposition'] = 'y-position upper left corner';
 

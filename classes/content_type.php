@@ -121,6 +121,42 @@ class content_type extends \mod_unilabel\content_type {
             ['size' => 50]
         );
         $repeatarray[] = $mform->createElement(
+            'filemanager',
+            $prefix . 'image',
+            get_string('image', 'unilabeltype_imageboard') . '-{no}',
+            null,
+            [
+                'maxbytes' => $form->get_course()->maxbytes,
+                'maxfiles' => 1,
+                'subdirs' => false,
+                'accepted_types' => ['web_image'],
+            ]
+        );
+        $repeatarray[] = $mform->createElement(
+            'text',
+            $prefix . 'xposition',
+            get_string('xposition', 'unilabeltype_imageboard') . '-{no}',
+            ['size' => 5]
+        );
+        $repeatarray[] = $mform->createElement(
+            'text',
+            $prefix . 'yposition',
+            get_string('yposition', 'unilabeltype_imageboard') . '-{no}',
+            ['size' => 5]
+        );
+        $repeatarray[] = $mform->createElement(
+            'text',
+            $prefix . 'targetwidth',
+            get_string('targetwidth', 'unilabeltype_imageboard') . '-{no}',
+            ['size' => 4]
+        );
+        $repeatarray[] = $mform->createElement(
+            'text',
+            $prefix . 'targetheight',
+            get_string('targetheight', 'unilabeltype_imageboard') . '-{no}',
+            ['size' => 4]
+        );
+        $repeatarray[] = $mform->createElement(
             'text',
             $prefix . 'url',
             get_string('url', 'unilabeltype_imageboard') . '-{no}',
@@ -132,47 +168,6 @@ class content_type extends \mod_unilabel\content_type {
             '',
             $OUTPUT->render($pickerbutton)
 
-        );
-
-        $repeatarray[] = $mform->createElement(
-            'text',
-            $prefix . 'xposition',
-            get_string('xposition', 'unilabeltype_imageboard') . '-{no}',
-            ['size' => 5]
-        );
-
-        $repeatarray[] = $mform->createElement(
-            'text',
-            $prefix . 'yposition',
-            get_string('yposition', 'unilabeltype_imageboard') . '-{no}',
-            ['size' => 5]
-        );
-
-        $repeatarray[] = $mform->createElement(
-            'text',
-            $prefix . 'targetwidth',
-            get_string('targetwidth', 'unilabeltype_imageboard') . '-{no}',
-            ['size' => 4]
-        );
-
-        $repeatarray[] = $mform->createElement(
-            'text',
-            $prefix . 'targetheight',
-            get_string('targetheight', 'unilabeltype_imageboard') . '-{no}',
-            ['size' => 4]
-        );
-
-        $repeatarray[] = $mform->createElement(
-            'filemanager',
-            $prefix . 'image',
-            get_string('image', 'unilabeltype_imageboard') . '-{no}',
-            null,
-            [
-                'maxbytes' => $form->get_course()->maxbytes,
-                'maxfiles' => 1,
-                'subdirs' => false,
-                'accepted_types' => ['web_image'],
-            ]
         );
 
         $repeatedoptions = [];
@@ -207,7 +202,6 @@ class content_type extends \mod_unilabel\content_type {
             $prefix . 'add_more_tiles_btn',
             $defaultrepeatcount, // Each time we add 3 elements.
             get_string('addmoreimages', 'unilabeltype_imageboard'),
-            false
         );
     }
 
@@ -343,7 +337,6 @@ class content_type extends \mod_unilabel\content_type {
                 if (!empty($image->targetheight)) {
                     $image->hastargetheight = true;
                 }
-
                 $images[] = $image;
             }
             $content = [

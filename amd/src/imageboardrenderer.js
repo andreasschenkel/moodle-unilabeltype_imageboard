@@ -7,12 +7,12 @@ export const init = (cmid, canvaswidth) => {
         if (canvaswidth > getWidth()) {
             let newcanvaswidth = getWidth() * 0.90;
             let widthfactor =  newcanvaswidth / canvaswidth;
-            const mydiv = document.getElementById("unilabeltype-imageboard-" + cmid);
+            const mydiv = document.getElementById("module-" + cmid);
             mydiv.style.transform="scale("+widthfactor+")";
+            mydiv.style.transformOrigin="0 0";
         }
     });
 };
-
 
 /**
  * Helper function to get the width of the usable browserarea.
