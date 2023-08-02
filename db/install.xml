@@ -26,7 +26,7 @@
         <FIELD NAME="yposition" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false"/>
         <FIELD NAME="targetwidth" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false"/>
         <FIELD NAME="targetheight" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false"/>
-
+        <FIELD NAME="border" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false"/>
       </FIELDS>
       <KEYS>
         <KEY NAME="primary" TYPE="primary" FIELDS="id"/>

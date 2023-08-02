@@ -11,6 +11,7 @@
       "yposition": "100",
       "targetwidth": "80",
       "targetheight": "0",
+      "border": "2",
       "imageurl": {},
       "nr": 0
     },
@@ -23,6 +24,7 @@
       "yposition": "200",
       "targetwidth": "0",
       "targetheight": "0",
+      "border": "0",
       "imageurl": {},
       "nr": 1
     }

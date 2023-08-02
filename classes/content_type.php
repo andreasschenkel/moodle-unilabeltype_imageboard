@@ -169,6 +169,13 @@ class content_type extends \mod_unilabel\content_type {
             $OUTPUT->render($pickerbutton)
 
         );
+        $numbers = array_combine(range(0, 10, 1), range(0, 10, 1));
+        $repeatarray[] = $mform->createElement(
+            'select',
+            $prefix . 'border',
+            'border in px',
+            $numbers
+        );
 
         $repeatedoptions = [];
         $repeatedoptions[$prefix . 'title']['type'] = PARAM_TEXT;
@@ -184,6 +191,8 @@ class content_type extends \mod_unilabel\content_type {
 
         $repeatedoptions[$prefix . 'targetwidth']['type'] = PARAM_INT;
         $repeatedoptions[$prefix . 'targetheight']['type'] = PARAM_INT;
+
+        $repeatedoptions[$prefix . 'border']['type'] = PARAM_INT;
 
         $defaultrepeatcount = 4; // The default count for tiles.
         $repeatcount = count($this->images);
@@ -271,6 +280,9 @@ class content_type extends \mod_unilabel\content_type {
             $elementname = $prefix . 'targetheight[' . $index . ']';
             $data[$elementname] = $tile->targetheight;
 
+            $elementname = $prefix . 'border[' . $index . ']';
+            $data[$elementname] = $tile->border;
+
             // Prepare the images.
             // $draftitemid is set by the function file_prepare_draft_area().
             $draftitemidimage = 0; // This is needed to create a new draftitemid.
@@ -337,6 +349,10 @@ class content_type extends \mod_unilabel\content_type {
                 if (!empty($image->targetheight)) {
                     $image->hastargetheight = true;
                 }
+                if (!empty($image->border)) {
+                    $image->border = $image->border;
+                }
+
                 $images[] = $image;
             }
 
@@ -469,6 +485,8 @@ class content_type extends \mod_unilabel\content_type {
 
             $tilerecord->targetwidth = abs($formdata->{$prefix . 'targetwidth'}[$i]);
             $tilerecord->targetheight = abs($formdata->{$prefix . 'targetheight'}[$i]);
+
+            $tilerecord->border = abs($formdata->{$prefix . 'border'}[$i]);
 
             $tilerecord->id = $DB->insert_record('unilabeltype_imageboard_tile', $tilerecord);
 
