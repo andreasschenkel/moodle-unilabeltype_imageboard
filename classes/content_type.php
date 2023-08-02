@@ -336,13 +336,12 @@ class content_type extends \mod_unilabel\content_type {
             // Todo: Maybe gridcolor should be configurable for each canvas.
 
             $images = [];
-            foreach($this->images as $image) {
+            foreach ($this->images as $image) {
                 if ($image->imageurl != '') {
                     $image->imageurl = $image->imageurl->out();
                 } else {
                     $image->imageurl = '';
                 }
-                // wenn widht oder height = 0 dann berechen
                 if (!empty($image->targetwidth)) {
                     $image->hastargetwidth = true;
                 }
@@ -352,19 +351,19 @@ class content_type extends \mod_unilabel\content_type {
                 if (!empty($image->border)) {
                     $image->border = $image->border;
                 }
-
                 $images[] = $image;
             }
 
-            // helpergrid
+            // Create a 50x50px helpergrid if $capababilityforgrid.
             $helpergrids = [];
-
-            for ($y=0; $y < $unilabeltyperecord->canvasheight; $y=$y+50) {
-                for ($x=0; $x < $unilabeltyperecord->canvaswidth; $x=$x+50) {
-                    $helpergrid = [];
-                    $helpergrid['x'] = $x;
-                    $helpergrid['y'] = $y;
-                    $helpergrids[] = $helpergrid;
+            if ($capababilityforgrid) {
+                for ($y = 0; $y < $unilabeltyperecord->canvasheight; $y = $y + 50) {
+                    for ($x = 0; $x < $unilabeltyperecord->canvaswidth; $x = $x + 50) {
+                        $helpergrid = [];
+                        $helpergrid['x'] = $x;
+                        $helpergrid['y'] = $y;
+                        $helpergrids[] = $helpergrid;
+                    }
                 }
             }
             $content = [
@@ -382,7 +381,6 @@ class content_type extends \mod_unilabel\content_type {
                 'helpergrids' => $helpergrids
             ];
         }
-
 
         global $OUTPUT;
         // Be able to create a json: $content_as_json = json_encode($content);.
