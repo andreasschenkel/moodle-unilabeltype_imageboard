@@ -339,6 +339,18 @@ class content_type extends \mod_unilabel\content_type {
                 }
                 $images[] = $image;
             }
+
+            // helpergrid
+            $helpergrids = [];
+
+            for ($y=0; $y < $unilabeltyperecord->canvasheight; $y=$y+50) {
+                for ($x=0; $x < $unilabeltyperecord->canvaswidth; $x=$x+50) {
+                    $helpergrid = [];
+                    $helpergrid['x'] = $x;
+                    $helpergrid['y'] = $y;
+                    $helpergrids[] = $helpergrid;
+                }
+            }
             $content = [
                 'showintro' => $showintro,
                 'intro' => $showintro ? $intro : '',
@@ -350,7 +362,8 @@ class content_type extends \mod_unilabel\content_type {
                 'capababilityforgrid' => $capababilityforgrid,
                 'showborders' => $showborders,
                 'bordercolor' => $bordercolor,
-                'gridcolor' => $gridcolor
+                'gridcolor' => $gridcolor,
+                'helpergrids' => $helpergrids
             ];
         }
 
