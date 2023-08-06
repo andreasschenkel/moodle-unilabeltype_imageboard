@@ -1,26 +1,58 @@
 /**
  * @param {string} cmid
  * @param {string} canvaswidth
+ * @param {string} canvasheight
  */
-export const init = (cmid, canvaswidth) => {
-    window.addEventListener("resize", function () {
-        if (canvaswidth > getWidth()) {
-            let newcanvaswidth = getWidth() * 0.90;
+export const init = (cmid, canvaswidth, canvasheight) => {
+    //window.addEventListener("resize", function () {
+    //if (canvaswidth > getWidth()) {
+
+
+    const resizer = document.getElementById("unilabeltype-imageboard-resizer-"+cmid);
+    resizer.addEventListener("click", function () {
+
+            const dummy = document.getElementById("unilabeltype-imageboard-gridtoggler-"+cmid);
+            let newcanvaswidth = (getWidth() - dummy.getBoundingClientRect().left) * 0.95;
+            if (newcanvaswidth > 1100) {
+                newcanvaswidth = 1100-80;
+            }
+
+
             let widthfactor = newcanvaswidth / canvaswidth;
-            const mydiv = document.getElementById("module-"+cmid);
+            //const mydiv = document.getElementById("module-"+cmid);
+            const mydiv = document.getElementById("unilabeltype-imageboard-"+cmid);
+
+
+
             mydiv.style.transform = "scale("+widthfactor+")";
             mydiv.style.transformOrigin = "0 0";
-        }
+
+            /*
+            const elementLi = document.querySelector("li#section-0");
+            elementLi.style.border = "solid 2px";
+
+            let offsetHeight = elementLi.offsetHeight;
+            let difference = canvasheight * (1 - widthfactor);
+            let newLiHeight = offsetHeight - difference;
+            alert("offsetHeight=" + offsetHeight +
+                "   difference=" + difference +
+                "   newLiHeight=" + newLiHeight);
+
+            elementLi.style.height = newLiHeight + "px";
+*/
     });
 
-    window.addEventListener("click", function () {
-        const elements = document.getElementsByClassName("unilabeltype-imageboard-helpergrid-"+cmid);
-        Array.prototype.forEach.call(elements, function (element) {
-            element.classList.toggle("hidden");
+    // Add eventlistener that toggles the 50x50px helpergrid on and off
+    const gridtoggler = document.getElementById("unilabeltype-imageboard-gridtoggler-"+cmid);
+    gridtoggler.addEventListener("click", function () {
+        const helpergridsquares = document.getElementsByClassName("unilabeltype-imageboard-helpergrid-"+cmid);
+        Array.prototype.forEach.call(helpergridsquares, function (helpergridsquare) {
+            helpergridsquare.classList.toggle("hidden");
         });
 
     });
 };
+
 
 /**
  * Helper function to get the width of the usable browserarea.
