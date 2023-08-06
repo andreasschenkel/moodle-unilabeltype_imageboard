@@ -12,9 +12,17 @@ export const init = (cmid, canvaswidth, canvasheight) => {
     resizer.addEventListener("click", function () {
 
             const dummy = document.getElementById("unilabeltype-imageboard-gridtoggler-"+cmid);
-            let newcanvaswidth = (getWidth() - dummy.getBoundingClientRect().left) * 0.95;
-            if (newcanvaswidth > 1100) {
-                newcanvaswidth = 1100-80;
+            let newcanvaswidth = 0;
+            if (getWidth() < 750) {
+                newcanvaswidth = (getWidth() - dummy.getBoundingClientRect().left)-10;
+            } else if (getWidth() < 585) {
+                newcanvaswidth = (getWidth() - dummy.getBoundingClientRect().left)-20;
+            } else {
+                newcanvaswidth = (getWidth() - dummy.getBoundingClientRect().left)-80;
+            }
+            
+            if (newcanvaswidth > canvaswidth) {
+                newcanvaswidth = canvaswidth ;
             }
 
 
