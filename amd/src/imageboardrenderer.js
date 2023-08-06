@@ -20,22 +20,21 @@ export const init = (cmid, canvaswidth, canvasheight) => {
             } else {
                 newcanvaswidth = (getWidth() - dummy.getBoundingClientRect().left)-80;
             }
-            
+
             if (newcanvaswidth > canvaswidth) {
                 newcanvaswidth = canvaswidth ;
             }
-
 
             let widthfactor = newcanvaswidth / canvaswidth;
             //const mydiv = document.getElementById("module-"+cmid);
             const mydiv = document.getElementById("unilabeltype-imageboard-"+cmid);
 
-
-
             mydiv.style.transform = "scale("+widthfactor+")";
             mydiv.style.transformOrigin = "0 0";
 
+            canvasheight = canvasheight + 1;
             /*
+            // ToDo: Implement a way to reduce white space beloc imageboard when resizing/shrinking imageboard.
             const elementLi = document.querySelector("li#section-0");
             elementLi.style.border = "solid 2px";
 

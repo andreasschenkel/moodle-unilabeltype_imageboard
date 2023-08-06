@@ -357,7 +357,7 @@ class content_type extends \mod_unilabel\content_type {
             // Create a 50x50px helpergrid if $capababilityforgrid.
             $helpergrids = [];
             $canvaswidth = $unilabeltyperecord->canvaswidth;
-            $canvasheight =$unilabeltyperecord->canvasheight;
+            $canvasheight = $unilabeltyperecord->canvasheight;
 
             if ($capababilityforgrid) {
                 for ($y = 0; $y < $canvasheight; $y = $y + 50) {
