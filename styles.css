@@ -25,7 +25,7 @@ button[id^="unilabeltype-imageboard-resizer"] {
 
 
 li#section-0 {
-    border: solid 2px red;
+    border: solid 0 red;
 }
 
 div[id^="collapseExample"] .card.card-body{
