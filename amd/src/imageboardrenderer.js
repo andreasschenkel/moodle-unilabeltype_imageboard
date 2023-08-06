@@ -6,12 +6,10 @@
 export const init = (cmid, canvaswidth, canvasheight) => {
     //window.addEventListener("resize", function () {
     //if (canvaswidth > getWidth()) {
-
-
     const resizer = document.getElementById("unilabeltype-imageboard-resizer-"+cmid);
     resizer.addEventListener("click", function () {
 
-            const dummy = document.getElementById("unilabeltype-imageboard-gridtoggler-"+cmid);
+            const dummy = document.getElementById("unilabeltype-imageboard-"+cmid);
             let newcanvaswidth = 0;
             if (getWidth() < 750) {
                 newcanvaswidth = (getWidth() - dummy.getBoundingClientRect().left)-10;
