@@ -66,10 +66,12 @@
     {{{intro}}}
 {{/showintro}}
 
-<button id="unilabeltype-imageboard-resizer-{{cmid}}">shrink to fit browser</button>
-{{#capababilityforgrid}}
-    <button id="unilabeltype-imageboard-gridtoggler-{{cmid}}">show/hide 50x50px grid</button>
-{{/capababilityforgrid}}
+<div class="unilabeltype-imageboard-controllbuttons">
+    <button id="unilabeltype-imageboard-resizer-{{cmid}}" class="btn unilabeltype-imageboard-resizer">shrink to fit browser</button>
+    {{#capababilityforgrid}}
+        <button id="unilabeltype-imageboard-gridtoggler-{{cmid}}" class="btn unilabeltype-imageboard-gridtoggler">show/hide 50x50px grid</button>
+    {{/capababilityforgrid}}
+</div>
 
 <div id="unilabeltype-imageboard-{{cmid}}"
      style="position: relative;
@@ -120,8 +122,36 @@
                     border-bottom: solid 1px {{gridcolor}};
                     z-index: 1;">
             </div>
+            <div class="unilabeltype-imageboard-helpergrid-{{cmid}}" style="position: absolute;
+                    left: {{x}}px;
+                    margin-left: -30px;
+                    margin-top: -8px;
+                    font-size: 10px;
+                    top: {{y}}px;
+                width: 60px;
+                height: 25px;
+                z-index: 1;
+                border: solid 0;
+                text-align: center;
+                color: #fff;">
+                {{x}}/{{y}}
+            </div>
         {{/helpergrids}}
     {{/capababilityforgrid}}
+
+    <div class="unilabeltype-imageboard-helpergrid-{{cmid}}" style="position: absolute;
+            left: 75px;
+            top: 0px;
+            width: 50px;
+            height: 25px;
+            z-index: 1;
+            border: solid 0;
+            text-align: center;
+            color: #fff;">
+
+    </div>
+
+
 </div>
 
 

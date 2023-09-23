@@ -14,13 +14,16 @@
 .unilabel-imageboard-list-title {
     margin: auto 10px;
 }
-button[id^="unilabeltype-imageboard-gridtoggler"],
-button[id^="unilabeltype-imageboard-resizer"] {
+.btn.unilabeltype-imageboard-gridtoggler,
+.btn.unilabeltype-imageboard-resizer {
     margin-top: 5px;
     margin-bottom: 5px;
     border: solid 1px;
     width: 170px;
     padding: 2px;
+}
+.unilabeltype-imageboard-controllbuttons {
+    margin-bottom: 38px;
 }
 
 
@@ -31,4 +34,3 @@ li#section-0 {
 div[id^="collapseExample"] .card.card-body{
     background-color: #eee;
 }
-
