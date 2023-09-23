@@ -31,6 +31,17 @@ li#section-0 {
     border: solid 0 red;
 }
 
-div[id^="collapseExample"] .card.card-body{
+div[id^="collapseExample"] .card.card-body {
     background-color: #eee;
+}
+
+.koordinaten {
+    position: absolute;
+    top: 0;
+    width: 50px;
+    height: 25px;
+    z-index: 1;
+    border: solid 0;
+    text-align: center;
+    color: #fff;
 }

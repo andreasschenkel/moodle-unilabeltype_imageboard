@@ -38,11 +38,12 @@ export const init = (cmid, canvaswidth, canvasheight) => {
     // Add eventlistener that toggles the 50x50px helpergrid on and off
     const gridtoggler = document.getElementById("unilabeltype-imageboard-gridtoggler-"+cmid);
     gridtoggler.addEventListener("click", function () {
-        const helpergridsquares = document.getElementsByClassName("unilabeltype-imageboard-helpergrid-"+cmid);
-        Array.prototype.forEach.call(helpergridsquares, function (helpergridsquare) {
-            helpergridsquare.classList.toggle("hidden");
-        });
-
+        const helpergrid = document.getElementById("unilabeltype-imageboard-helpergrid-"+cmid);
+        if ( helpergrid.classList.contains("hidden")) {
+            helpergrid.classList.remove("hidden");
+        } else {
+            helpergrid.classList.add("hidden");
+        }
     });
 };
 

@@ -112,8 +112,9 @@
     {{/images}}
 
     {{#capababilityforgrid}}
+        <div id="unilabeltype-imageboard-helpergrid-{{cmid}}">
         {{#helpergrids}}
-            <div class="unilabeltype-imageboard-helpergrid-{{cmid}}" style="position: absolute;
+            <div style="position: absolute;
                     left: {{x}}px;
                     top: {{y}}px;
                     width: 50px;
@@ -122,35 +123,34 @@
                     border-bottom: solid 1px {{gridcolor}};
                     z-index: 1;">
             </div>
-            <div class="unilabeltype-imageboard-helpergrid-{{cmid}}" style="position: absolute;
-                    left: {{x}}px;
-                    margin-left: -30px;
-                    margin-top: -8px;
-                    font-size: 10px;
-                    top: {{y}}px;
-                width: 60px;
-                height: 25px;
-                z-index: 1;
-                border: solid 0;
-                text-align: center;
-                color: #fff;">
-                {{x}}/{{y}}
-            </div>
         {{/helpergrids}}
+
+            <!-- Koordinatenalternaive noch in Entwicklung -->
+            <div class="koordinaten" style="left: 75px;">100</div>
+            <div class="koordinaten" style="left: 175px;">200</div>
+            <div class="koordinaten" style="left: 275px;">300</div>
+            <div class="koordinaten" style="left: 375px;">400</div>
+            <div class="koordinaten" style="left: 475px;">500</div>
+            <div class="koordinaten" style="left: 575px;">600</div>
+            <div class="koordinaten" style="left: 675px;">700</div>
+            <div class="koordinaten" style="left: 775px;">800</div>
+            <div class="koordinaten" style="left: 875px;">900</div>
+            <div class="koordinaten" style="left: 975px;">1000</div>
+
+            <div class="koordinaten" style="top: 90px;">100</div>
+            <div class="koordinaten" style="top: 190px;">200</div>
+            <div class="koordinaten" style="top: 290px;">300</div>
+            <div class="koordinaten" style="top: 390px;">400</div>
+            <div class="koordinaten" style="top: 490px;">500</div>
+            <div class="koordinaten" style="top: 590px;">600</div>
+            <div class="koordinaten" style="top: 690px;">700</div>
+            <div class="koordinaten" style="top: 790px;">800</div>
+            <div class="koordinaten" style="top: 890px;">900</div>
+            <div class="koordinaten" style="top: 990px;">1000</div>
+            <div class="koordinaten" style="top: 1090px;">1100</div>
+
+        </div>
     {{/capababilityforgrid}}
-
-    <div class="unilabeltype-imageboard-helpergrid-{{cmid}}" style="position: absolute;
-            left: 75px;
-            top: 0px;
-            width: 50px;
-            height: 25px;
-            z-index: 1;
-            border: solid 0;
-            text-align: center;
-            color: #fff;">
-
-    </div>
-
 
 </div>
 
