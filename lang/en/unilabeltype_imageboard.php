@@ -70,3 +70,9 @@ $string['url_help'] = 'By defining a url the image becomes a clickable button li
 $string['xposition'] = 'x-position upper left corner';
 $string['yposition'] = 'y-position upper left corner';
 
+
+$string['buttonlabel'] = 'Bilderliste und deren Links falls vorhanden:';
+
+
+
+

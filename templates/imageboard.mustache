@@ -144,10 +144,6 @@
             <div class="koordinaten" style="top: 490px;">500</div>
             <div class="koordinaten" style="top: 590px;">600</div>
             <div class="koordinaten" style="top: 690px;">700</div>
-            <div class="koordinaten" style="top: 790px;">800</div>
-            <div class="koordinaten" style="top: 890px;">900</div>
-            <div class="koordinaten" style="top: 990px;">1000</div>
-            <div class="koordinaten" style="top: 1090px;">1100</div>
 
         </div>
     {{/capababilityforgrid}}
@@ -157,12 +153,12 @@
 
 <div class="unilabel-imageboard-list">
     <p class="unilabel-imageboard-list-button">
-        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample{{cmid}}"
-                aria-expanded="false" aria-controls="collapseExample">
-            Bilderliste und deren Links falls vorhanden:
+        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#unilabel-imageboard-list{{cmid}}"
+                aria-expanded="false" aria-controls="unilabel-imageboard-list">
+            {{#str}} buttonlabel, unilabeltype_imageboard {{/str}}
         </button>
     </p>
-    <div class="collapse" id="collapseExample{{cmid}}">
+    <div class="collapse unilabel-imageboard-list-collapsable" id="unilabel-imageboard-list{{cmid}}">
         <div class="card card-body">
             {{#images}}
                 {{#url}}

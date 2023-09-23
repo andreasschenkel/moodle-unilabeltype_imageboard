@@ -31,7 +31,7 @@ li#section-0 {
     border: solid 0 red;
 }
 
-div[id^="collapseExample"] .card.card-body {
+.unilabel-imageboard-list-collapsable .card.card-body {
     background-color: #eee;
 }
 
