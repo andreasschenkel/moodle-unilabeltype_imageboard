@@ -65,11 +65,12 @@
 {{#showintro}}
     {{{intro}}}
 {{/showintro}}
-
-<button id="unilabeltype-imageboard-resizer-{{cmid}}">shrink to fit browser</button>
-{{#capababilityforgrid}}
-    <button id="unilabeltype-imageboard-gridtoggler-{{cmid}}">show/hide 50x50px grid</button>
-{{/capababilityforgrid}}
+<div class="unilabeltype-imageboard-controllbuttons">
+    <button id="unilabeltype-imageboard-resizer-{{cmid}}" class="btn unilabeltype-imageboard-resizer">{{#str}} buttonlabelresize, unilabeltype_imageboard {{/str}}</button>
+    {{#capababilityforgrid}}
+        <button id="unilabeltype-imageboard-gridtoggler-{{cmid}}" class="btn unilabeltype-imageboard-gridtoggler">{{#str}} buttonlabelhelpergrid, unilabeltype_imageboard {{/str}}</button>
+    {{/capababilityforgrid}}
+</div>
 
 <div id="unilabeltype-imageboard-{{cmid}}"
      style="position: relative;
@@ -84,9 +85,14 @@
             <div style="position: absolute;
                     z-index: 5;
                     left: {{xposition}}px;
-                    top: calc({{yposition}}px - 36px);
+                    top: calc({{yposition}}px - ({{fontsize}}px + 10px ));
                     color: #fff; background-color: #3399ff;
-                    font-size: 24px;">
+                {{#fontsize}}
+                    font-size: {{fontsize}}px;
+                    line-height: {{fontsize}}px;
+                    padding: 5px;
+                {{/fontsize}}
+                    ">
                 {{title}}
             </div>
 
@@ -110,8 +116,9 @@
     {{/images}}
 
     {{#capababilityforgrid}}
+        <div id="unilabeltype-imageboard-helpergrid-{{cmid}}">
         {{#helpergrids}}
-            <div class="unilabeltype-imageboard-helpergrid-{{cmid}}" style="position: absolute;
+            <div style="position: absolute;
                     left: {{x}}px;
                     top: {{y}}px;
                     width: 50px;
@@ -121,18 +128,41 @@
                     z-index: 1;">
             </div>
         {{/helpergrids}}
+
+            <!-- Koordinatenalternaive noch in Entwicklung -->
+            <div class="xcoordinate" style="left: 75px;">100</div>
+            <div class="xcoordinate" style="left: 175px;">200</div>
+            <div class="xcoordinate" style="left: 275px;">300</div>
+            <div class="xcoordinate" style="left: 375px;">400</div>
+            <div class="xcoordinate" style="left: 475px;">500</div>
+            <div class="xcoordinate" style="left: 575px;">600</div>
+            <div class="xcoordinate" style="left: 675px;">700</div>
+            <div class="xcoordinate" style="left: 775px;">800</div>
+            <div class="xcoordinate" style="left: 875px;">900</div>
+            <div class="xcoordinate" style="left: 975px;">1000</div>
+
+            <div class="ycoordinate" style="top: 90px;">100</div>
+            <div class="ycoordinate" style="top: 190px;">200</div>
+            <div class="ycoordinate" style="top: 290px;">300</div>
+            <div class="ycoordinate" style="top: 390px;">400</div>
+            <div class="ycoordinate" style="top: 490px;">500</div>
+            <div class="ycoordinate" style="top: 590px;">600</div>
+            <div class="ycoordinate" style="top: 690px;">700</div>
+
+        </div>
     {{/capababilityforgrid}}
+
 </div>
 
 
 <div class="unilabel-imageboard-list">
     <p class="unilabel-imageboard-list-button">
-        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample{{cmid}}"
-                aria-expanded="false" aria-controls="collapseExample">
-            Bilderliste und deren Links falls vorhanden:
+        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#unilabel-imageboard-list{{cmid}}"
+                aria-expanded="false" aria-controls="unilabel-imageboard-list">
+            {{#str}} buttonlabel, unilabeltype_imageboard {{/str}}
         </button>
     </p>
-    <div class="collapse" id="collapseExample{{cmid}}">
+    <div class="collapse unilabel-imageboard-list-collapsable" id="unilabel-imageboard-list{{cmid}}">
         <div class="card card-body">
             {{#images}}
                 {{#url}}

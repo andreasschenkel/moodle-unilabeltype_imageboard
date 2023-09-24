@@ -99,6 +99,24 @@ class content_type extends \mod_unilabel\content_type {
         );
         $mform->setType('unilabeltype_imageboard_backgroundimage', PARAM_FILE);
 
+        // Documentation where changes are needed if there will be added more settings e.g. fontsize of title
+        // 1. content_type.php
+        // 2. Set default data for the imageboard in general.
+        // 3. Set the selected value
+        // 4. Add setting in function get_content
+        // 5. Add setting to save_content
+        // 6. Add setting to install
+        // 7. Add setting to update
+        // 8. Add setting to backup
+        // 9. Add Setting to restore
+        // 10. Add default-Value to settings
+        // 11. Add langstrings for settings
+        // 12.
+
+        // 1. content_type.php
+        $numbers = array_combine(range(0, 36, 1), range(0, 36, 1));
+        $mform->addElement('select', $prefix . 'fontsize', get_string('fontsize_help', 'unilabeltype_imageboard'), $numbers);
+
         // Prepare the activity url picker.
         $formid = $mform->getAttribute('id');
         $course = $form->get_course();
@@ -132,30 +150,43 @@ class content_type extends \mod_unilabel\content_type {
                 'accepted_types' => ['web_image'],
             ]
         );
+
+        $html = '<div class="unilabeltype-imageboard-position">' . get_string('position', 'unilabeltype_imageboard'). '</div>';
+        $repeatarray[] = $mform->createElement(
+                'html',
+                $html
+        );
         $repeatarray[] = $mform->createElement(
             'text',
             $prefix . 'xposition',
-            get_string('xposition', 'unilabeltype_imageboard') . '-{no}',
+            get_string('xposition', 'unilabeltype_imageboard'),
             ['size' => 5]
         );
         $repeatarray[] = $mform->createElement(
             'text',
             $prefix . 'yposition',
-            get_string('yposition', 'unilabeltype_imageboard') . '-{no}',
+            get_string('yposition', 'unilabeltype_imageboard'),
             ['size' => 5]
+        );
+
+        $html = '<div class="unilabeltype-imageboard-targetsize">' . get_string('targetsize', 'unilabeltype_imageboard'). '</div>';
+        $repeatarray[] = $mform->createElement(
+                'html',
+                $html
         );
         $repeatarray[] = $mform->createElement(
             'text',
             $prefix . 'targetwidth',
-            get_string('targetwidth', 'unilabeltype_imageboard') . '-{no}',
+            get_string('targetwidth', 'unilabeltype_imageboard'),
             ['size' => 4]
         );
         $repeatarray[] = $mform->createElement(
             'text',
             $prefix . 'targetheight',
-            get_string('targetheight', 'unilabeltype_imageboard') . '-{no}',
+            get_string('targetheight', 'unilabeltype_imageboard'),
             ['size' => 4]
         );
+
         $repeatarray[] = $mform->createElement(
             'text',
             $prefix . 'url',
@@ -235,6 +266,8 @@ class content_type extends \mod_unilabel\content_type {
             $data[$prefix . 'canvaswidth'] = $this->config->canvaswidth;
             $data[$prefix . 'canvasheight'] = $this->config->canvasheight;
             $data[$prefix . 'backgroundimage'] = 0;
+            // 2. Set default data for the imageboard in general.
+            $data[$prefix . 'fontsize'] = $this->config->fontsize;
             return $data;
         }
 
@@ -247,6 +280,9 @@ class content_type extends \mod_unilabel\content_type {
         $draftitemidbackgroundimage = 0; // This is needed to create a new draftitemid.
         file_prepare_draft_area($draftitemidbackgroundimage, $context->id, 'unilabeltype_imageboard', 'backgroundimage', 0);
         $data[$prefix . 'backgroundimage'] = $draftitemidbackgroundimage;
+
+        // 3. Set the selected value
+        $data[$prefix . 'fontsize'] = $unilabeltyperecord->fontsize;
 
         // Set default data for tiles.
         if (!$tiles = $DB->get_records(
@@ -377,6 +413,8 @@ class content_type extends \mod_unilabel\content_type {
                 'canvaswidth' => $unilabeltyperecord->canvaswidth,
                 'canvasheight' => $unilabeltyperecord->canvasheight,
                 'backgroundimage' => $unilabeltyperecord->backgroundimage,
+                // 4. Add setting in function get_content
+                'fontsize' => $unilabeltyperecord->fontsize,
                 'capababilityforgrid' => $capababilityforgrid,
                 'showborders' => $showborders,
                 'bordercolor' => $bordercolor,
@@ -438,6 +476,9 @@ class content_type extends \mod_unilabel\content_type {
         $unilabeltyperecord->canvaswidth = $formdata->{$prefix . 'canvaswidth'};
         $unilabeltyperecord->canvasheight = $formdata->{$prefix . 'canvasheight'};
 
+        // 5. Add setting to save_content
+        $unilabeltyperecord->fontsize = $formdata->{$prefix . 'fontsize'};
+
         $fs = get_file_storage();
         $context = \context_module::instance($formdata->cmid);
         $usercontext = \context_user::instance($USER->id);
@@ -454,6 +495,7 @@ class content_type extends \mod_unilabel\content_type {
 
         $unilabeltyperecord->canvaswidth = abs($formdata->{$prefix . 'canvaswidth'});
         $unilabeltyperecord->canvasheight = abs($formdata->{$prefix . 'canvasheight'});
+        // 5. ToDo ... do we need code for fontsize here ???????
 
         file_save_draft_area_files($draftitemidbackgroundimage, $context->id, 'unilabeltype_imageboard', 'backgroundimage', 0);
 
