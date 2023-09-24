@@ -106,16 +106,22 @@ class content_type extends \mod_unilabel\content_type {
         // 4. Add setting in function get_content
         // 5. Add setting to save_content
         // 6. Add setting to install
-        // 7. Add setting to update
+        // 7. Add setting to upgrade
         // 8. Add setting to backup
         // 9. Add Setting to restore
         // 10. Add default-Value to settings
         // 11. Add langstrings for settings
-        // 12.
+
 
         // 1. content_type.php
         $numbers = array_combine(range(0, 36, 1), range(0, 36, 1));
         $mform->addElement('select', $prefix . 'fontsize', get_string('fontsize_help', 'unilabeltype_imageboard'), $numbers);
+
+        $backgrounddefault = empty($unilabeltyperecord->titlebackgroundcolor) ? '' : $unilabeltyperecord->titlebackgroundcolor;
+        $this->add_colourpicker($mform,
+                $prefix.'titlebackgroundcolor',
+                get_string('titlebackgroundcolor', 'unilabeltype_imageboard'),
+                $backgrounddefault);
 
         // Prepare the activity url picker.
         $formid = $mform->getAttribute('id');
@@ -268,6 +274,7 @@ class content_type extends \mod_unilabel\content_type {
             $data[$prefix . 'backgroundimage'] = 0;
             // 2. Set default data for the imageboard in general.
             $data[$prefix . 'fontsize'] = $this->config->fontsize;
+            $data[$prefix . 'titlebackgroundcolor'] = $this->config->titlebackgroundcolor;
             return $data;
         }
 
@@ -283,6 +290,8 @@ class content_type extends \mod_unilabel\content_type {
 
         // 3. Set the selected value
         $data[$prefix . 'fontsize'] = $unilabeltyperecord->fontsize;
+        $data[$prefix . 'titlebackgroundcolor'] = $unilabeltyperecord->titlebackgroundcolor;
+
 
         // Set default data for tiles.
         if (!$tiles = $DB->get_records(
@@ -415,6 +424,7 @@ class content_type extends \mod_unilabel\content_type {
                 'backgroundimage' => $unilabeltyperecord->backgroundimage,
                 // 4. Add setting in function get_content
                 'fontsize' => $unilabeltyperecord->fontsize,
+                'titlebackgroundcolor' => $unilabeltyperecord->titlebackgroundcolor,
                 'capababilityforgrid' => $capababilityforgrid,
                 'showborders' => $showborders,
                 'bordercolor' => $bordercolor,
@@ -478,6 +488,8 @@ class content_type extends \mod_unilabel\content_type {
 
         // 5. Add setting to save_content
         $unilabeltyperecord->fontsize = $formdata->{$prefix . 'fontsize'};
+        $unilabeltyperecord->titlebackgroundcolor = $formdata->{$prefix . 'titlebackgroundcolor'};
+
 
         $fs = get_file_storage();
         $context = \context_module::instance($formdata->cmid);
@@ -677,4 +689,45 @@ class content_type extends \mod_unilabel\content_type {
     public function is_active() {
         return !empty($this->config->active);
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /**
+     * Add a colourpicker element into the settings form.
+     *
+     * @param \MoodleQuickForm $mform
+     * @param string $name
+     * @param string $label
+     * @param string $defaultvalue
+     * @return void
+     */
+    private function add_colourpicker($mform, $name, $label, $defaultvalue) {
+        global $PAGE;
+        $mform->addElement('hidden', $name);
+        $mform->setType($name, PARAM_TEXT);
+        $renderer = $PAGE->get_renderer('mod_unilabel');
+        $colourpickercontent = new \stdClass();
+        $colourpickercontent->iconurl = $renderer->image_url('i/colourpicker');
+        $colourpickercontent->inputname = $name;
+        $colourpickercontent->inputid = 'id_'.$name.'_colourpicker';
+        $colourpickercontent->label = $label;
+        $colourpickercontent->defaultvalue = $defaultvalue;
+        $colourpickerhtml = $renderer->render_from_template('unilabeltype_carousel/colourpicker', $colourpickercontent);
+        $mform->addElement('html', $colourpickerhtml);
+        $PAGE->requires->js_init_call('M.util.init_colour_picker', array($colourpickercontent->inputid, null));
+    }
+
+
+
+
 }

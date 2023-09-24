@@ -45,7 +45,8 @@ class backup_unilabeltype_imageboard_subplugin extends backup_subplugin {
         $subpluginwrapper = new backup_nested_element($this->get_recommended_name());
         $subpluginimageboard = new backup_nested_element('unilabeltype_imageboard',
             array('id'),
-            array('showintro', 'canvaswidth', 'canvasheight', 'fontsize')
+            // 8. Add setting to backup
+            array('showintro', 'canvaswidth', 'canvasheight', 'fontsize', 'titlebackgroundcolor')
         );
         $subplugintile = new backup_nested_element('unilabeltype_imageboard_tile',
             array('id'),
