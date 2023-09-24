@@ -72,5 +72,18 @@ function xmldb_unilabeltype_imageboard_upgrade($oldversion) {
         }
         upgrade_mod_savepoint(true, 2023092400, 'unilabel', 'imageboard_tile');
     }
+    if ($oldversion < 2023092501) {
+        // Define field continuoustype to be added to mootyper.
+        $table = new xmldb_table('unilabeltype_imageboard');
+        $field = new xmldb_field('titlebackgroundcolor', XMLDB_TYPE_CHAR, '255', null, null, null, '0', 'fontsize');
+
+        // Conditionally launch add field continuoustype.
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+        upgrade_mod_savepoint(true, 2023092501, 'unilabel', 'imageboard_tile');
+    }
+
+
     return true;
 }

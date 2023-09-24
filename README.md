@@ -10,6 +10,10 @@ Form:
 
 CHANGELOG
 
+2023092501:
+-  backgroundcolor for title
+
+
 2023092400: 
 - do not use dummy as variablename
 - some csschanges for controllbuttons, space below controllbuttons, imagegrid with coordinates 
@@ -19,3 +23,6 @@ CHANGELOG
 - hardcoded labelś for buttons, position and size values are in side by side in form, some refactoring of helpergrid
 - Add fontsize setting for title of images
 - Sorting langstings in languagfile
+
+2023092500:
+- titlebacgroundcolor
