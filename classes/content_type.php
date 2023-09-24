@@ -132,30 +132,43 @@ class content_type extends \mod_unilabel\content_type {
                 'accepted_types' => ['web_image'],
             ]
         );
+
+        $html = '<div class="unilabeltype-imageboard-position">' . get_string('position', 'unilabeltype_imageboard'). '</div>';
+        $repeatarray[] = $mform->createElement(
+                'html',
+                $html
+        );
         $repeatarray[] = $mform->createElement(
             'text',
             $prefix . 'xposition',
-            get_string('xposition', 'unilabeltype_imageboard') . '-{no}',
+            get_string('xposition', 'unilabeltype_imageboard'),
             ['size' => 5]
         );
         $repeatarray[] = $mform->createElement(
             'text',
             $prefix . 'yposition',
-            get_string('yposition', 'unilabeltype_imageboard') . '-{no}',
+            get_string('yposition', 'unilabeltype_imageboard'),
             ['size' => 5]
+        );
+
+        $html = '<div class="unilabeltype-imageboard-targetsize">' . get_string('targetsize', 'unilabeltype_imageboard'). '</div>';
+        $repeatarray[] = $mform->createElement(
+                'html',
+                $html
         );
         $repeatarray[] = $mform->createElement(
             'text',
             $prefix . 'targetwidth',
-            get_string('targetwidth', 'unilabeltype_imageboard') . '-{no}',
+            get_string('targetwidth', 'unilabeltype_imageboard'),
             ['size' => 4]
         );
         $repeatarray[] = $mform->createElement(
             'text',
             $prefix . 'targetheight',
-            get_string('targetheight', 'unilabeltype_imageboard') . '-{no}',
+            get_string('targetheight', 'unilabeltype_imageboard'),
             ['size' => 4]
         );
+
         $repeatarray[] = $mform->createElement(
             'text',
             $prefix . 'url',

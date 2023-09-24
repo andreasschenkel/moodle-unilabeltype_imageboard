@@ -19,7 +19,6 @@
     margin-top: 5px;
     margin-bottom: 5px;
     border: solid 1px;
-    width: 170px;
     padding: 2px;
 }
 .unilabeltype-imageboard-controllbuttons {
@@ -35,7 +34,8 @@ li#section-0 {
     background-color: #eee;
 }
 
-.koordinaten {
+.xcoordinate,
+.ycoordinate {
     position: absolute;
     top: 0;
     width: 50px;
@@ -44,4 +44,30 @@ li#section-0 {
     border: solid 0;
     text-align: center;
     color: #fff;
+}
+
+[id^="fitem_id_unilabeltype_imageboard_xposition"] {
+    width: 226px;
+    position: absolute;
+}
+[id^="fitem_id_unilabeltype_imageboard_yposition"] {
+    position: relative;
+    left: 154px;
+    width: 226px;
+}
+
+.unilabeltype-imageboard-position,
+.unilabeltype-imageboard-targetsize {
+    padding: 15px;
+}
+
+[id^="fitem_id_unilabeltype_imageboard_targetwidth"] {
+    width: 450px;
+    position: absolute;
+}
+
+[id^="fitem_id_unilabeltype_imageboard_targetheight"] {
+    position: relative;
+    left: 180px;
+    width: 470px;
 }

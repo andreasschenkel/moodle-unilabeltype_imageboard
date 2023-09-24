@@ -31,6 +31,9 @@ $string['addmoreimages'] = 'Add more images';
 $string['autocanvaswidth'] = 'autocanvaswidth_todo';
 
 $string['backgroundimage'] = 'Backgroundimage';
+$string['buttonlabelresize'] = 'Resize to fit';
+$string['buttonlabelhelpergrid'] = 'show/hide 50x50px grid';
+
 $string['default_bordercolor'] = 'Default bordercolor';
 $string['default_bordercolor_desc'] = 'Default bordercolor of images';
 $string['canvaswidth'] = 'Witdh of canvas';
@@ -47,10 +50,10 @@ $string['height_help'] = 'If your pictures are of a different size, use the fixe
 $string['image'] = 'Image';
 $string['imagenr'] = 'Image {$a}';
 $string['images'] = 'Images';
-$string['targetwidth'] = 'Target image width an image should be resized to';
+$string['targetwidth'] = 'width=';
 $string['targetwidth_help'] = 'Values different from 0 will be used. If both are 0, then the original imagesize will be used';
 
-$string['targetheight'] = 'Target image height an image should be resized to';
+$string['targetheight'] = 'height=';
 $string['targetheight_help'] = 'Values different from 0 will be used. If both are 0, then the original imagesize will be used';
 
 $string['nocontent'] = 'No content';
@@ -67,12 +70,15 @@ $string['default_showborders_desc'] = 'If activated then the added images have b
 $string['title'] = 'Title';
 $string['url'] = 'Url';
 $string['url_help'] = 'By defining a url the image becomes a clickable button linked to the defined url.';
-$string['xposition'] = 'x-position upper left corner';
-$string['yposition'] = 'y-position upper left corner';
+
+
+$string['position'] = 'Position upper left corner:';
+$string['xposition'] = 'x=';
+$string['yposition'] = 'y=';
 
 
 $string['buttonlabel'] = 'Bilderliste und deren Links falls vorhanden:';
-
+$string['targetsize'] = 'Target size an image should be resized to:';
 
 
 
