@@ -84,6 +84,5 @@ function xmldb_unilabeltype_imageboard_upgrade($oldversion) {
         upgrade_mod_savepoint(true, 2023092501, 'unilabel', 'imageboard_tile');
     }
 
-
     return true;
 }
