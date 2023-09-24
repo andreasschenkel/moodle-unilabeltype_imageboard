@@ -52,6 +52,16 @@ $imageboardsettings[] = new admin_setting_configselect('unilabeltype_imageboard/
     $numbers
 );
 
+
+$numbers = array_combine(range(0, 36, 1), range(0, 36, 1));
+$imageboardsettings[] = new admin_setting_configselect('unilabeltype_imageboard/fontsize',
+        get_string('default_fontsize', 'unilabeltype_imageboard'),
+        get_string('default_fontsize_help', 'unilabeltype_imageboard'),
+        12,
+        $numbers
+);
+
+
 $imageboardsettings[] = new admin_setting_configcheckbox('unilabeltype_imageboard/default_showborders',
     get_string('default_showborders', 'unilabeltype_imageboard'),
     get_string('default_showborders_desc', 'unilabeltype_imageboard'),
