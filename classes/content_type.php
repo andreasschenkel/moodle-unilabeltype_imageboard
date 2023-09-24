@@ -100,20 +100,19 @@ class content_type extends \mod_unilabel\content_type {
         $mform->setType('unilabeltype_imageboard_backgroundimage', PARAM_FILE);
 
         // Documentation where changes are needed if there will be added more settings e.g. fontsize of title
-        // 1. content_type.php
+        // 1. content_type.php.
         // 2. Set default data for the imageboard in general.
-        // 3. Set the selected value
-        // 4. Add setting in function get_content
-        // 5. Add setting to save_content
-        // 6. Add setting to install
-        // 7. Add setting to upgrade
-        // 8. Add setting to backup
-        // 9. Add Setting to restore
-        // 10. Add default-Value to settings
-        // 11. Add langstrings for settings
+        // 3. Set the selected value.
+        // 4. Add setting in function get_content.
+        // 5. Add setting to save_content.
+        // 6. Add setting to install.
+        // 7. Add setting to upgrade.
+        // 8. Add setting to backup.
+        // 9. Add Setting to restore.
+        // 10. Add default-Value to settings.
+        // 11. Add langstrings for settings.
 
-
-        // 1. content_type.php
+        // 1. content_type.php.
         $numbers = array_combine(range(0, 36, 1), range(0, 36, 1));
         $mform->addElement('select', $prefix . 'fontsize', get_string('fontsize_help', 'unilabeltype_imageboard'), $numbers);
 
@@ -288,10 +287,9 @@ class content_type extends \mod_unilabel\content_type {
         file_prepare_draft_area($draftitemidbackgroundimage, $context->id, 'unilabeltype_imageboard', 'backgroundimage', 0);
         $data[$prefix . 'backgroundimage'] = $draftitemidbackgroundimage;
 
-        // 3. Set the selected value
+        // 3. Set the selected value.
         $data[$prefix . 'fontsize'] = $unilabeltyperecord->fontsize;
         $data[$prefix . 'titlebackgroundcolor'] = $unilabeltyperecord->titlebackgroundcolor;
-
 
         // Set default data for tiles.
         if (!$tiles = $DB->get_records(
@@ -422,7 +420,7 @@ class content_type extends \mod_unilabel\content_type {
                 'canvaswidth' => $unilabeltyperecord->canvaswidth,
                 'canvasheight' => $unilabeltyperecord->canvasheight,
                 'backgroundimage' => $unilabeltyperecord->backgroundimage,
-                // 4. Add setting in function get_content
+                // 4. Add setting in function get_content.
                 'fontsize' => $unilabeltyperecord->fontsize,
                 'titlebackgroundcolor' => $unilabeltyperecord->titlebackgroundcolor,
                 'capababilityforgrid' => $capababilityforgrid,
@@ -486,10 +484,9 @@ class content_type extends \mod_unilabel\content_type {
         $unilabeltyperecord->canvaswidth = $formdata->{$prefix . 'canvaswidth'};
         $unilabeltyperecord->canvasheight = $formdata->{$prefix . 'canvasheight'};
 
-        // 5. Add setting to save_content
+        // 5. Add setting to save_content.
         $unilabeltyperecord->fontsize = $formdata->{$prefix . 'fontsize'};
         $unilabeltyperecord->titlebackgroundcolor = $formdata->{$prefix . 'titlebackgroundcolor'};
-
 
         $fs = get_file_storage();
         $context = \context_module::instance($formdata->cmid);
