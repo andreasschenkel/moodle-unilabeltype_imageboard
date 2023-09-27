@@ -10,6 +10,13 @@ Form:
 
 CHANGELOG
 
+2023092700:
+
+- "better support of xaxis and yaxis in helpergrid
+- changes in form: grouping xposition and yposition
+- changes in form: grouping width and height"
+
+
 2023092501:
 -  backgroundcolor for title
 

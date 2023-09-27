@@ -46,28 +46,7 @@ li#section-0 {
     color: #fff;
 }
 
-[id^="fitem_id_unilabeltype_imageboard_xposition"] {
-    width: 226px;
-    position: absolute;
-}
-[id^="fitem_id_unilabeltype_imageboard_yposition"] {
-    position: relative;
-    left: 154px;
-    width: 226px;
-}
-
-.unilabeltype-imageboard-position,
-.unilabeltype-imageboard-targetsize {
-    padding: 15px;
-}
-
-[id^="fitem_id_unilabeltype_imageboard_targetwidth"] {
-    width: 450px;
-    position: absolute;
-}
-
-[id^="fitem_id_unilabeltype_imageboard_targetheight"] {
-    position: relative;
-    left: 180px;
-    width: 470px;
+/* ToDo: optimize hover-effect */
+.unilabel-imageboard-image:hover {
+    box-shadow: 0 0 3px 0 #f00;
 }
