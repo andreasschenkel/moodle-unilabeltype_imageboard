@@ -28,6 +28,7 @@ namespace unilabeltype_imageboard;
 
 /**
  * Content type definition
+ *
  * @package     unilabeltype_imageboard
  * @author      Andreas Grabs <info@grabs-edv.de>
  * @author      Andreas Schenkel
@@ -86,16 +87,16 @@ class content_type extends \mod_unilabel\content_type {
         $mform->addElement('select', $prefix . 'canvasheight', get_string('canvasheight', 'unilabeltype_imageboard'), $numbers);
 
         $mform->addElement(
-            'filemanager',
-            $prefix . 'backgroundimage',
-            get_string('backgroundimage', 'unilabeltype_imageboard'),
-            null,
-            [
-                'maxbytes' => $form->get_course()->maxbytes,
-                'maxfiles' => 1,
-                'subdirs' => false,
-                'accepted_types' => ['web_image'],
-            ]
+                'filemanager',
+                $prefix . 'backgroundimage',
+                get_string('backgroundimage', 'unilabeltype_imageboard'),
+                null,
+                [
+                        'maxbytes' => $form->get_course()->maxbytes,
+                        'maxfiles' => 1,
+                        'subdirs' => false,
+                        'accepted_types' => ['web_image'],
+                ]
         );
         $mform->setType('unilabeltype_imageboard_backgroundimage', PARAM_FILE);
 
@@ -118,7 +119,7 @@ class content_type extends \mod_unilabel\content_type {
 
         $backgrounddefault = empty($unilabeltyperecord->titlebackgroundcolor) ? '' : $unilabeltyperecord->titlebackgroundcolor;
         $this->add_colourpicker($mform,
-                $prefix.'titlebackgroundcolor',
+                $prefix . 'titlebackgroundcolor',
                 get_string('titlebackgroundcolor', 'unilabeltype_imageboard'),
                 $backgrounddefault);
 
@@ -134,60 +135,65 @@ class content_type extends \mod_unilabel\content_type {
         // If we want each repeated elment in a numbered group we add a header with '{no}' in its label.
         // This is replaced by the number of element.
         $repeatarray[] = $mform->createElement(
-            'header',
-            $prefix . 'tilehdr',
-            get_string('image', 'unilabeltype_imageboard') . '-{no}');
+                'header',
+                $prefix . 'tilehdr',
+                get_string('image', 'unilabeltype_imageboard') . '-{no}');
         $repeatarray[] = $mform->createElement(
-            'text',
-            $prefix . 'title',
-            get_string('title', 'unilabeltype_imageboard') . '-{no}',
-            ['size' => 50]
+                'text',
+                $prefix . 'title',
+                get_string('title', 'unilabeltype_imageboard') . '-{no}',
+                ['size' => 50]
         );
         $repeatarray[] = $mform->createElement(
-            'filemanager',
-            $prefix . 'image',
-            get_string('image', 'unilabeltype_imageboard') . '-{no}',
-            null,
-            [
-                'maxbytes' => $form->get_course()->maxbytes,
-                'maxfiles' => 1,
-                'subdirs' => false,
-                'accepted_types' => ['web_image'],
-            ]
+                'filemanager',
+                $prefix . 'image',
+                get_string('image', 'unilabeltype_imageboard') . '-{no}',
+                null,
+                [
+                        'maxbytes' => $form->get_course()->maxbytes,
+                        'maxfiles' => 1,
+                        'subdirs' => false,
+                        'accepted_types' => ['web_image'],
+                ]
         );
 
-        $dummyarray=array();
-        $dummyarray[] =& $mform->createElement('text', $prefix . 'xposition', get_string('xposition', 'unilabeltype_imageboard'), ['size' => 5]);
-        $dummyarray[] =& $mform->createElement('text', $prefix . 'yposition', get_string('yposition', 'unilabeltype_imageboard'), ['size' => 5]);
-        $repeatarray[] = $mform->addGroup($dummyarray, 'position', get_string('position', 'unilabeltype_imageboard'), array(' '), false);
+        $position = array();
+        $position[] =& $mform->createElement('text', $prefix . 'xposition', get_string('xposition', 'unilabeltype_imageboard'),
+                ['size' => 5]);
+        $position[] =& $mform->createElement('text', $prefix . 'yposition', get_string('yposition', 'unilabeltype_imageboard'),
+                ['size' => 5]);
+        $repeatarray[] =
+                $mform->addGroup($position, 'position', get_string('position', 'unilabeltype_imageboard'), array(' '), false);
 
-        $dummyarray=array();
-        $dummyarray[] =& $mform->createElement('text', $prefix . 'targetwidth', get_string('targetwidth', 'unilabeltype_imageboard'), ['size' => 4]);
-        $dummyarray[] =& $mform->createElement('text', $prefix . 'targetheight', get_string('targetheight', 'unilabeltype_imageboard'), ['size' => 4]);
-        $repeatarray[] = $mform->addGroup($dummyarray, $prefix . 'targetsize', get_string('targetsize', 'unilabeltype_imageboard'), array(' '), false);
-
-
-
+        $targetsize = array();
+        $targetsize[] =&
+                $mform->createElement('text', $prefix . 'targetwidth', get_string('targetwidth', 'unilabeltype_imageboard'),
+                        ['size' => 4]);
+        $targetsize[] =&
+                $mform->createElement('text', $prefix . 'targetheight', get_string('targetheight', 'unilabeltype_imageboard'),
+                        ['size' => 4]);
+        $repeatarray[] = $mform->addGroup($targetsize, $prefix . 'targetsize', get_string('targetsize', 'unilabeltype_imageboard'),
+                array(' '), false);
 
         $repeatarray[] = $mform->createElement(
-            'text',
-            $prefix . 'url',
-            get_string('url', 'unilabeltype_imageboard') . '-{no}',
-            ['size' => 50]
+                'text',
+                $prefix . 'url',
+                get_string('url', 'unilabeltype_imageboard') . '-{no}',
+                ['size' => 50]
         );
         $repeatarray[] = $mform->createElement(
-            'static',
-            $prefix . 'activitypickerbutton',
-            '',
-            $OUTPUT->render($pickerbutton)
+                'static',
+                $prefix . 'activitypickerbutton',
+                '',
+                $OUTPUT->render($pickerbutton)
 
         );
         $numbers = array_combine(range(0, 10, 1), range(0, 10, 1));
         $repeatarray[] = $mform->createElement(
-            'select',
-            $prefix . 'border',
-            'border in px',
-            $numbers
+                'select',
+                $prefix . 'border',
+                'border in px',
+                $numbers
         );
 
         $repeatedoptions = [];
@@ -216,13 +222,13 @@ class content_type extends \mod_unilabel\content_type {
         }
 
         $nextel = $form->repeat_elements(
-            $repeatarray,
-            $repeatcount,
-            $repeatedoptions,
-            $prefix . 'chosen_tiles_count',
-            $prefix . 'add_more_tiles_btn',
-            $defaultrepeatcount, // Each time we add 3 elements.
-            get_string('addmoreimages', 'unilabeltype_imageboard'),
+                $repeatarray,
+                $repeatcount,
+                $repeatedoptions,
+                $prefix . 'chosen_tiles_count',
+                $prefix . 'add_more_tiles_btn',
+                $defaultrepeatcount, // Each time we add 3 elements.
+                get_string('addmoreimages', 'unilabeltype_imageboard'),
         );
     }
 
@@ -269,9 +275,9 @@ class content_type extends \mod_unilabel\content_type {
 
         // Set default data for tiles.
         if (!$tiles = $DB->get_records(
-            'unilabeltype_imageboard_tile',
-            ['imageboardid' => $unilabeltyperecord->id],
-            'id ASC'
+                'unilabeltype_imageboard_tile',
+                ['imageboardid' => $unilabeltyperecord->id],
+                'id ASC'
         )) {
             return $data;
         }
@@ -336,8 +342,8 @@ class content_type extends \mod_unilabel\content_type {
         global $USER;
         if (!$unilabeltyperecord = $this->load_unilabeltype_record($unilabel->id)) {
             $content = [
-                'intro' => get_string('nocontent', 'unilabeltype_imageboard'),
-                'cmid' => $cm->id
+                    'intro' => get_string('nocontent', 'unilabeltype_imageboard'),
+                    'cmid' => $cm->id
             ];
         } else {
             $intro = $this->format_intro($unilabel, $cm);
@@ -389,21 +395,21 @@ class content_type extends \mod_unilabel\content_type {
                 }
             }
             $content = [
-                'showintro' => $showintro,
-                'intro' => $showintro ? $intro : '',
-                'images' => $images,
-                'cmid' => $cm->id,
-                'canvaswidth' => $unilabeltyperecord->canvaswidth,
-                'canvasheight' => $unilabeltyperecord->canvasheight,
-                'backgroundimage' => $unilabeltyperecord->backgroundimage,
+                    'showintro' => $showintro,
+                    'intro' => $showintro ? $intro : '',
+                    'images' => $images,
+                    'cmid' => $cm->id,
+                    'canvaswidth' => $unilabeltyperecord->canvaswidth,
+                    'canvasheight' => $unilabeltyperecord->canvasheight,
+                    'backgroundimage' => $unilabeltyperecord->backgroundimage,
                 // 4. Add setting in function get_content.
-                'fontsize' => $unilabeltyperecord->fontsize,
-                'titlebackgroundcolor' => $unilabeltyperecord->titlebackgroundcolor,
-                'capababilityforgrid' => $capababilityforgrid,
-                'showborders' => $showborders,
-                'bordercolor' => $bordercolor,
-                'gridcolor' => $gridcolor,
-                'helpergrids' => $helpergrids
+                    'fontsize' => $unilabeltyperecord->fontsize,
+                    'titlebackgroundcolor' => $unilabeltyperecord->titlebackgroundcolor,
+                    'capababilityforgrid' => $capababilityforgrid,
+                    'showborders' => $showborders,
+                    'bordercolor' => $bordercolor,
+                    'gridcolor' => $gridcolor,
+                    'helpergrids' => $helpergrids
             ];
         }
 
@@ -573,16 +579,15 @@ class content_type extends \mod_unilabel\content_type {
             return '';
         }
         $imageurl = \moodle_url::make_pluginfile_url(
-            $this->context->id,
-            'unilabeltype_imageboard',
-            'backgroundimage',
-            0,
-            '/',
-            $file->get_filename()
+                $this->context->id,
+                'unilabeltype_imageboard',
+                'backgroundimage',
+                0,
+                '/',
+                $file->get_filename()
         );
         return $imageurl;
     }
-
 
     /**
      * Get the image url for the given tile
@@ -597,12 +602,12 @@ class content_type extends \mod_unilabel\content_type {
             return '';
         }
         $imageurl = \moodle_url::make_pluginfile_url(
-            $this->context->id,
-            'unilabeltype_imageboard',
-            'image',
-            $image->id,
-            '/',
-            $file->get_filename()
+                $this->context->id,
+                'unilabeltype_imageboard',
+                'image',
+                $image->id,
+                '/',
+                $file->get_filename()
         );
         return $imageurl;
     }
@@ -615,10 +620,10 @@ class content_type extends \mod_unilabel\content_type {
      */
     private function html_has_content($content) {
         $searches = [
-            '<br>',
-            '<br />',
-            '<p>',
-            '</p>'
+                '<br>',
+                '<br />',
+                '<p>',
+                '</p>'
         ];
 
         $check = trim(str_replace($searches, '', $content));
@@ -634,10 +639,10 @@ class content_type extends \mod_unilabel\content_type {
      */
     public function editor_options($context) {
         return [
-            'maxfiles' => EDITOR_UNLIMITED_FILES,
-            'noclean' => true,
-            'context' => $context,
-            'subdirs' => true
+                'maxfiles' => EDITOR_UNLIMITED_FILES,
+                'noclean' => true,
+                'context' => $context,
+                'subdirs' => true
         ];
     }
 
@@ -649,8 +654,8 @@ class content_type extends \mod_unilabel\content_type {
      */
     public function format_options($context) {
         return [
-            'noclean' => true,
-            'context' => $context
+                'noclean' => true,
+                'context' => $context
         ];
     }
 
@@ -662,18 +667,6 @@ class content_type extends \mod_unilabel\content_type {
     public function is_active() {
         return !empty($this->config->active);
     }
-
-
-
-
-
-
-
-
-
-
-
-
 
     /**
      * Add a colourpicker element into the settings form.
@@ -692,15 +685,12 @@ class content_type extends \mod_unilabel\content_type {
         $colourpickercontent = new \stdClass();
         $colourpickercontent->iconurl = $renderer->image_url('i/colourpicker');
         $colourpickercontent->inputname = $name;
-        $colourpickercontent->inputid = 'id_'.$name.'_colourpicker';
+        $colourpickercontent->inputid = 'id_' . $name . '_colourpicker';
         $colourpickercontent->label = $label;
         $colourpickercontent->defaultvalue = $defaultvalue;
         $colourpickerhtml = $renderer->render_from_template('unilabeltype_carousel/colourpicker', $colourpickercontent);
         $mform->addElement('html', $colourpickerhtml);
         $PAGE->requires->js_init_call('M.util.init_colour_picker', array($colourpickercontent->inputid, null));
     }
-
-
-
 
 }
