@@ -127,27 +127,32 @@
                     border-bottom: solid 1px {{gridcolor}};
                     z-index: 1;">
             </div>
+
+        <!-- xAxis -->
+            {{^y}}
+            <div style="position: absolute;
+                    left: calc({{x}}px - 10px);
+                    top: -12px;
+                    color: #fff;
+                    text-shadow: 2px 2px #02023f;
+                    z-index: 1;">
+                {{x}}
+            </div>
+            {{/y}}
+
+        <!-- yAxis -->
+            {{^x}}
+                <div style="position: absolute;
+                        left: 0;
+                        top: calc({{y}}px - 12px);
+                        color: #fff;
+                        text-shadow: 2px 2px #02023f;
+                        z-index: 1;">
+                    {{y}}
+                </div>
+            {{/x}}
+
         {{/helpergrids}}
-
-            <!-- Koordinatenalternaive noch in Entwicklung -->
-            <div class="xcoordinate" style="left: 75px;">100</div>
-            <div class="xcoordinate" style="left: 175px;">200</div>
-            <div class="xcoordinate" style="left: 275px;">300</div>
-            <div class="xcoordinate" style="left: 375px;">400</div>
-            <div class="xcoordinate" style="left: 475px;">500</div>
-            <div class="xcoordinate" style="left: 575px;">600</div>
-            <div class="xcoordinate" style="left: 675px;">700</div>
-            <div class="xcoordinate" style="left: 775px;">800</div>
-            <div class="xcoordinate" style="left: 875px;">900</div>
-            <div class="xcoordinate" style="left: 975px;">1000</div>
-
-            <div class="ycoordinate" style="top: 90px;">100</div>
-            <div class="ycoordinate" style="top: 190px;">200</div>
-            <div class="ycoordinate" style="top: 290px;">300</div>
-            <div class="ycoordinate" style="top: 390px;">400</div>
-            <div class="ycoordinate" style="top: 490px;">500</div>
-            <div class="ycoordinate" style="top: 590px;">600</div>
-            <div class="ycoordinate" style="top: 690px;">700</div>
 
         </div>
     {{/capababilityforgrid}}
