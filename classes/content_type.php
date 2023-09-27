@@ -156,41 +156,18 @@ class content_type extends \mod_unilabel\content_type {
             ]
         );
 
-        $html = '<div class="unilabeltype-imageboard-position">' . get_string('position', 'unilabeltype_imageboard'). '</div>';
-        $repeatarray[] = $mform->createElement(
-                'html',
-                $html
-        );
-        $repeatarray[] = $mform->createElement(
-            'text',
-            $prefix . 'xposition',
-            get_string('xposition', 'unilabeltype_imageboard'),
-            ['size' => 5]
-        );
-        $repeatarray[] = $mform->createElement(
-            'text',
-            $prefix . 'yposition',
-            get_string('yposition', 'unilabeltype_imageboard'),
-            ['size' => 5]
-        );
+        $dummyarray=array();
+        $dummyarray[] =& $mform->createElement('text', $prefix . 'xposition', get_string('xposition', 'unilabeltype_imageboard'), ['size' => 5]);
+        $dummyarray[] =& $mform->createElement('text', $prefix . 'yposition', get_string('yposition', 'unilabeltype_imageboard'), ['size' => 5]);
+        $repeatarray[] = $mform->addGroup($dummyarray, 'position', get_string('position', 'unilabeltype_imageboard'), array(' '), false);
 
-        $html = '<div class="unilabeltype-imageboard-targetsize">' . get_string('targetsize', 'unilabeltype_imageboard'). '</div>';
-        $repeatarray[] = $mform->createElement(
-                'html',
-                $html
-        );
-        $repeatarray[] = $mform->createElement(
-            'text',
-            $prefix . 'targetwidth',
-            get_string('targetwidth', 'unilabeltype_imageboard'),
-            ['size' => 4]
-        );
-        $repeatarray[] = $mform->createElement(
-            'text',
-            $prefix . 'targetheight',
-            get_string('targetheight', 'unilabeltype_imageboard'),
-            ['size' => 4]
-        );
+        $dummyarray=array();
+        $dummyarray[] =& $mform->createElement('text', $prefix . 'targetwidth', get_string('targetwidth', 'unilabeltype_imageboard'), ['size' => 4]);
+        $dummyarray[] =& $mform->createElement('text', $prefix . 'targetheight', get_string('targetheight', 'unilabeltype_imageboard'), ['size' => 4]);
+        $repeatarray[] = $mform->addGroup($dummyarray, $prefix . 'targetsize', get_string('targetsize', 'unilabeltype_imageboard'), array(' '), false);
+
+
+
 
         $repeatarray[] = $mform->createElement(
             'text',
@@ -219,8 +196,7 @@ class content_type extends \mod_unilabel\content_type {
         $repeatedoptions[$prefix . 'image']['type'] = PARAM_FILE;
         // Adding the help buttons.
         $repeatedoptions[$prefix . 'url']['helpbutton'] = ['url', 'unilabeltype_imageboard'];
-        $repeatedoptions[$prefix . 'targetwidth']['helpbutton'] = ['targetwidth', 'unilabeltype_imageboard'];
-        $repeatedoptions[$prefix . 'targetheight']['helpbutton'] = ['targetheight', 'unilabeltype_imageboard'];
+        $repeatedoptions[$prefix . 'targetsize']['helpbutton'] = ['targetsize', 'unilabeltype_imageboard'];
 
         $repeatedoptions[$prefix . 'xposition']['type'] = PARAM_INT;
         $repeatedoptions[$prefix . 'yposition']['type'] = PARAM_INT;
