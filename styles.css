@@ -48,5 +48,5 @@ li#section-0 {
 
 /* ToDo: optimize hover-effect */
 a .unilabel-imageboard-image:hover {
-    box-shadow: 0 0 3px 0 #f00;
+    box-shadow: 0 0 13px 0;
 }
