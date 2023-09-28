@@ -79,22 +79,26 @@
              height: {{canvasheight}}px;
              background-size: cover;">
     {{#images}}
-        {{#url}}
-            <a href="{{url}}">
-        {{/url}}
-            <div style="position: absolute;
-                    z-index: 5;
-                    left: {{xposition}}px;
-                    top: calc({{yposition}}px - ({{fontsize}}px + 10px));
-                    color: #fff; background-color: {{titlebackgroundcolor}};
-                {{#fontsize}}
-                    font-size: {{fontsize}}px;
-                    line-height: {{fontsize}}px;
-                    padding: 5px;
-                {{/fontsize}}
-                    ">
-                {{title}}
-            </div>
+        <div id="imageid_{{id}}">
+            {{#url}}
+                <a href="{{url}}">
+            {{/url}}
+
+            {{#title}}
+                <div style="position: absolute;
+                        z-index: 5;
+                        left: {{xposition}}px;
+                        top: calc({{yposition}}px - ({{fontsize}}px + 10px));
+                        color: #fff; background-color: {{titlebackgroundcolor}};
+                    {{#fontsize}}
+                        font-size: {{fontsize}}px;
+                        line-height: {{fontsize}}px;
+                        padding: 5px;
+                    {{/fontsize}}
+                        ">
+                    {{title}}
+                </div>
+            {{/title}}
 
             {{#imageurl}}
                 <div class="unilabel-imageboard-image" style="position: absolute;
@@ -110,9 +114,11 @@
                             {{#showborders}} {{#border}}border: solid {{border}}px {{bordercolor}};{{/border}} {{/showborders}};">
                 </div>
             {{/imageurl}}
-        {{#url}}
-            </a>
-        {{/url}}
+
+            {{#url}}
+                </a>
+            {{/url}}
+        </div>
     {{/images}}
 
     {{#capababilityforgrid}}
@@ -159,7 +165,7 @@
 
 </div>
 
-
+<!-- List the used images or text -->
 <div class="unilabel-imageboard-list">
     <p class="unilabel-imageboard-list-button">
         <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#unilabel-imageboard-list{{cmid}}"
@@ -178,9 +184,12 @@
                                     {{nr}}
                                 </div>
                                 <div>
-                                    <img src="{{{imageurl}}}" width="40px" style="margin-right: 5px;"
-                                         alt="{{{title}}}"></img>
-                                    {{{title}}}
+                                    <img src="{{{imageurl}}}"
+                                         width="40px"
+                                         style="margin-right: 5px;"
+                                         alt="{{title}}">
+                                    </img>
+                                    {{title}}
                                 </div>
                             </div>
                         </a>
@@ -194,7 +203,7 @@
                                 <div class="border" style="width: 40px; height: 40px; margin-right: 5px;">
                                 </div>
                                 <div class="unilabel-imageboard-list-title">
-                                    {{{title}}}
+                                    {{title}}
                                 </div>
                             </div>
                         </a>
@@ -206,8 +215,8 @@
                             {{nr}}
                         </div>
                         <div>
-                            <img src="{{{imageurl}}}" width="40px;" style="margin-right: 5px;" alt="{{{title}}}"></img>
-                            {{{title}}}
+                            <img src="{{{imageurl}}}" width="40px;" style="margin-right: 5px;" alt="{{title}}"></img>
+                            {{title}}
                         </div>
                     </div>
                 {{/url}}
