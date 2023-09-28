@@ -61,12 +61,10 @@ $imageboardsettings[] = new admin_setting_configselect('unilabeltype_imageboard/
         $numbers
 );
 
-$settingname = 'titlebackgroundcolor';
-$name = 'unilabeltype_imageboard/default_' . $settingname;
-$title = get_string('default_'. $settingname, 'unilabeltype_imageboard');
-$description = get_string('default_' . $settingname . '_desc', 'unilabeltype_imageboard');
-$imageboardsettings[] = new admin_setting_configcolourpicker($name, $title, $description, '#33ff33');
-
+$imageboardsettings[] = new admin_setting_configcolourpicker('unilabeltype_imageboard/titlebackgroundcolor',
+        get_string('default_titlebackgroundcolor', 'unilabeltype_imageboard'),
+        get_string('default_titlebackgroundcolor_desc', 'unilabeltype_imageboard')
+        , '#33ff33');
 
 $imageboardsettings[] = new admin_setting_configcheckbox('unilabeltype_imageboard/default_showborders',
     get_string('default_showborders', 'unilabeltype_imageboard'),
