@@ -117,11 +117,17 @@ class content_type extends \mod_unilabel\content_type {
         $numbers = array_combine(range(0, 36, 1), range(0, 36, 1));
         $mform->addElement('select', $prefix . 'fontsize', get_string('fontsize_help', 'unilabeltype_imageboard'), $numbers);
 
-        $backgrounddefault = empty($unilabeltyperecord->titlebackgroundcolor) ? $this->config->default_titlebackgroundcolor : $unilabeltyperecord->titlebackgroundcolor;
+        $titlebackgroundcolor = '';
+        if (empty($unilabeltyperecord->titlebackgroundcolor)) {
+            $titlebackgroundcolor = $this->config->default_titlebackgroundcolor;
+        } else {
+            $titlebackgroundcolor = $unilabeltyperecord->titlebackgroundcolor;
+        }
+
         $this->add_colourpicker($mform,
                 $prefix . 'titlebackgroundcolor',
                 get_string('titlebackgroundcolor', 'unilabeltype_imageboard'),
-                $backgrounddefault);
+                $titlebackgroundcolor);
 
         // Prepare the activity url picker.
         $formid = $mform->getAttribute('id');
@@ -160,23 +166,29 @@ class content_type extends \mod_unilabel\content_type {
         // ToDo: position is only needed for images. Bug: position is also shown for the backgroundimage.
         // I do not know why and how to fix this :-(.
         $position = [];
-        $position[] = $mform->createElement('text', $prefix . 'xposition', get_string('xposition', 'unilabeltype_imageboard'),
+        $position[] = $mform->createElement('text', $prefix . 'xposition',
+                get_string('xposition', 'unilabeltype_imageboard'),
                 ['size' => 5]);
         $mform->setType($prefix . 'xposition', PARAM_INT);
-        $position[] = $mform->createElement('text', $prefix . 'yposition', get_string('yposition', 'unilabeltype_imageboard'),
+        $position[] = $mform->createElement('text', $prefix . 'yposition',
+                get_string('yposition', 'unilabeltype_imageboard'),
                 ['size' => 5]);
         $mform->setType($prefix . 'yposition', PARAM_INT);
-        $repeatarray[] = $mform->addGroup($position, $prefix . 'position', get_string('position', 'unilabeltype_imageboard'),
+        $repeatarray[] = $mform->addGroup($position, $prefix . 'position',
+                get_string('position', 'unilabeltype_imageboard'),
                         array(' '), false);
 
         $targetsize = [];
-        $targetsize[] = $mform->createElement('text', $prefix . 'targetwidth', get_string('targetwidth', 'unilabeltype_imageboard'),
+        $targetsize[] = $mform->createElement('text', $prefix . 'targetwidth',
+                get_string('targetwidth', 'unilabeltype_imageboard'),
                         ['size' => 4]);
         $mform->setType($prefix . 'targetwidth', PARAM_INT);
-        $targetsize[] = $mform->createElement('text', $prefix . 'targetheight', get_string('targetheight', 'unilabeltype_imageboard'),
+        $targetsize[] = $mform->createElement('text', $prefix . 'targetheight',
+                get_string('targetheight', 'unilabeltype_imageboard'),
                         ['size' => 4]);
         $mform->setType($prefix . 'targetheight', PARAM_INT);
-        $repeatarray[] = $mform->addGroup($targetsize, $prefix . 'targetsize', get_string('targetsize', 'unilabeltype_imageboard'),
+        $repeatarray[] = $mform->addGroup($targetsize, $prefix . 'targetsize',
+                get_string('targetsize', 'unilabeltype_imageboard'),
                 array(' '), false);
 
         $repeatarray[] = $mform->createElement(
@@ -207,12 +219,6 @@ class content_type extends \mod_unilabel\content_type {
         // Adding the help buttons.
         $repeatedoptions[$prefix . 'url']['helpbutton'] = ['url', 'unilabeltype_imageboard'];
         $repeatedoptions[$prefix . 'targetsize']['helpbutton'] = ['targetsize', 'unilabeltype_imageboard'];
-
-        //$repeatedoptions[$prefix . 'xposition']['type'] = PARAM_INT;
-        //$repeatedoptions[$prefix . 'yposition']['type'] = PARAM_INT;
-
-        //$repeatedoptions[$prefix . 'targetwidth']['type'] = PARAM_INT;
-        //$repeatedoptions[$prefix . 'targetheight']['type'] = PARAM_INT;
 
         $repeatedoptions[$prefix . 'border']['type'] = PARAM_INT;
 
