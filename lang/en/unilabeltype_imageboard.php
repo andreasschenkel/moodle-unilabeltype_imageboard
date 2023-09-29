@@ -65,6 +65,7 @@ $string['nocontent'] = 'No content';
 $string['pluginname'] = 'imageboard';
 $string['pluginname_help'] = 'This plugin type creates an imageboard consisting of a canvas where pictures can be placed at different positions. A click on the image brings the user to a defined url.';
 $string['position'] = 'Upper left corner:';
+$string['position_help'] = 'By default all images will have the upper left corner at coordinate (0/0). You can moove the image with this input fields.';
 $string['privacy:metadata'] = 'The unilabel type Imageboard does not store any personal data.';
 $string['showunilabeltext'] = 'Show unilabel text';
 $string['title'] = 'Title';
