@@ -157,7 +157,8 @@ class content_type extends \mod_unilabel\content_type {
                 ]
         );
 
-
+        // ToDo: position is only needed for images. Bug: position is also shown for the backgroundimage.
+        // I do not know why and how to fix this :-(.
         $position = [];
         $position[] = $mform->createElement('text', $prefix . 'xposition', get_string('xposition', 'unilabeltype_imageboard'),
                 ['size' => 5]);
@@ -166,9 +167,6 @@ class content_type extends \mod_unilabel\content_type {
         $repeatarray[] = $mform->addGroup($position, $prefix . 'position', get_string('position', 'unilabeltype_imageboard'),
                         array(' '), false);
 
-
-
-
         $targetsize = [];
         $targetsize[] = $mform->createElement('text', $prefix . 'targetwidth', get_string('targetwidth', 'unilabeltype_imageboard'),
                         ['size' => 4]);
@@ -176,9 +174,6 @@ class content_type extends \mod_unilabel\content_type {
                         ['size' => 4]);
         $repeatarray[] = $mform->addGroup($targetsize, $prefix . 'targetsize', get_string('targetsize', 'unilabeltype_imageboard'),
                 array(' '), false);
-
-
-
 
         $repeatarray[] = $mform->createElement(
                 'text',
