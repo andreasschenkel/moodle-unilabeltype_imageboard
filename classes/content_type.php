@@ -162,6 +162,7 @@ class content_type extends \mod_unilabel\content_type {
         $position = [];
         $position[] = $mform->createElement('text', $prefix . 'xposition', get_string('xposition', 'unilabeltype_imageboard'),
                 ['size' => 5]);
+        $mform->setType($prefix . 'xposition', PARAM_INT);
         $position[] = $mform->createElement('text', $prefix . 'yposition', get_string('yposition', 'unilabeltype_imageboard'),
                 ['size' => 5]);
         $repeatarray[] = $mform->addGroup($position, $prefix . 'position', get_string('position', 'unilabeltype_imageboard'),
