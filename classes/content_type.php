@@ -165,14 +165,17 @@ class content_type extends \mod_unilabel\content_type {
         $mform->setType($prefix . 'xposition', PARAM_INT);
         $position[] = $mform->createElement('text', $prefix . 'yposition', get_string('yposition', 'unilabeltype_imageboard'),
                 ['size' => 5]);
+        $mform->setType($prefix . 'yposition', PARAM_INT);
         $repeatarray[] = $mform->addGroup($position, $prefix . 'position', get_string('position', 'unilabeltype_imageboard'),
                         array(' '), false);
 
         $targetsize = [];
         $targetsize[] = $mform->createElement('text', $prefix . 'targetwidth', get_string('targetwidth', 'unilabeltype_imageboard'),
                         ['size' => 4]);
+        $mform->setType($prefix . 'targetwidth', PARAM_INT);
         $targetsize[] = $mform->createElement('text', $prefix . 'targetheight', get_string('targetheight', 'unilabeltype_imageboard'),
                         ['size' => 4]);
+        $mform->setType($prefix . 'targetheight', PARAM_INT);
         $repeatarray[] = $mform->addGroup($targetsize, $prefix . 'targetsize', get_string('targetsize', 'unilabeltype_imageboard'),
                 array(' '), false);
 
@@ -205,11 +208,11 @@ class content_type extends \mod_unilabel\content_type {
         $repeatedoptions[$prefix . 'url']['helpbutton'] = ['url', 'unilabeltype_imageboard'];
         $repeatedoptions[$prefix . 'targetsize']['helpbutton'] = ['targetsize', 'unilabeltype_imageboard'];
 
-        $repeatedoptions[$prefix . 'xposition']['type'] = PARAM_INT;
-        $repeatedoptions[$prefix . 'yposition']['type'] = PARAM_INT;
+        //$repeatedoptions[$prefix . 'xposition']['type'] = PARAM_INT;
+        //$repeatedoptions[$prefix . 'yposition']['type'] = PARAM_INT;
 
-        $repeatedoptions[$prefix . 'targetwidth']['type'] = PARAM_INT;
-        $repeatedoptions[$prefix . 'targetheight']['type'] = PARAM_INT;
+        //$repeatedoptions[$prefix . 'targetwidth']['type'] = PARAM_INT;
+        //$repeatedoptions[$prefix . 'targetheight']['type'] = PARAM_INT;
 
         $repeatedoptions[$prefix . 'border']['type'] = PARAM_INT;
 
