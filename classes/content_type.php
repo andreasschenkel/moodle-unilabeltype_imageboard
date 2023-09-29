@@ -163,8 +163,6 @@ class content_type extends \mod_unilabel\content_type {
                 ]
         );
 
-        // ToDo: position is only needed for images. Bug: position is also shown for the backgroundimage.
-        // I do not know why and how to fix this :-(.
         $position = [];
         $position[] = $mform->createElement('text', $prefix . 'xposition',
                 get_string('xposition', 'unilabeltype_imageboard'),
@@ -174,9 +172,10 @@ class content_type extends \mod_unilabel\content_type {
                 get_string('yposition', 'unilabeltype_imageboard'),
                 ['size' => 5]);
         $mform->setType($prefix . 'yposition', PARAM_INT);
-        $repeatarray[] = $mform->addGroup($position, $prefix . 'position',
+        $repeatarray[] = $mform->createElement('group',
+                $prefix . 'position',
                 get_string('position', 'unilabeltype_imageboard'),
-                        array(' '), false);
+                $position);
 
         $targetsize = [];
         $targetsize[] = $mform->createElement('text', $prefix . 'targetwidth',
@@ -187,9 +186,10 @@ class content_type extends \mod_unilabel\content_type {
                 get_string('targetheight', 'unilabeltype_imageboard'),
                         ['size' => 4]);
         $mform->setType($prefix . 'targetheight', PARAM_INT);
-        $repeatarray[] = $mform->addGroup($targetsize, $prefix . 'targetsize',
+        $repeatarray[] = $mform->createElement('group',
+                $prefix . 'targetsize',
                 get_string('targetsize', 'unilabeltype_imageboard'),
-                array(' '), false);
+                $targetsize);
 
         $repeatarray[] = $mform->createElement(
                 'text',
@@ -215,12 +215,11 @@ class content_type extends \mod_unilabel\content_type {
         $repeatedoptions = [];
         $repeatedoptions[$prefix . 'title']['type'] = PARAM_TEXT;
         $repeatedoptions[$prefix . 'url']['type'] = PARAM_URL;
-        $repeatedoptions[$prefix . 'image']['type'] = PARAM_FILE;
-        // Adding the help buttons.
         $repeatedoptions[$prefix . 'url']['helpbutton'] = ['url', 'unilabeltype_imageboard'];
-        $repeatedoptions[$prefix . 'targetsize']['helpbutton'] = ['targetsize', 'unilabeltype_imageboard'];
-
+        $repeatedoptions[$prefix . 'image']['type'] = PARAM_FILE;
         $repeatedoptions[$prefix . 'border']['type'] = PARAM_INT;
+        $repeatedoptions[$prefix . 'position']['helpbutton'] = ['position', 'unilabeltype_imageboard'];
+        $repeatedoptions[$prefix . 'targetsize']['helpbutton'] = ['targetsize', 'unilabeltype_imageboard'];
 
         $defaultrepeatcount = 4; // The default count for tiles.
         $repeatcount = count($this->images);
