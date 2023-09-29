@@ -164,12 +164,12 @@ class content_type extends \mod_unilabel\content_type {
         );
 
         $position = [];
-        $position[] =& $mform->createElement('text',
+        $position[] = $mform->createElement('text',
                 $prefix . 'xposition',
                 get_string('xposition', 'unilabeltype_imageboard'),
                 ['size' => 5]);
         $mform->setType($prefix . 'xposition', PARAM_INT);
-        $position[] =& $mform->createElement('text',
+        $position[] = $mform->createElement('text',
                 $prefix . 'yposition',
                 get_string('yposition', 'unilabeltype_imageboard'),
                 ['size' => 5]);
@@ -177,7 +177,9 @@ class content_type extends \mod_unilabel\content_type {
         $repeatarray[] = $mform->createElement('group',
                 $prefix . 'position',
                 get_string('position', 'unilabeltype_imageboard'),
-                $position);
+                $position,
+                null,
+                false);
         $mform->setType($prefix . 'position', PARAM_RAW);
 
         $targetsize = [];
@@ -194,7 +196,9 @@ class content_type extends \mod_unilabel\content_type {
         $repeatarray[] = $mform->createElement('group',
                 $prefix . 'targetsize',
                 get_string('targetsize', 'unilabeltype_imageboard'),
-                $targetsize);
+                $targetsize,
+                null,
+                false);
         $mform->setType($prefix . 'targetsize', PARAM_RAW);
 
         $repeatarray[] = $mform->createElement(
