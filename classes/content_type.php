@@ -176,6 +176,7 @@ class content_type extends \mod_unilabel\content_type {
                 $prefix . 'position',
                 get_string('position', 'unilabeltype_imageboard'),
                 $position);
+        $mform->setType($prefix . 'position', PARAM_RAW);
 
         $targetsize = [];
         $targetsize[] = $mform->createElement('text', $prefix . 'targetwidth',
@@ -190,6 +191,7 @@ class content_type extends \mod_unilabel\content_type {
                 $prefix . 'targetsize',
                 get_string('targetsize', 'unilabeltype_imageboard'),
                 $targetsize);
+        $mform->setType($prefix . 'targetsize', PARAM_RAW);
 
         $repeatarray[] = $mform->createElement(
                 'text',
