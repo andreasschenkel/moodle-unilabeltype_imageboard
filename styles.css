@@ -50,3 +50,10 @@ li#section-0 {
 a .unilabel-imageboard-image:hover {
     box-shadow: 0 0 13px 0;
 }
+
+.form-group.row.fitem {
+    border: solid 1px #ddd;
+    background-color: #fafafa;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
