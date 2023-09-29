@@ -164,32 +164,42 @@ class content_type extends \mod_unilabel\content_type {
         );
 
         $position = [];
-        $position[] = $mform->createElement('text', $prefix . 'xposition',
+        $position[] = $mform->createElement('text',
+                $prefix . 'xposition',
                 get_string('xposition', 'unilabeltype_imageboard'),
                 ['size' => 5]);
         $mform->setType($prefix . 'xposition', PARAM_INT);
-        $position[] = $mform->createElement('text', $prefix . 'yposition',
+        $position[] = $mform->createElement('text',
+                $prefix . 'yposition',
                 get_string('yposition', 'unilabeltype_imageboard'),
                 ['size' => 5]);
         $mform->setType($prefix . 'yposition', PARAM_INT);
         $repeatarray[] = $mform->createElement('group',
                 $prefix . 'position',
                 get_string('position', 'unilabeltype_imageboard'),
-                $position);
+                $position,
+                null,
+                false);
+        $mform->setType($prefix . 'position', PARAM_RAW);
 
         $targetsize = [];
-        $targetsize[] = $mform->createElement('text', $prefix . 'targetwidth',
+        $targetsize[] = $mform->createElement('text',
+                $prefix . 'targetwidth',
                 get_string('targetwidth', 'unilabeltype_imageboard'),
-                        ['size' => 4]);
+                ['size' => 4]);
         $mform->setType($prefix . 'targetwidth', PARAM_INT);
-        $targetsize[] = $mform->createElement('text', $prefix . 'targetheight',
+        $targetsize[] = $mform->createElement('text',
+                $prefix . 'targetheight',
                 get_string('targetheight', 'unilabeltype_imageboard'),
-                        ['size' => 4]);
+                ['size' => 4]);
         $mform->setType($prefix . 'targetheight', PARAM_INT);
         $repeatarray[] = $mform->createElement('group',
                 $prefix . 'targetsize',
                 get_string('targetsize', 'unilabeltype_imageboard'),
-                $targetsize);
+                $targetsize,
+                null,
+                false);
+        $mform->setType($prefix . 'targetsize', PARAM_RAW);
 
         $repeatarray[] = $mform->createElement(
                 'text',
