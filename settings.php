@@ -37,7 +37,7 @@ $imageboardsettings[] = new admin_setting_configcheckbox('unilabeltype_imageboar
 
 $numbers = array_combine(range(100, 1800, 50), range(100, 1800, 50));
 $numbers = array(0 => get_string('autocanvaswidth', 'unilabeltype_imageboard')) + $numbers;
-$imageboardsettings[] = new admin_setting_configselect('unilabeltype_imageboard/canvaswidth',
+$imageboardsettings[] = new admin_setting_configselect('unilabeltype_imageboard/default_canvaswidth',
     get_string('default_canvaswidth', 'unilabeltype_imageboard'),
     get_string('default_canvaswidth_help', 'unilabeltype_imageboard'),
     600,
@@ -45,7 +45,7 @@ $imageboardsettings[] = new admin_setting_configselect('unilabeltype_imageboard/
 );
 
 $numbers = array_combine(range(100, 1800, 50), range(100, 1800, 50));
-$imageboardsettings[] = new admin_setting_configselect('unilabeltype_imageboard/canvasheight',
+$imageboardsettings[] = new admin_setting_configselect('unilabeltype_imageboard/default_canvasheight',
     get_string('default_canvasheight', 'unilabeltype_imageboard'),
     get_string('default_canvasheight_help', 'unilabeltype_imageboard'),
     400,
@@ -54,19 +54,17 @@ $imageboardsettings[] = new admin_setting_configselect('unilabeltype_imageboard/
 
 
 $numbers = array_combine(range(0, 36, 1), range(0, 36, 1));
-$imageboardsettings[] = new admin_setting_configselect('unilabeltype_imageboard/fontsize',
+$imageboardsettings[] = new admin_setting_configselect('unilabeltype_imageboard/default_fontsize',
         get_string('default_fontsize', 'unilabeltype_imageboard'),
         get_string('default_fontsize_help', 'unilabeltype_imageboard'),
         12,
         $numbers
 );
 
-$settingname = 'titlebackgroundcolor';
-$name = 'unilabeltype_imageboard/default_' . $settingname;
-$title = get_string('default_'. $settingname, 'unilabeltype_imageboard');
-$description = get_string('default_' . $settingname . '_desc', 'unilabeltype_imageboard');
-$imageboardsettings[] = new admin_setting_configcolourpicker($name, $title, $description, '#33ff33');
-
+$imageboardsettings[] = new admin_setting_configcolourpicker('unilabeltype_imageboard/default_titlebackgroundcolor',
+        get_string('default_titlebackgroundcolor', 'unilabeltype_imageboard'),
+        get_string('default_titlebackgroundcolor_desc', 'unilabeltype_imageboard')
+        , '#33ff33');
 
 $imageboardsettings[] = new admin_setting_configcheckbox('unilabeltype_imageboard/default_showborders',
     get_string('default_showborders', 'unilabeltype_imageboard'),
@@ -87,7 +85,7 @@ $imageboardsettings[] = new admin_setting_configcolourpicker($name, $title, $des
 
 
 
-$imageboardsettings[] = new admin_setting_configcheckbox('unilabeltype_imageboard/showintro',
+$imageboardsettings[] = new admin_setting_configcheckbox('unilabeltype_imageboard/default_showintro',
     get_string('default_showintro', 'unilabeltype_imageboard'),
     '',
     false

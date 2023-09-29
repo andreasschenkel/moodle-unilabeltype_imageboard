@@ -117,11 +117,17 @@ class content_type extends \mod_unilabel\content_type {
         $numbers = array_combine(range(0, 36, 1), range(0, 36, 1));
         $mform->addElement('select', $prefix . 'fontsize', get_string('fontsize_help', 'unilabeltype_imageboard'), $numbers);
 
-        $backgrounddefault = empty($unilabeltyperecord->titlebackgroundcolor) ? '' : $unilabeltyperecord->titlebackgroundcolor;
+        $titlebackgroundcolor = '';
+        if (empty($unilabeltyperecord->titlebackgroundcolor)) {
+            $titlebackgroundcolor = $this->config->default_titlebackgroundcolor;
+        } else {
+            $titlebackgroundcolor = $unilabeltyperecord->titlebackgroundcolor;
+        }
+
         $this->add_colourpicker($mform,
                 $prefix . 'titlebackgroundcolor',
                 get_string('titlebackgroundcolor', 'unilabeltype_imageboard'),
-                $backgrounddefault);
+                $titlebackgroundcolor);
 
         // Prepare the activity url picker.
         $formid = $mform->getAttribute('id');
@@ -157,22 +163,32 @@ class content_type extends \mod_unilabel\content_type {
                 ]
         );
 
-        $position = array();
-        $position[] =& $mform->createElement('text', $prefix . 'xposition', get_string('xposition', 'unilabeltype_imageboard'),
+        // ToDo: position is only needed for images. Bug: position is also shown for the backgroundimage.
+        // I do not know why and how to fix this :-(.
+        $position = [];
+        $position[] = $mform->createElement('text', $prefix . 'xposition',
+                get_string('xposition', 'unilabeltype_imageboard'),
                 ['size' => 5]);
-        $position[] =& $mform->createElement('text', $prefix . 'yposition', get_string('yposition', 'unilabeltype_imageboard'),
+        $mform->setType($prefix . 'xposition', PARAM_INT);
+        $position[] = $mform->createElement('text', $prefix . 'yposition',
+                get_string('yposition', 'unilabeltype_imageboard'),
                 ['size' => 5]);
-        $repeatarray[] =
-                $mform->addGroup($position, 'position', get_string('position', 'unilabeltype_imageboard'), array(' '), false);
+        $mform->setType($prefix . 'yposition', PARAM_INT);
+        $repeatarray[] = $mform->addGroup($position, $prefix . 'position',
+                get_string('position', 'unilabeltype_imageboard'),
+                        array(' '), false);
 
-        $targetsize = array();
-        $targetsize[] =&
-                $mform->createElement('text', $prefix . 'targetwidth', get_string('targetwidth', 'unilabeltype_imageboard'),
+        $targetsize = [];
+        $targetsize[] = $mform->createElement('text', $prefix . 'targetwidth',
+                get_string('targetwidth', 'unilabeltype_imageboard'),
                         ['size' => 4]);
-        $targetsize[] =&
-                $mform->createElement('text', $prefix . 'targetheight', get_string('targetheight', 'unilabeltype_imageboard'),
+        $mform->setType($prefix . 'targetwidth', PARAM_INT);
+        $targetsize[] = $mform->createElement('text', $prefix . 'targetheight',
+                get_string('targetheight', 'unilabeltype_imageboard'),
                         ['size' => 4]);
-        $repeatarray[] = $mform->addGroup($targetsize, $prefix . 'targetsize', get_string('targetsize', 'unilabeltype_imageboard'),
+        $mform->setType($prefix . 'targetheight', PARAM_INT);
+        $repeatarray[] = $mform->addGroup($targetsize, $prefix . 'targetsize',
+                get_string('targetsize', 'unilabeltype_imageboard'),
                 array(' '), false);
 
         $repeatarray[] = $mform->createElement(
@@ -192,7 +208,7 @@ class content_type extends \mod_unilabel\content_type {
         $repeatarray[] = $mform->createElement(
                 'select',
                 $prefix . 'border',
-                'border in px',
+                get_string('border', 'unilabeltype_imageboard'),
                 $numbers
         );
 
@@ -203,12 +219,6 @@ class content_type extends \mod_unilabel\content_type {
         // Adding the help buttons.
         $repeatedoptions[$prefix . 'url']['helpbutton'] = ['url', 'unilabeltype_imageboard'];
         $repeatedoptions[$prefix . 'targetsize']['helpbutton'] = ['targetsize', 'unilabeltype_imageboard'];
-
-        $repeatedoptions[$prefix . 'xposition']['type'] = PARAM_INT;
-        $repeatedoptions[$prefix . 'yposition']['type'] = PARAM_INT;
-
-        $repeatedoptions[$prefix . 'targetwidth']['type'] = PARAM_INT;
-        $repeatedoptions[$prefix . 'targetheight']['type'] = PARAM_INT;
 
         $repeatedoptions[$prefix . 'border']['type'] = PARAM_INT;
 
@@ -249,13 +259,13 @@ class content_type extends \mod_unilabel\content_type {
 
         // Set default data for the imageboard in general.
         if (!$unilabeltyperecord = $this->load_unilabeltype_record($unilabel->id)) {
-            $data[$prefix . 'showintro'] = !empty($this->config->showintro);
-            $data[$prefix . 'canvaswidth'] = $this->config->canvaswidth;
-            $data[$prefix . 'canvasheight'] = $this->config->canvasheight;
+            $data[$prefix . 'showintro'] = !empty($this->config->default_showintro);
+            $data[$prefix . 'canvaswidth'] = $this->config->default_canvaswidth;
+            $data[$prefix . 'canvasheight'] = $this->config->default_canvasheight;
             $data[$prefix . 'backgroundimage'] = 0;
             // 2. Set default data for the imageboard in general.
-            $data[$prefix . 'fontsize'] = $this->config->fontsize;
-            $data[$prefix . 'titlebackgroundcolor'] = $this->config->titlebackgroundcolor;
+            $data[$prefix . 'fontsize'] = $this->config->default_fontsize;
+            $data[$prefix . 'titlebackgroundcolor'] = $this->config->default_titlebackgroundcolor;
             return $data;
         }
 
