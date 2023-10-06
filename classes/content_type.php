@@ -39,8 +39,8 @@ class content_type extends \mod_unilabel\content_type {
     /** @var \stdClass $unilabeltyperecord */
     private $unilabeltyperecord;
 
-    /** @var array $tiles */
-    private $tiles;
+    /** @var array $images */
+    private $images;
 
     /** @var \stdClass $cm */
     private $cm;
@@ -119,7 +119,7 @@ class content_type extends \mod_unilabel\content_type {
 
         $titlebackgroundcolor = '';
         if (empty($unilabeltyperecord->titlebackgroundcolor)) {
-            $titlebackgroundcolor = $this->config->default_titlebackgroundcolor;
+            $titlebackgroundcolor = $this->config->default_titlebackgroundcolor ?? '' ;
         } else {
             $titlebackgroundcolor = $unilabeltyperecord->titlebackgroundcolor;
         }
@@ -167,12 +167,12 @@ class content_type extends \mod_unilabel\content_type {
         $position[] = $mform->createElement('text',
                 $prefix . 'xposition',
                 get_string('xposition', 'unilabeltype_imageboard'),
-                ['size' => 5]);
+                ['size' => 4, 'placeholder' => get_string('placeholder_xposition', 'unilabeltype_imageboard')]);
         $mform->setType($prefix . 'xposition', PARAM_INT);
         $position[] = $mform->createElement('text',
                 $prefix . 'yposition',
                 get_string('yposition', 'unilabeltype_imageboard'),
-                ['size' => 5]);
+                ['size' => 4, 'placeholder' => get_string('placeholder_yposition', 'unilabeltype_imageboard')]);
         $mform->setType($prefix . 'yposition', PARAM_INT);
         $repeatarray[] = $mform->createElement('group',
                 $prefix . 'position',
@@ -186,12 +186,12 @@ class content_type extends \mod_unilabel\content_type {
         $targetsize[] = $mform->createElement('text',
                 $prefix . 'targetwidth',
                 get_string('targetwidth', 'unilabeltype_imageboard'),
-                ['size' => 4]);
+                ['size' => 4, 'placeholder' => get_string('placeholder_targetwidth', 'unilabeltype_imageboard')]);
         $mform->setType($prefix . 'targetwidth', PARAM_INT);
         $targetsize[] = $mform->createElement('text',
                 $prefix . 'targetheight',
                 get_string('targetheight', 'unilabeltype_imageboard'),
-                ['size' => 4]);
+                ['size' => 4, 'placeholder' => get_string('placeholder_targetheight', 'unilabeltype_imageboard')]);
         $mform->setType($prefix . 'targetheight', PARAM_INT);
         $repeatarray[] = $mform->createElement('group',
                 $prefix . 'targetsize',
@@ -269,12 +269,12 @@ class content_type extends \mod_unilabel\content_type {
         // Set default data for the imageboard in general.
         if (!$unilabeltyperecord = $this->load_unilabeltype_record($unilabel->id)) {
             $data[$prefix . 'showintro'] = !empty($this->config->default_showintro);
-            $data[$prefix . 'canvaswidth'] = $this->config->default_canvaswidth;
-            $data[$prefix . 'canvasheight'] = $this->config->default_canvasheight;
+            $data[$prefix . 'canvaswidth'] = $this->config->default_canvaswidth ?? '600';
+            $data[$prefix . 'canvasheight'] = $this->config->default_canvasheight ?? '400';
             $data[$prefix . 'backgroundimage'] = 0;
             // 2. Set default data for the imageboard in general.
-            $data[$prefix . 'fontsize'] = $this->config->default_fontsize;
-            $data[$prefix . 'titlebackgroundcolor'] = $this->config->default_titlebackgroundcolor;
+            $data[$prefix . 'fontsize'] = $this->config->default_fontsize ?? '12';
+            $data[$prefix . 'titlebackgroundcolor'] = $this->config->default_titlebackgroundcolor ?? '#aaaaaa';
             return $data;
         }
 
@@ -360,10 +360,7 @@ class content_type extends \mod_unilabel\content_type {
     public function get_content($unilabel, $cm, \plugin_renderer_base $renderer) {
         global $USER;
         if (!$unilabeltyperecord = $this->load_unilabeltype_record($unilabel->id)) {
-            $content = [
-                    'intro' => get_string('nocontent', 'unilabeltype_imageboard'),
-                    'cmid' => $cm->id
-            ];
+            return '';
         } else {
             $intro = $this->format_intro($unilabel, $cm);
             $showintro = !empty($unilabeltyperecord->showintro);
@@ -374,13 +371,13 @@ class content_type extends \mod_unilabel\content_type {
             $capababilityforgrid = has_capability('mod/unilabel:edit', $context, $USER->id, true);
 
             $showborders = $this->config->default_showborders == '1';
-            $bordercolor = $this->config->default_bordercolor;
-            $gridcolor = $this->config->default_gridcolor;
-            // Todo: Maybe bordercolor should be configurable for each image.
-            // Todo: Maybe gridcolor should be configurable for each canvas.
+            $bordercolor = $this->config->default_bordercolor ?? '#ff0000';
+            $gridcolor = $this->config->default_gridcolor ?? '#ff0000';
 
             $images = [];
+            $hasimages = false;
             foreach ($this->images as $image) {
+                $hasimages = true;
                 if ($image->imageurl != '') {
                     $image->imageurl = $image->imageurl->out();
                 } else {
@@ -417,6 +414,7 @@ class content_type extends \mod_unilabel\content_type {
                     'showintro' => $showintro,
                     'intro' => $showintro ? $intro : '',
                     'images' => $images,
+                    'hasimages' => $hasimages,
                     'cmid' => $cm->id,
                     'canvaswidth' => $unilabeltyperecord->canvaswidth,
                     'canvasheight' => $unilabeltyperecord->canvasheight,
