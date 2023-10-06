@@ -119,7 +119,7 @@ class content_type extends \mod_unilabel\content_type {
 
         $titlebackgroundcolor = '';
         if (empty($unilabeltyperecord->titlebackgroundcolor)) {
-            $titlebackgroundcolor = $this->config->default_titlebackgroundcolor ?? '' ;
+            $titlebackgroundcolor = $this->config->default_titlebackgroundcolor ?? '';
         } else {
             $titlebackgroundcolor = $unilabeltyperecord->titlebackgroundcolor;
         }
