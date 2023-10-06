@@ -61,7 +61,7 @@
       "gridcolor": "#B7009E"
     }
 }}
-
+<div id="unilabeltype-imageboard-container-{{cmid}}" class="unilabeltype-imageboard-container">
 {{#showintro}}
     {{{intro}}}
 {{/showintro}}
@@ -75,6 +75,7 @@
 </div>
 
 <div id="unilabeltype-imageboard-{{cmid}}"
+     class="unilabeltype-imageboard"
      style="position: relative;
              background: url('{{backgroundimage}}');
              width: {{canvaswidth}}px;
@@ -124,7 +125,7 @@
     {{/images}}
 
     {{#capababilityforgrid}}
-        <div id="unilabeltype-imageboard-helpergrid-{{cmid}}">
+        <div id="unilabeltype-imageboard-helpergrid-{{cmid}}" class="hidden">
         {{#helpergrids}}
             <div style="position: absolute;
                     left: {{x}}px;
@@ -168,6 +169,8 @@
 </div>
 
 <!-- List the used images or text -->
+
+{{#hasimages}}
 <div class="unilabel-imageboard-list">
     <p class="unilabel-imageboard-list-button">
         <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#unilabel-imageboard-list{{cmid}}"
@@ -226,7 +229,8 @@
         </div>
     </div>
 </div>
-
+{{/hasimages}}
+</div>
 {{#js}}
     require(['unilabeltype_imageboard/imageboardrenderer'],
     function(imageboardrenderer) {
