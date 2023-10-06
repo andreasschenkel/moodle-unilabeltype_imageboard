@@ -59,7 +59,7 @@ function xmldb_unilabeltype_imageboard_upgrade($oldversion) {
         if (!$dbman->field_exists($table, $field)) {
             $dbman->add_field($table, $field);
         }
-        upgrade_mod_savepoint(true, 2023080100, 'unilabel', 'imageboard_tile');
+        upgrade_plugin_savepoint(true, 2023080100, 'unilabeltype', 'imageboard');
     }
     if ($oldversion < 2023092400) {
         // Define field continuoustype to be added to mootyper.
@@ -70,7 +70,7 @@ function xmldb_unilabeltype_imageboard_upgrade($oldversion) {
         if (!$dbman->field_exists($table, $field)) {
             $dbman->add_field($table, $field);
         }
-        upgrade_mod_savepoint(true, 2023092400, 'unilabel', 'imageboard_tile');
+        upgrade_plugin_savepoint(true, 2023092400, 'unilabeltype', 'imageboard');
     }
     if ($oldversion < 2023092501) {
         // Define field continuoustype to be added to mootyper.
@@ -81,7 +81,7 @@ function xmldb_unilabeltype_imageboard_upgrade($oldversion) {
         if (!$dbman->field_exists($table, $field)) {
             $dbman->add_field($table, $field);
         }
-        upgrade_mod_savepoint(true, 2023092501, 'unilabel', 'imageboard_tile');
+        upgrade_plugin_savepoint(true, 2023092501, 'unilabeltype', 'imageboard');
     }
 
     return true;
