@@ -61,7 +61,7 @@
       "gridcolor": "#B7009E"
     }
 }}
-
+<div class="unilabeltype-imageboard-container">
 {{#showintro}}
     {{{intro}}}
 {{/showintro}}
@@ -75,6 +75,7 @@
 </div>
 
 <div id="unilabeltype-imageboard-{{cmid}}"
+     class="unilabeltype-imageboard"
      style="position: relative;
              background: url('{{backgroundimage}}');
              width: {{canvaswidth}}px;
@@ -229,7 +230,7 @@
     </div>
 </div>
 {{/hasimages}}
-
+</div>
 {{#js}}
     require(['unilabeltype_imageboard/imageboardrenderer'],
     function(imageboardrenderer) {

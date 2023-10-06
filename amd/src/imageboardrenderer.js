@@ -41,8 +41,12 @@ export const init = (cmid, canvaswidth, canvasheight) => {
         const helpergrid = document.getElementById("unilabeltype-imageboard-helpergrid-"+cmid);
         if ( helpergrid.classList.contains("hidden")) {
             helpergrid.classList.remove("hidden");
+            gridtoggler.value = 'gridvisible';
+            gridtoggler.innerText = 'hide #';
         } else {
             helpergrid.classList.add("hidden");
+            gridtoggler.value = 'gridhidden';
+            gridtoggler.innerText = 'show #';
         }
     });
 };

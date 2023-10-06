@@ -20,6 +20,7 @@
     margin-bottom: 5px;
     border: solid 1px;
     padding: 2px;
+    width: 90px;
 }
 .unilabeltype-imageboard-controllbuttons {
     margin-bottom: 38px;
@@ -32,4 +33,14 @@
 /* ToDo: optimize hover-effect */
 a .unilabel-imageboard-image:hover {
     box-shadow: 0 0 13px 0;
+}
+
+.unilabeltype-imageboard {
+    border: solid 1px #aaa;
+    box-shadow: 0 0 10px #aaa;
+}
+
+.unilabeltype-imageboard-container {
+    border: solid 1px #aaa;
+    padding: 10px;
 }
