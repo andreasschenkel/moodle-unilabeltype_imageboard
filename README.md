@@ -9,8 +9,14 @@ Form:
 ![grafik](https://github.com/andreasschenkel/moodle-unilabeltype_imageboard/assets/31856043/9e6f8bbb-fd5f-4653-9085-9c5fe80bd6d5)
 
 CHANGELOG
+[v2.0.1]
+- resize only imageboard
+- change width off unilable-content container
 
-2023092700:
+[v2.0.0]
+
+
+[2023092700]
 
 - "better support of xaxis and yaxis in helpergrid
 - changes in form: grouping xposition and yposition

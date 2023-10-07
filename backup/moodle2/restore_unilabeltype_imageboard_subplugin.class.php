@@ -40,7 +40,7 @@ class restore_unilabeltype_imageboard_subplugin extends restore_subplugin {
      */
     protected function define_unilabel_subplugin_structure() {
 
-        $paths = array();
+        $paths = [];
 
         $elename = $this->get_namefor();
         $elepath = $this->get_pathfor('/unilabeltype_imageboard');
@@ -93,11 +93,11 @@ class restore_unilabeltype_imageboard_subplugin extends restore_subplugin {
      * processed by the link decoder
      */
     public static function define_decode_contents() {
-        $contents = array();
+        $contents = [];
 
         $contents[] = new restore_decode_content('unilabeltype_imageboard_tile',
-            array('url'),
-            'unilabeltype_imageboard_tile');
+                ['url'],
+                'unilabeltype_imageboard_tile');
 
         return $contents;
     }

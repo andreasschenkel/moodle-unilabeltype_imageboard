@@ -49,30 +49,30 @@ class generator_test extends \advanced_testcase {
 
         $course = $this->getDataGenerator()->create_course();
 
-        $this->assertFalse($DB->record_exists('unilabel', array('course' => $course->id)));
+        $this->assertFalse($DB->record_exists('unilabel', ['course' => $course->id]));
         $unilabel = $this->getDataGenerator()->create_module(
             'unilabel',
-            array(
+            [
                 'course'       => $course,
                 'idnumber'     => 'mh1',
                 'name'         => 'testlabel',
                 'intro'        => 'Hello label',
                 'unilabeltype' => 'imageboard',
-            )
+            ]
         );
-        $records = $DB->get_records('unilabel', array('course' => $course->id, 'unilabeltype' => 'imageboard'), 'id');
+        $records = $DB->get_records('unilabel', ['course' => $course->id, 'unilabeltype' => 'imageboard'], 'id');
         $this->assertEquals(1, count($records));
         $this->assertTrue(array_key_exists($unilabel->id, $records));
 
-        $params = array(
+        $params = [
             'course'       => $course->id,
             'idnumber'     => 'mh2',
             'name'         => 'testlabel2',
             'intro'        => 'Hello label-2',
             'unilabeltype' => 'imageboard',
-        );
+        ];
         $unilabel = $this->getDataGenerator()->create_module('unilabel', $params);
-        $records = $DB->get_records('unilabel', array('course' => $course->id, 'unilabeltype' => 'imageboard'), 'id');
+        $records = $DB->get_records('unilabel', ['course' => $course->id, 'unilabeltype' => 'imageboard'], 'id');
         $this->assertEquals(2, count($records));
         $this->assertEquals('testlabel2', $records[$unilabel->id]->name);
     }
