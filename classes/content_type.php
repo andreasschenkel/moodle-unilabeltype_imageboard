@@ -15,12 +15,11 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * unilabel type imageboard
+ * Unilabel type imageboard
  *
  * @package     unilabeltype_imageboard
- * @author      Andreas Grabs <info@grabs-edv.de>
  * @author      Andreas Schenkel
- * @copyright   2018 onwards Grabs EDV {@link https://www.grabs-edv.de}
+ * @copyright   Andreas Schenkel {@link https://github.com/andreasschenkel}
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -30,9 +29,8 @@ namespace unilabeltype_imageboard;
  * Content type definition
  *
  * @package     unilabeltype_imageboard
- * @author      Andreas Grabs <info@grabs-edv.de>
  * @author      Andreas Schenkel
- * @copyright   2018 onwards Grabs EDV {@link https://www.grabs-edv.de}
+ * @copyright   Andreas Schenkel {@link https://github.com/andreasschenkel}
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class content_type extends \mod_unilabel\content_type {
@@ -142,7 +140,7 @@ class content_type extends \mod_unilabel\content_type {
         // This is replaced by the number of element.
         $repeatarray[] = $mform->createElement(
                 'header',
-                $prefix . 'tilehdr',
+                $prefix . 'imagehdr',
                 get_string('image', 'unilabeltype_imageboard') . '-{no}');
         $repeatarray[] = $mform->createElement(
                 'text',
@@ -231,7 +229,7 @@ class content_type extends \mod_unilabel\content_type {
         $repeatedoptions[$prefix . 'position']['helpbutton'] = ['position', 'unilabeltype_imageboard'];
         $repeatedoptions[$prefix . 'targetsize']['helpbutton'] = ['targetsize', 'unilabeltype_imageboard'];
 
-        $defaultrepeatcount = 4; // The default count for tiles.
+        $defaultrepeatcount = 4; // The default count for images.
         $repeatcount = count($this->images);
         if ($rest = count($this->images) % $defaultrepeatcount) {
             $repeatcount = count($this->images) + ($defaultrepeatcount - $rest);
@@ -244,10 +242,10 @@ class content_type extends \mod_unilabel\content_type {
                 $repeatarray,
                 $repeatcount,
                 $repeatedoptions,
-                $prefix . 'chosen_tiles_count',
-                $prefix . 'add_more_tiles_btn',
+                $prefix . 'chosen_images_count',
+                $prefix . 'add_more_images_btn',
                 $defaultrepeatcount, // Each time we add 3 elements.
-                get_string('addmoreimages', 'unilabeltype_imageboard'),
+                get_string('addmoreimages', 'unilabeltype_imageboard')
         );
     }
 
@@ -292,9 +290,9 @@ class content_type extends \mod_unilabel\content_type {
         $data[$prefix . 'fontsize'] = $unilabeltyperecord->fontsize;
         $data[$prefix . 'titlebackgroundcolor'] = $unilabeltyperecord->titlebackgroundcolor;
 
-        // Set default data for tiles.
-        if (!$tiles = $DB->get_records(
-                'unilabeltype_imageboard_tile',
+        // Set default data for images.
+        if (!$images = $DB->get_records(
+                'unilabeltype_imageboard_img',
                 ['imageboardid' => $unilabeltyperecord->id],
                 'id ASC'
         )) {
@@ -302,35 +300,35 @@ class content_type extends \mod_unilabel\content_type {
         }
 
         $index = 0;
-        foreach ($tiles as $tile) {
+        foreach ($images as $image) {
             // Prepare the title field.
             $elementname = $prefix . 'title[' . $index . ']';
-            $data[$elementname] = $tile->title;
+            $data[$elementname] = $image->title;
 
             // Prepare the url field.
             $elementname = $prefix . 'url[' . $index . ']';
-            $data[$elementname] = $tile->url;
+            $data[$elementname] = $image->url;
 
             // Prepare the url field.
             $elementname = $prefix . 'xposition[' . $index . ']';
-            $data[$elementname] = $tile->xposition;
+            $data[$elementname] = $image->xposition;
 
             $elementname = $prefix . 'yposition[' . $index . ']';
-            $data[$elementname] = $tile->yposition;
+            $data[$elementname] = $image->yposition;
 
             $elementname = $prefix . 'targetwidth[' . $index . ']';
-            $data[$elementname] = $tile->targetwidth;
+            $data[$elementname] = $image->targetwidth;
 
             $elementname = $prefix . 'targetheight[' . $index . ']';
-            $data[$elementname] = $tile->targetheight;
+            $data[$elementname] = $image->targetheight;
 
             $elementname = $prefix . 'border[' . $index . ']';
-            $data[$elementname] = $tile->border;
+            $data[$elementname] = $image->border;
 
             // Prepare the images.
             // $draftitemid is set by the function file_prepare_draft_area().
             $draftitemidimage = 0; // This is needed to create a new draftitemid.
-            file_prepare_draft_area($draftitemidimage, $context->id, 'unilabeltype_imageboard', 'image', $tile->id);
+            file_prepare_draft_area($draftitemidimage, $context->id, 'unilabeltype_imageboard', 'image', $image->id);
             $elementname = $prefix . 'image[' . $index . ']';
             $data[$elementname] = $draftitemidimage;
 
@@ -411,22 +409,22 @@ class content_type extends \mod_unilabel\content_type {
                 }
             }
             $content = [
-                    'showintro' => $showintro,
-                    'intro' => $showintro ? $intro : '',
-                    'images' => $images,
-                    'hasimages' => $hasimages,
-                    'cmid' => $cm->id,
-                    'canvaswidth' => $unilabeltyperecord->canvaswidth,
-                    'canvasheight' => $unilabeltyperecord->canvasheight,
-                    'backgroundimage' => $unilabeltyperecord->backgroundimage,
+                'showintro' => $showintro,
+                'intro' => $showintro ? $intro : '',
+                'images' => $images,
+                'hasimages' => $hasimages,
+                'cmid' => $cm->id,
+                'canvaswidth' => $unilabeltyperecord->canvaswidth,
+                'canvasheight' => $unilabeltyperecord->canvasheight,
+                'backgroundimage' => $unilabeltyperecord->backgroundimage,
                 // 4. Add setting in function get_content.
-                    'fontsize' => $unilabeltyperecord->fontsize,
-                    'titlebackgroundcolor' => $unilabeltyperecord->titlebackgroundcolor,
-                    'capababilityforgrid' => $capababilityforgrid,
-                    'showborders' => $showborders,
-                    'bordercolor' => $bordercolor,
-                    'gridcolor' => $gridcolor,
-                    'helpergrids' => $helpergrids
+                'fontsize' => $unilabeltyperecord->fontsize,
+                'titlebackgroundcolor' => $unilabeltyperecord->titlebackgroundcolor,
+                'capababilityforgrid' => $capababilityforgrid,
+                'showborders' => $showborders,
+                'bordercolor' => $bordercolor,
+                'gridcolor' => $gridcolor,
+                'helpergrids' => $helpergrids,
             ];
         }
 
@@ -448,9 +446,9 @@ class content_type extends \mod_unilabel\content_type {
 
         $unilabeltyperecord = $this->load_unilabeltype_record($unilabelid);
 
-        // Delete all tiles.
+        // Delete all images.
         if (!empty($unilabeltyperecord)) {
-            $DB->delete_records('unilabeltype_imageboard_tile', ['imageboardid' => $unilabeltyperecord->id]);
+            $DB->delete_records('unilabeltype_imageboard_img', ['imageboardid' => $unilabeltyperecord->id]);
         }
 
         $DB->delete_records('unilabeltype_imageboard', ['unilabelid' => $unilabelid]);
@@ -466,7 +464,7 @@ class content_type extends \mod_unilabel\content_type {
     public function save_content($formdata, $unilabel) {
         global $DB, $USER;
 
-        // We want to keep the tiles consistent so we start a transaction here.
+        // We want to keep the images consistent so we start a transaction here.
         $transaction = $DB->start_delegated_transaction();
 
         $prefix = 'unilabeltype_imageboard_';
@@ -490,13 +488,13 @@ class content_type extends \mod_unilabel\content_type {
         $fs = get_file_storage();
         $context = \context_module::instance($formdata->cmid);
         $usercontext = \context_user::instance($USER->id);
-        // First: remove old tile images.
+        // First: remove old image images.
         // We use the module_context as context and this component as component.
         $fs->delete_area_files($context->id, 'unilabeltype_imageboard', 'backgroundimage');
         $fs->delete_area_files($context->id, 'unilabeltype_imageboard', 'image');
 
-        // Second: remove old tile records.
-        $DB->delete_records('unilabeltype_imageboard_tile', ['imageboardid' => $unilabeltyperecord->id]);
+        // Second: remove old image records.
+        $DB->delete_records('unilabeltype_imageboard_img', ['imageboardid' => $unilabeltyperecord->id]);
 
         // Backgroundimage-support.
         $draftitemidbackgroundimage = $formdata->{$prefix . 'backgroundimage'};
@@ -508,13 +506,13 @@ class content_type extends \mod_unilabel\content_type {
         file_save_draft_area_files($draftitemidbackgroundimage, $context->id, 'unilabeltype_imageboard', 'backgroundimage', 0);
 
         // Now update the record with the information collected for the "hole" board.
-        // Information for each tile follows.
+        // Information for each image follows.
         $DB->update_record('unilabeltype_imageboard', $unilabeltyperecord);
 
-        // How many tiles could be defined (we have an array here)?
+        // How many images could be defined (we have an array here)?
         // They may not all used so some could be left out.
-        $potentialtilecount = $formdata->{$prefix . 'chosen_tiles_count'};
-        for ($i = 0; $i < $potentialtilecount; $i++) {
+        $potentialimagecount = $formdata->{$prefix . 'chosen_images_count'};
+        for ($i = 0; $i < $potentialimagecount; $i++) {
             // Get the draftitemids to identify the submitted files in image and content.
             $draftitemidimage = $formdata->{$prefix . 'image'}[$i];
 
@@ -526,25 +524,25 @@ class content_type extends \mod_unilabel\content_type {
                 continue;
             }
 
-            $tilerecord = new \stdClass();
-            $tilerecord->imageboardid = $unilabeltyperecord->id;
-            $tilerecord->title = $title;
-            $tilerecord->url = $formdata->{$prefix . 'url'}[$i];
+            $imagerecord = new \stdClass();
+            $imagerecord->imageboardid = $unilabeltyperecord->id;
+            $imagerecord->title = $title;
+            $imagerecord->url = $formdata->{$prefix . 'url'}[$i];
 
-            $tilerecord->xposition = abs($formdata->{$prefix . 'xposition'}[$i]);
-            $tilerecord->yposition = abs($formdata->{$prefix . 'yposition'}[$i]);
+            $imagerecord->xposition = abs($formdata->{$prefix . 'xposition'}[$i]);
+            $imagerecord->yposition = abs($formdata->{$prefix . 'yposition'}[$i]);
 
-            $tilerecord->targetwidth = abs($formdata->{$prefix . 'targetwidth'}[$i]);
-            $tilerecord->targetheight = abs($formdata->{$prefix . 'targetheight'}[$i]);
+            $imagerecord->targetwidth = abs($formdata->{$prefix . 'targetwidth'}[$i]);
+            $imagerecord->targetheight = abs($formdata->{$prefix . 'targetheight'}[$i]);
 
-            $tilerecord->border = abs($formdata->{$prefix . 'border'}[$i]);
+            $imagerecord->border = abs($formdata->{$prefix . 'border'}[$i]);
 
-            $tilerecord->id = $DB->insert_record('unilabeltype_imageboard_tile', $tilerecord);
+            $imagerecord->id = $DB->insert_record('unilabeltype_imageboard_img', $imagerecord);
 
-            $DB->update_record('unilabeltype_imageboard_tile', $tilerecord);
+            $DB->update_record('unilabeltype_imageboard_img', $imagerecord);
 
             // Now we can save our draft files for image.
-            file_save_draft_area_files($draftitemidimage, $context->id, 'unilabeltype_imageboard', 'image', $tilerecord->id);
+            file_save_draft_area_files($draftitemidimage, $context->id, 'unilabeltype_imageboard', 'image', $imagerecord->id);
         }
         $transaction->allow_commit();
 
@@ -568,7 +566,7 @@ class content_type extends \mod_unilabel\content_type {
             $this->cm = get_coursemodule_from_instance('unilabel', $unilabelid);
             $this->context = \context_module::instance($this->cm->id);
 
-            $images = $DB->get_records('unilabeltype_imageboard_tile', ['imageboardid' => $this->unilabeltyperecord->id]);
+            $images = $DB->get_records('unilabeltype_imageboard_img', ['imageboardid' => $this->unilabeltyperecord->id]);
 
             $index = 1;
             foreach ($images as $image) {
@@ -607,9 +605,9 @@ class content_type extends \mod_unilabel\content_type {
     }
 
     /**
-     * Get the image url for the given tile
+     * Get the image url for the given image
      *
-     * @param \stdClass $tile
+     * @param \stdClass $image
      * @return string
      */
     private function get_imageurl_for_image($image) {
@@ -640,7 +638,7 @@ class content_type extends \mod_unilabel\content_type {
                 '<br>',
                 '<br />',
                 '<p>',
-                '</p>'
+                '</p>',
         ];
 
         $check = trim(str_replace($searches, '', $content));
@@ -659,7 +657,7 @@ class content_type extends \mod_unilabel\content_type {
                 'maxfiles' => EDITOR_UNLIMITED_FILES,
                 'noclean' => true,
                 'context' => $context,
-                'subdirs' => true
+                'subdirs' => true,
         ];
     }
 
@@ -672,7 +670,7 @@ class content_type extends \mod_unilabel\content_type {
     public function format_options($context) {
         return [
                 'noclean' => true,
-                'context' => $context
+                'context' => $context,
         ];
     }
 
@@ -707,7 +705,7 @@ class content_type extends \mod_unilabel\content_type {
         $colourpickercontent->defaultvalue = $defaultvalue;
         $colourpickerhtml = $renderer->render_from_template('unilabeltype_carousel/colourpicker', $colourpickercontent);
         $mform->addElement('html', $colourpickerhtml);
-        $PAGE->requires->js_init_call('M.util.init_colour_picker', array($colourpickercontent->inputid, null));
+        $PAGE->requires->js_init_call('M.util.init_colour_picker', [$colourpickercontent->inputid, null]);
     }
 
 }

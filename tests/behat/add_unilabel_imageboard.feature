@@ -45,10 +45,10 @@ Feature: Modify content of the unilabeltype imageboard
 
     And I should see "Backgroundimage"
 
-    # Set the Caption for the four tiles.
-    # Both are defined by the css-id id_unilabeltype_imageboard_tilehdr_0 and ..._1.
-    # Click on the toggle "Tile-1" and open the element
-    And I click on "#id_unilabeltype_imageboard_tilehdr_0 div.ftoggler > a" "css_element"
+    # Set the Caption for the four images.
+    # Both are defined by the css-id id_unilabeltype_imageboard_imghdr_0 and ..._1.
+    # Click on the toggle "Image-1" and open the element
+    And I click on "#id_unilabeltype_imageboard_imagehdr_0 div.ftoggler > a" "css_element"
     And I should see "Title-1"
     And I set the field "Title-1" to "Title-Element-1"
 

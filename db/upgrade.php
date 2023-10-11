@@ -24,10 +24,10 @@
  * it cannot do itself, it will tell you what you need to do.  The commands in
  * here will all be database-neutral, using the functions defined in DLL libraries.
  *
- * @package
- * @copyright
- * @copyright
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later.
+ * @package     unilabeltype_imageboard
+ * @author      Andreas Schenkel
+ * @copyright   Andreas Schenkel {@link https://github.com/andreasschenkel}
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die(); // @codingStandardsIgnoreLine
@@ -52,7 +52,7 @@ function xmldb_unilabeltype_imageboard_upgrade($oldversion) {
 
     if ($oldversion < 2023080100) {
         // Define field continuoustype to be added to mootyper.
-        $table = new xmldb_table('unilabeltype_imageboard_tile');
+        $table = new xmldb_table('unilabeltype_imageboard_img');
         $field = new xmldb_field('border', XMLDB_TYPE_INTEGER, '3', null, null, null, '0', 'targetheight');
 
         // Conditionally launch add field continuoustype.

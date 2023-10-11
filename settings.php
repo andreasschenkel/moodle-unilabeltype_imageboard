@@ -15,12 +15,11 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * unilabel type imageboard
+ * Unilabel type imageboard
  *
  * @package     unilabeltype_imageboard
- * @author      Andreas Grabs <info@grabs-edv.de>
  * @author      Andreas Schenkel
- * @copyright   2018 onwards Grabs EDV {@link https://www.grabs-edv.de}
+ * @copyright   Andreas Schenkel {@link https://github.com/andreasschenkel}
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -28,7 +27,7 @@ defined('MOODLE_INTERNAL') || die;
 
 $page = new admin_settingpage('unilabeltype_imageboard', get_string('pluginname', 'unilabeltype_imageboard'));
 
-$imageboardsettings = array();
+$imageboardsettings = [];
 
 $imageboardsettings[] = new admin_setting_configcheckbox('unilabeltype_imageboard/active',
     get_string('active'),
@@ -36,7 +35,7 @@ $imageboardsettings[] = new admin_setting_configcheckbox('unilabeltype_imageboar
     true);
 
 $numbers = array_combine(range(100, 1800, 50), range(100, 1800, 50));
-$numbers = array(0 => get_string('autocanvaswidth', 'unilabeltype_imageboard')) + $numbers;
+$numbers = [0 => get_string('autocanvaswidth', 'unilabeltype_imageboard')] + $numbers;
 $imageboardsettings[] = new admin_setting_configselect('unilabeltype_imageboard/default_canvaswidth',
     get_string('default_canvaswidth', 'unilabeltype_imageboard'),
     get_string('default_canvaswidth_help', 'unilabeltype_imageboard'),
