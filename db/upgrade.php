@@ -84,5 +84,17 @@ function xmldb_unilabeltype_imageboard_upgrade($oldversion) {
         upgrade_plugin_savepoint(true, 2023092501, 'unilabeltype', 'imageboard');
     }
 
+    if ($oldversion < 2023101200) {
+
+        // Define table unilabeltype_imageboard_img to be renamed to NEWNAMEGOESHERE.
+        $table = new xmldb_table('unilabeltype_imageboard_tile');
+
+        // Launch rename table for unilabeltype_imageboard_img.
+        $dbman->rename_table($table, 'unilabeltype_imageboard_img');
+
+        // Imageboard savepoint reached.
+        upgrade_plugin_savepoint(true, 2023101200, 'unilabeltype', 'imageboard');
+    }
+
     return true;
 }
