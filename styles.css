@@ -43,4 +43,5 @@ a .unilabel-imageboard-image:hover {
 .unilabeltype-imageboard-container {
     border: solid 1px #aaa;
     padding: 10px;
+    overflow: hidden; /* Hide scrollbars */
 }

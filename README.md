@@ -10,6 +10,14 @@ Form:
 
 CHANGELOG
 
+[v3.0.0] 2023101400:
+
+- Hide scrollbars
+- codeformatings in template
+- only resize imageboard and NOT the buttons
+- optimize some margings and paddings during resizing
+
+
 2023092700:
 
 - "better support of xaxis and yaxis in helpergrid
