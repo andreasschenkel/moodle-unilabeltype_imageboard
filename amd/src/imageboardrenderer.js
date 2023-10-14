@@ -16,7 +16,7 @@ export const init = (cmid, canvaswidth, canvasheight) => {
         const imageboard = document.getElementById("unilabeltype-imageboard-" + cmid);
         const imageboard_container = document.getElementById("unilabeltype-imageboard-container-"+cmid);
         let newcanvaswidth = 0;
-        if (getWidth() < 770) {
+        if (getWidth() > 770) {
             newcanvaswidth = (getWidth() - imageboard.getBoundingClientRect().left)-70;
             imageboard_container.style.width = newcanvaswidth + 20 + "px";
         } else {
