@@ -44,13 +44,13 @@ class backup_unilabeltype_imageboard_subplugin extends backup_subplugin {
         $subplugin = $this->get_subplugin_element();
         $subpluginwrapper = new backup_nested_element($this->get_recommended_name());
         $subpluginimageboard = new backup_nested_element('unilabeltype_imageboard',
-            array('id'),
-            // 8. Add setting to backup
-            array('showintro', 'canvaswidth', 'canvasheight', 'fontsize', 'titlebackgroundcolor')
+                ['id'],
+                // 8. Add setting to backup
+                ['showintro', 'canvaswidth', 'canvasheight', 'fontsize', 'titlebackgroundcolor']
         );
         $subplugintile = new backup_nested_element('unilabeltype_imageboard_tile',
-            array('id'),
-            array('title', 'url', 'xposition', 'yposition', 'targetwidth', 'targetheight', 'border')
+                ['id'],
+                ['title', 'url', 'xposition', 'yposition', 'targetwidth', 'targetheight', 'border']
         );
 
         // Connect XML elements into the tree.
@@ -59,8 +59,8 @@ class backup_unilabeltype_imageboard_subplugin extends backup_subplugin {
         $subpluginimageboard->add_child($subplugintile);
 
         // Set source to populate the data.
-        $subpluginimageboard->set_source_table('unilabeltype_imageboard', array('unilabelid' => backup::VAR_ACTIVITYID));
-        $subplugintile->set_source_table('unilabeltype_imageboard_tile', array('imageboardid' => backup::VAR_PARENTID));
+        $subpluginimageboard->set_source_table('unilabeltype_imageboard', ['unilabelid' => backup::VAR_ACTIVITYID]);
+        $subplugintile->set_source_table('unilabeltype_imageboard_tile', ['imageboardid' => backup::VAR_PARENTID]);
 
         // File annotations.
         $subpluginimageboard->annotate_files('unilabeltype_imageboard', 'backgroundimage', null);

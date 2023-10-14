@@ -426,7 +426,7 @@ class content_type extends \mod_unilabel\content_type {
                     'showborders' => $showborders,
                     'bordercolor' => $bordercolor,
                     'gridcolor' => $gridcolor,
-                    'helpergrids' => $helpergrids
+                    'helpergrids' => $helpergrids,
             ];
         }
 
@@ -640,7 +640,7 @@ class content_type extends \mod_unilabel\content_type {
                 '<br>',
                 '<br />',
                 '<p>',
-                '</p>'
+                '</p>',
         ];
 
         $check = trim(str_replace($searches, '', $content));
@@ -659,7 +659,7 @@ class content_type extends \mod_unilabel\content_type {
                 'maxfiles' => EDITOR_UNLIMITED_FILES,
                 'noclean' => true,
                 'context' => $context,
-                'subdirs' => true
+                'subdirs' => true,
         ];
     }
 
@@ -672,7 +672,7 @@ class content_type extends \mod_unilabel\content_type {
     public function format_options($context) {
         return [
                 'noclean' => true,
-                'context' => $context
+                'context' => $context,
         ];
     }
 
@@ -707,7 +707,7 @@ class content_type extends \mod_unilabel\content_type {
         $colourpickercontent->defaultvalue = $defaultvalue;
         $colourpickerhtml = $renderer->render_from_template('unilabeltype_carousel/colourpicker', $colourpickercontent);
         $mform->addElement('html', $colourpickerhtml);
-        $PAGE->requires->js_init_call('M.util.init_colour_picker', array($colourpickercontent->inputid, null));
+        $PAGE->requires->js_init_call('M.util.init_colour_picker', [$colourpickercontent->inputid, null]);
     }
 
 }
