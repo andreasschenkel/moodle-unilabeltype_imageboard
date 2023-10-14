@@ -15,18 +15,17 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * unilabel type imageboard
+ * Unilabel type imageboard
  *
  * @package     unilabeltype_imageboard
- * @author      Andreas Grabs <info@grabs-edv.de>
  * @author      Andreas Schenkel
- * @copyright   2018 onwards Grabs EDV {@link https://www.grabs-edv.de}
+ * @copyright   Andreas Schenkel {@link https://github.com/andreasschenkel}
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die;
 
 $plugin->component = 'unilabeltype_imageboard';
-$plugin->version   = 2023100600;
+$plugin->version   = 2023101200;
 $plugin->requires  = 2022111800;
 $plugin->dependencies = ['mod_unilabel' => 2023042304];

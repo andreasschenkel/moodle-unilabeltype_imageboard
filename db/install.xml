@@ -18,7 +18,7 @@
         <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
       </KEYS>
     </TABLE>
-    <TABLE NAME="unilabeltype_imageboard_tile" COMMENT="Default comment for the table, please edit me">
+    <TABLE NAME="unilabeltype_imageboard_img" COMMENT="Default comment for the table, please edit me">
       <FIELDS>
         <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
         <FIELD NAME="imageboardid" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false"/>

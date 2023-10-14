@@ -15,21 +15,20 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * unilabel type imageboard
+ * Unilabel type imageboard
  *
  * @package     unilabeltype_imageboard
- * @author      Andreas Grabs <info@grabs-edv.de>
  * @author      Andreas Schenkel
- * @copyright   2018 onwards Grabs EDV {@link https://www.grabs-edv.de}
+ * @copyright   Andreas Schenkel {@link https://github.com/andreasschenkel}
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 /**
  * Restore definition of this content type
+ *
  * @package     unilabeltype_imageboard
- * @author      Andreas Grabs <info@grabs-edv.de>
  * @author      Andreas Schenkel
- * @copyright   2018 onwards Grabs EDV {@link https://www.grabs-edv.de}
+ * @copyright   Andreas Schenkel {@link https://github.com/andreasschenkel}
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class restore_unilabeltype_imageboard_subplugin extends restore_subplugin {
@@ -40,14 +39,14 @@ class restore_unilabeltype_imageboard_subplugin extends restore_subplugin {
      */
     protected function define_unilabel_subplugin_structure() {
 
-        $paths = array();
+        $paths = [];
 
         $elename = $this->get_namefor();
         $elepath = $this->get_pathfor('/unilabeltype_imageboard');
         $paths[] = new restore_path_element($elename, $elepath);
 
-        $elename = $this->get_namefor('tile');
-        $elepath = $this->get_pathfor('/unilabeltype_imageboard/unilabeltype_imageboard_tile');
+        $elename = $this->get_namefor('image');
+        $elepath = $this->get_pathfor('/unilabeltype_imageboard/unilabeltype_imageboard_img');
         $paths[] = new restore_path_element($elename, $elepath);
 
         return $paths; // And we return the interesting paths.
@@ -72,20 +71,20 @@ class restore_unilabeltype_imageboard_subplugin extends restore_subplugin {
     }
 
     /**
-     * Processes the unilabeltype_imageboard_tile element
+     * Processes the unilabeltype_imageboard_img element
      * @param array $data
      */
-    public function process_unilabeltype_imageboard_tile($data) {
+    public function process_unilabeltype_imageboard_img($data) {
         global $DB;
 
         $data = (object)$data;
         $oldid = $data->id;
         $data->imageboardid = $this->get_new_parentid($this->get_namefor());
-        $newitemid = $DB->insert_record('unilabeltype_imageboard_tile', $data);
-        $this->set_mapping($this->get_namefor('tile'), $oldid, $newitemid, true);
+        $newitemid = $DB->insert_record('unilabeltype_imageboard_img', $data);
+        $this->set_mapping($this->get_namefor('image'), $oldid, $newitemid, true);
 
         // Process files.
-        $this->add_related_files('unilabeltype_imageboard', 'image', 'unilabeltype_imageboard_tile');
+        $this->add_related_files('unilabeltype_imageboard', 'image', 'unilabeltype_imageboard_img');
     }
 
     /**
@@ -93,11 +92,11 @@ class restore_unilabeltype_imageboard_subplugin extends restore_subplugin {
      * processed by the link decoder
      */
     public static function define_decode_contents() {
-        $contents = array();
+        $contents = [];
 
-        $contents[] = new restore_decode_content('unilabeltype_imageboard_tile',
-            array('url'),
-            'unilabeltype_imageboard_tile');
+        $contents[] = new restore_decode_content('unilabeltype_imageboard_img',
+            ['url'],
+            'unilabeltype_imageboard_img');
 
         return $contents;
     }

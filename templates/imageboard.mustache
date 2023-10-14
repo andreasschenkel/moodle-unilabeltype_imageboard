@@ -27,12 +27,12 @@
           "id": "9",
           "imageboardid": "1",
           "title": "",
-          "url": "http:\/\/localhost:8000\/mod\/forum\/view.php?id=136",
+          "url": "http://localhost/mod/forum/view.php?id=136",
           "xposition": "150",
           "yposition": "100",
           "targetwidth": "80",
           "targetheight": "0",
-          "imageurl": {},
+          "imageurl": "",
           "nr": 0
         },
         {
@@ -44,7 +44,7 @@
           "yposition": "200",
           "targetwidth": "0",
           "targetheight": "0",
-          "imageurl": {http:\/\/localhost:8000\/mod\/forum\/view.php?id=137},
+          "imageurl": "http://localhost/image.png",
           "nr": 1
         }
       ],
@@ -54,7 +54,7 @@
       "autocanvaswidth": false,
       "canvasheight": "600",
       "autocanvasheight": false,
-      "backgroundimage": {},
+      "backgroundimage": "",
       "capababilityforgrid": true,
       "showborders": true,
       "bordercolor": "#2D57FA",
@@ -111,7 +111,7 @@
                     {{#hastargetwidth}}width: {{targetwidth}}px; {{/hastargetwidth}}
                     {{#hastargetheight}}height: {{targetheight}}px; {{/hastargetheight}}">
 
-                    <img src="{{imageurl}}" style="object-fit: contain;
+                    <img src="{{imageurl}}" title="{{title}}" style="object-fit: contain;
                             width: 100%;
                             height: 100%;
                             {{#showborders}} {{#border}}border: solid {{border}}px {{bordercolor}};{{/border}} {{/showborders}};">
@@ -174,7 +174,7 @@
 <div class="unilabel-imageboard-list">
     <p class="unilabel-imageboard-list-button">
         <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#unilabel-imageboard-list{{cmid}}"
-                aria-expanded="false" aria-controls="unilabel-imageboard-list">
+                aria-expanded="false" aria-controls="unilabel-imageboard-list{{cmid}}">
             {{#str}} buttonlabel, unilabeltype_imageboard {{/str}}
         </button>
     </p>
@@ -193,7 +193,6 @@
                                          width="40px"
                                          style="margin-right: 5px;"
                                          alt="{{title}}">
-                                    </img>
                                     {{title}}
                                 </div>
                             </div>
@@ -220,7 +219,7 @@
                             {{nr}}
                         </div>
                         <div>
-                            <img src="{{{imageurl}}}" width="40px;" style="margin-right: 5px;" alt="{{title}}"></img>
+                            <img src="{{{imageurl}}}" width="40" style="margin-right: 5px;" alt="{{title}}">
                             {{title}}
                         </div>
                     </div>

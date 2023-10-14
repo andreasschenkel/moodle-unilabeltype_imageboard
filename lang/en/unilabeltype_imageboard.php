@@ -15,12 +15,11 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * unilabel type imageboard
+ * Unilabel type imageboard
  *
  * @package     unilabeltype_imageboard
- * @author      Andreas Grabs <info@grabs-edv.de>
  * @author      Andreas Schenkel
- * @copyright   2018 onwards Grabs EDV {@link https://www.grabs-edv.de}
+ * @copyright   Andreas Schenkel {@link https://github.com/andreasschenkel}
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -32,7 +31,7 @@ $string['backgroundimage'] = 'Backgroundimage';
 $string['border'] = 'Border (px)';
 $string['buttonlabel'] = 'Imagelist:';
 $string['buttonlabelresize'] = 'Resize to fit';
-$string['buttonlabelhelpergrid'] = 'show #';
+$string['buttonlabelhelpergrid'] = 'Show Grid';
 $string['default_bordercolor'] = 'Default bordercolor';
 $string['default_bordercolor_desc'] = 'Default bordercolor of images';
 $string['canvaswidth'] = 'Witdh of canvas';
@@ -42,7 +41,7 @@ $string['default_fontsize_help'] = 'Default fontsize of title of an image';
 $string['default_canvaswidth'] = 'Default witdh of canvas';
 $string['default_canvaswidth_help'] = 'This is the default width of canvas when adding an imageboard.';
 $string['default_canvasheight'] = 'Default height of canvas';
-$string['default_canvasheight_help'] = 'If NO backgroundimage is used, then this is the default height of canvas.';
+$string['default_canvasheight_help'] = 'If no backgroundimage is used, then this is the default height of canvas.';
 $string['default_gridcolor'] = 'Default grid color';
 $string['default_gridcolor_desc'] = 'Default color of a grid that is shown to teacher to help positioning the images.';
 $string['default_height'] = 'Default height';
@@ -56,25 +55,25 @@ $string['height_help'] = 'If your pictures are of a different size, use the fixe
 $string['image'] = 'Image';
 $string['imagenr'] = 'Image {$a}';
 $string['images'] = 'Images';
-$string['targetheight'] = 'height=';
+$string['targetheight'] = 'Height=';
 $string['targetheight_help'] = 'Values different from 0 will be used. If both are 0, then the original imagesize will be used';
 $string['targetsize'] = 'Width/height of the image';
-$string['targetwidth'] = 'width=';
+$string['targetwidth'] = 'Width=';
 $string['targetsize_help'] = 'Values different from 0 will be used. If both are 0, then the original imagesize will be used';
 $string['nocontent'] = 'No content';
-$string['placeholder_xposition'] = 'x';
-$string['placeholder_yposition'] = 'y';
-$string['placeholder_targetwidth'] = 'width';
-$string['placeholder_targetheight'] = 'height';
-$string['pluginname'] = 'imageboard';
+$string['placeholder_xposition'] = 'X';
+$string['placeholder_yposition'] = 'Y';
+$string['placeholder_targetwidth'] = 'Width';
+$string['placeholder_targetheight'] = 'Height';
+$string['pluginname'] = 'Imageboard';
 $string['pluginname_help'] = 'This plugin type creates an imageboard consisting of a canvas where pictures can be placed at different positions. A click on the image brings the user to a defined url.';
 $string['position'] = 'Upper left corner:';
 $string['position_help'] = 'By default all images will have the upper left corner at coordinate (0/0). You can moove the image with this input fields.';
 $string['privacy:metadata'] = 'The unilabel type Imageboard does not store any personal data.';
 $string['showunilabeltext'] = 'Show unilabel text';
 $string['title'] = 'Title';
-$string['titlebackgroundcolor'] = 'Backroundcolor of title';
+$string['titlebackgroundcolor'] = 'Backround color of title';
 $string['url'] = 'Url';
 $string['url_help'] = 'By defining a url the image becomes a clickable button linked to the defined url.';
-$string['xposition'] = 'x';
-$string['yposition'] = 'y';
+$string['xposition'] = 'X';
+$string['yposition'] = 'Y';
