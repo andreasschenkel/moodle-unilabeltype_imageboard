@@ -63,7 +63,7 @@ $imageboardsettings[] = new admin_setting_configselect('unilabeltype_imageboard/
 $imageboardsettings[] = new admin_setting_configcolourpicker('unilabeltype_imageboard/default_titlebackgroundcolor',
         get_string('default_titlebackgroundcolor', 'unilabeltype_imageboard'),
         get_string('default_titlebackgroundcolor_desc', 'unilabeltype_imageboard')
-        , '#33ff33');
+        , '#110099');
 
 $imageboardsettings[] = new admin_setting_configcheckbox('unilabeltype_imageboard/default_showborders',
     get_string('default_showborders', 'unilabeltype_imageboard'),
