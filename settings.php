@@ -28,7 +28,7 @@ defined('MOODLE_INTERNAL') || die;
 
 $page = new admin_settingpage('unilabeltype_imageboard', get_string('pluginname', 'unilabeltype_imageboard'));
 
-$imageboardsettings = [];
+$imageboardsettings = array();
 
 $imageboardsettings[] = new admin_setting_configcheckbox('unilabeltype_imageboard/active',
     get_string('active'),
@@ -36,7 +36,7 @@ $imageboardsettings[] = new admin_setting_configcheckbox('unilabeltype_imageboar
     true);
 
 $numbers = array_combine(range(100, 1800, 50), range(100, 1800, 50));
-$numbers = [0 => get_string('autocanvaswidth', 'unilabeltype_imageboard')] + $numbers;
+$numbers = array(0 => get_string('autocanvaswidth', 'unilabeltype_imageboard')) + $numbers;
 $imageboardsettings[] = new admin_setting_configselect('unilabeltype_imageboard/default_canvaswidth',
     get_string('default_canvaswidth', 'unilabeltype_imageboard'),
     get_string('default_canvaswidth_help', 'unilabeltype_imageboard'),
@@ -64,7 +64,7 @@ $imageboardsettings[] = new admin_setting_configselect('unilabeltype_imageboard/
 $imageboardsettings[] = new admin_setting_configcolourpicker('unilabeltype_imageboard/default_titlebackgroundcolor',
         get_string('default_titlebackgroundcolor', 'unilabeltype_imageboard'),
         get_string('default_titlebackgroundcolor_desc', 'unilabeltype_imageboard')
-        , '#110099');
+        , '#33ff33');
 
 $imageboardsettings[] = new admin_setting_configcheckbox('unilabeltype_imageboard/default_showborders',
     get_string('default_showborders', 'unilabeltype_imageboard'),

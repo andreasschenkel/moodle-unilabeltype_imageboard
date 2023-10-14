@@ -5,16 +5,14 @@
  */
 export const init = (cmid, canvaswidth, canvasheight) => {
     window.addEventListener("resize", function () {
-        const imageboard = document.getElementById("unilabeltype-imageboard-"+cmid);
-        const imageboard_container = document.getElementById("unilabeltype-imageboard-container-"+cmid);
-
+        const imageboard = document.getElementById("unilabeltype-imageboard-container-"+cmid);
         let newcanvaswidth = 0;
-        if (getWidth() > 770) {
-            newcanvaswidth = (getWidth() - imageboard.getBoundingClientRect().left)-70;
-            imageboard_container.style.width = newcanvaswidth + 20 + "px";
-        } else {
+        if (getWidth() < 750) {
+            newcanvaswidth = (getWidth() - imageboard.getBoundingClientRect().left)-10;
+        } else if (getWidth() < 585) {
             newcanvaswidth = (getWidth() - imageboard.getBoundingClientRect().left)-20;
-            imageboard_container.style.width = newcanvaswidth + 20 + "px";
+        } else {
+            newcanvaswidth = (getWidth() - imageboard.getBoundingClientRect().left)-80;
         }
 
         if (newcanvaswidth > canvaswidth) {
@@ -23,7 +21,7 @@ export const init = (cmid, canvaswidth, canvasheight) => {
 
         let widthfactor = newcanvaswidth / canvaswidth;
         //const mydiv = document.getElementById("module-"+cmid);
-        const mydiv = document.getElementById("unilabeltype-imageboard-"+cmid);
+        const mydiv = document.getElementById("unilabeltype-imageboard-container-"+cmid);
 
         mydiv.style.transform = "scale("+widthfactor+")";
         mydiv.style.transformOrigin = "0 0";
@@ -37,16 +35,14 @@ export const init = (cmid, canvaswidth, canvasheight) => {
     const resizer = document.getElementById("unilabeltype-imageboard-resizer-"+cmid);
     resizer.addEventListener("click", function () {
 
-            const imageboard = document.getElementById("unilabeltype-imageboard-"+cmid);
-            const imageboard_container = document.getElementById("unilabeltype-imageboard-container-"+cmid);
-
+            const imageboard = document.getElementById("unilabeltype-imageboard-container-"+cmid);
             let newcanvaswidth = 0;
-            if (getWidth() > 770) {
-                newcanvaswidth = (getWidth() - imageboard.getBoundingClientRect().left)-70;
-                imageboard_container.style.width = newcanvaswidth + 20 + "px";
-            } else {
+            if (getWidth() < 750) {
+                newcanvaswidth = (getWidth() - imageboard.getBoundingClientRect().left)-10;
+            } else if (getWidth() < 585) {
                 newcanvaswidth = (getWidth() - imageboard.getBoundingClientRect().left)-20;
-                imageboard_container.style.width = newcanvaswidth + 20 + "px";
+            } else {
+                newcanvaswidth = (getWidth() - imageboard.getBoundingClientRect().left)-80;
             }
 
             if (newcanvaswidth > canvaswidth) {
@@ -55,7 +51,7 @@ export const init = (cmid, canvaswidth, canvasheight) => {
 
             let widthfactor = newcanvaswidth / canvaswidth;
             //const mydiv = document.getElementById("module-"+cmid);
-            const mydiv = document.getElementById("unilabeltype-imageboard-"+cmid);
+            const mydiv = document.getElementById("unilabeltype-imageboard-container-"+cmid);
 
             mydiv.style.transform = "scale("+widthfactor+")";
             mydiv.style.transformOrigin = "0 0";
