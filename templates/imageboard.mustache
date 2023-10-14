@@ -62,173 +62,174 @@
     }
 }}
 <div id="unilabeltype-imageboard-container-{{cmid}}" class="unilabeltype-imageboard-container">
-{{#showintro}}
-    {{{intro}}}
-{{/showintro}}
-<div class="unilabeltype-imageboard-controllbuttons">
-    {{#canvaswidth}}
-        <button id="unilabeltype-imageboard-resizer-{{cmid}}" class="btn unilabeltype-imageboard-resizer">{{#str}} buttonlabelresize, unilabeltype_imageboard {{/str}}</button>
-    {{/canvaswidth}}
-    {{#capababilityforgrid}}
-        <button id="unilabeltype-imageboard-gridtoggler-{{cmid}}" class="btn unilabeltype-imageboard-gridtoggler">{{#str}} buttonlabelhelpergrid, unilabeltype_imageboard {{/str}}</button>
-    {{/capababilityforgrid}}
-</div>
+    {{#showintro}}
+        {{{intro}}}
+    {{/showintro}}
+    <div class="unilabeltype-imageboard-controllbuttons">
+        {{#canvaswidth}}
+            <button id="unilabeltype-imageboard-resizer-{{cmid}}" class="btn unilabeltype-imageboard-resizer">{{#str}} buttonlabelresize, unilabeltype_imageboard {{/str}}</button>
+        {{/canvaswidth}}
+        {{#capababilityforgrid}}
+            <button id="unilabeltype-imageboard-gridtoggler-{{cmid}}" class="btn unilabeltype-imageboard-gridtoggler">{{#str}}
+                buttonlabelhelpergrid, unilabeltype_imageboard {{/str}}</button>
+        {{/capababilityforgrid}}
+    </div>
 
-<div id="unilabeltype-imageboard-{{cmid}}"
-     class="unilabeltype-imageboard"
-     style="position: relative;
-             background: url('{{backgroundimage}}');
-             width: {{canvaswidth}}px;
-             height: {{canvasheight}}px;
-             background-size: cover;">
-    {{#images}}
-        <div id="imageid_{{nr}}">
-            {{#url}}
-                <a href="{{url}}">
-            {{/url}}
-
-            {{#title}}
-                <div style="position: absolute;
-                        z-index: 5;
-                        left: {{xposition}}px;
-                        top: calc({{yposition}}px - ({{fontsize}}px + 10px));
-                        color: #fff; background-color: {{titlebackgroundcolor}};
-                    {{#fontsize}}
-                        font-size: {{fontsize}}px;
-                        line-height: {{fontsize}}px;
-                        padding: 5px;
-                    {{/fontsize}}
-                        ">
-                    {{title}}
-                </div>
-            {{/title}}
-
-            {{#imageurl}}
-                <div class="unilabel-imageboard-image" style="position: absolute;
-                        z-index: 5;
-                        left: {{xposition}}px;
-                        top:{{yposition}}px;
-                    {{#hastargetwidth}}width: {{targetwidth}}px; {{/hastargetwidth}}
-                    {{#hastargetheight}}height: {{targetheight}}px; {{/hastargetheight}}">
-
-                    <img src="{{imageurl}}" title="{{title}}" style="object-fit: contain;
-                            width: 100%;
-                            height: 100%;
-                            {{#showborders}} {{#border}}border: solid {{border}}px {{bordercolor}};{{/border}} {{/showborders}};">
-                </div>
-            {{/imageurl}}
-
-            {{#url}}
-                </a>
-            {{/url}}
-        </div>
-    {{/images}}
-
-    {{#capababilityforgrid}}
-        <div id="unilabeltype-imageboard-helpergrid-{{cmid}}" class="hidden">
-        {{#helpergrids}}
-            <div style="position: absolute;
-                    left: {{x}}px;
-                    top: {{y}}px;
-                    width: 50px;
-                    height: 50px;
-                    border-right: solid 1px {{gridcolor}};
-                    border-bottom: solid 1px {{gridcolor}};
-                    z-index: 1;">
-            </div>
-
-        <!-- xAxis -->
-            {{^y}}
-            <div style="position: absolute;
-                    left: calc({{x}}px - 10px);
-                    top: -12px;
-                    color: #fff;
-                    text-shadow: 2px 2px #02023f;
-                    z-index: 1;">
-                {{x}}
-            </div>
-            {{/y}}
-
-        <!-- yAxis -->
-            {{^x}}
-                <div style="position: absolute;
-                        left: 0;
-                        top: calc({{y}}px - 12px);
-                        color: #fff;
-                        text-shadow: 2px 2px #02023f;
-                        z-index: 1;">
-                    {{y}}
-                </div>
-            {{/x}}
-
-        {{/helpergrids}}
-
-        </div>
-    {{/capababilityforgrid}}
-
-</div>
-
-<!-- List the used images or text -->
-
-{{#hasimages}}
-<div class="unilabel-imageboard-list">
-    <p class="unilabel-imageboard-list-button">
-        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#unilabel-imageboard-list{{cmid}}"
-                aria-expanded="false" aria-controls="unilabel-imageboard-list{{cmid}}">
-            {{#str}} buttonlabel, unilabeltype_imageboard {{/str}}
-        </button>
-    </p>
-    <div class="collapse unilabel-imageboard-list-collapsable" id="unilabel-imageboard-list{{cmid}}">
-        <div class="card card-body">
-            {{#images}}
+    <div id="unilabeltype-imageboard-{{cmid}}"
+         class="unilabeltype-imageboard"
+         style="position: relative;
+                 background: url('{{backgroundimage}}');
+                 width: {{canvaswidth}}px;
+                 height: {{canvasheight}}px;
+                 background-size: cover;">
+        {{#images}}
+            <div id="imageid_{{nr}}">
                 {{#url}}
-                    {{#imageurl}}
-                        <a href="{{{url}}}">
+                <a href="{{url}}">
+                {{/url}}
+
+                {{#title}}
+                    <div style="position: absolute;
+                            z-index: 5;
+                            left: {{xposition}}px;
+                            top: calc({{yposition}}px - ({{fontsize}}px + 10px));
+                            color: #fff; background-color: {{titlebackgroundcolor}};
+                        {{#fontsize}}
+                        font-size: {{fontsize}}px;
+                                line-height: {{fontsize}}px;
+                                padding: 5px;
+                        {{/fontsize}}
+                            ">
+                        {{title}}
+                    </div>
+                {{/title}}
+
+                {{#imageurl}}
+                    <div class="unilabel-imageboard-image" style="position: absolute;
+                            z-index: 5;
+                            left: {{xposition}}px;
+                            top:{{yposition}}px;
+                        {{#hastargetwidth}}width: {{targetwidth}}px; {{/hastargetwidth}}
+                        {{#hastargetheight}}height: {{targetheight}}px; {{/hastargetheight}}">
+
+                        <img src="{{imageurl}}" title="{{title}}" style="object-fit: contain;
+                                width: 100%;
+                                height: 100%;
+                            {{#showborders}} {{#border}}border: solid {{border}}px {{bordercolor}};{{/border}} {{/showborders}};">
+                    </div>
+                {{/imageurl}}
+
+                {{#url}}
+                </a>
+                {{/url}}
+            </div>
+        {{/images}}
+
+        {{#capababilityforgrid}}
+            <div id="unilabeltype-imageboard-helpergrid-{{cmid}}" class="hidden">
+                {{#helpergrids}}
+                    <div style="position: absolute;
+                            left: {{x}}px;
+                            top: {{y}}px;
+                            width: 50px;
+                            height: 50px;
+                            border-right: solid 1px {{gridcolor}};
+                            border-bottom: solid 1px {{gridcolor}};
+                            z-index: 1;">
+                    </div>
+
+                    <!-- xAxis -->
+                    {{^y}}
+                        <div style="position: absolute;
+                                left: calc({{x}}px - 10px);
+                                top: -12px;
+                                color: #fff;
+                                text-shadow: 2px 2px #02023f;
+                                z-index: 1;">
+                            {{x}}
+                        </div>
+                    {{/y}}
+
+                    <!-- yAxis -->
+                    {{^x}}
+                        <div style="position: absolute;
+                                left: 0;
+                                top: calc({{y}}px - 12px);
+                                color: #fff;
+                                text-shadow: 2px 2px #02023f;
+                                z-index: 1;">
+                            {{y}}
+                        </div>
+                    {{/x}}
+
+                {{/helpergrids}}
+
+            </div>
+        {{/capababilityforgrid}}
+
+    </div>
+
+    <!-- List the used images or text -->
+
+    {{#hasimages}}
+        <div class="unilabel-imageboard-list">
+            <p class="unilabel-imageboard-list-button">
+                <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#unilabel-imageboard-list{{cmid}}"
+                        aria-expanded="false" aria-controls="unilabel-imageboard-list{{cmid}}">
+                    {{#str}} buttonlabel, unilabeltype_imageboard {{/str}}
+                </button>
+            </p>
+            <div class="collapse unilabel-imageboard-list-collapsable" id="unilabel-imageboard-list{{cmid}}">
+                <div class="card card-body">
+                    {{#images}}
+                        {{#url}}
+                            {{#imageurl}}
+                                <a href="{{{url}}}">
+                                    <div class="row" style="margin-left:20px; max-width: 500px;">
+                                        <div class="unilabel-imageboard-list-nr">
+                                            {{nr}}
+                                        </div>
+                                        <div>
+                                            <img src="{{{imageurl}}}"
+                                                 width="40px"
+                                                 style="margin-right: 5px;"
+                                                 alt="{{title}}">
+                                            {{title}}
+                                        </div>
+                                    </div>
+                                </a>
+                            {{/imageurl}}
+                            {{^imageurl}}
+                                <a href="{{{url}}}">
+                                    <div class="row" style="margin-left:20px; max-width: 500px;">
+                                        <div class="unilabel-imageboard-list-nr">
+                                            {{nr}}
+                                        </div>
+                                        <div class="border" style="width: 40px; height: 40px; margin-right: 5px;">
+                                        </div>
+                                        <div class="unilabel-imageboard-list-title">
+                                            {{title}}
+                                        </div>
+                                    </div>
+                                </a>
+                            {{/imageurl}}
+                        {{/url}}
+                        {{^url}}
                             <div class="row" style="margin-left:20px; max-width: 500px;">
                                 <div class="unilabel-imageboard-list-nr">
                                     {{nr}}
                                 </div>
                                 <div>
-                                    <img src="{{{imageurl}}}"
-                                         width="40px"
-                                         style="margin-right: 5px;"
-                                         alt="{{title}}">
+                                    <img src="{{{imageurl}}}" width="40" style="margin-right: 5px;" alt="{{title}}">
                                     {{title}}
                                 </div>
                             </div>
-                        </a>
-                    {{/imageurl}}
-                    {{^imageurl}}
-                        <a href="{{{url}}}">
-                            <div class="row" style="margin-left:20px; max-width: 500px;">
-                                <div class="unilabel-imageboard-list-nr">
-                                    {{nr}}
-                                </div>
-                                <div class="border" style="width: 40px; height: 40px; margin-right: 5px;">
-                                </div>
-                                <div class="unilabel-imageboard-list-title">
-                                    {{title}}
-                                </div>
-                            </div>
-                        </a>
-                    {{/imageurl}}
-                {{/url}}
-                {{^url}}
-                    <div class="row" style="margin-left:20px; max-width: 500px;">
-                        <div class="unilabel-imageboard-list-nr">
-                            {{nr}}
-                        </div>
-                        <div>
-                            <img src="{{{imageurl}}}" width="40" style="margin-right: 5px;" alt="{{title}}">
-                            {{title}}
-                        </div>
-                    </div>
-                {{/url}}
-            {{/images}}
+                        {{/url}}
+                    {{/images}}
+                </div>
+            </div>
         </div>
-    </div>
-</div>
-{{/hasimages}}
+    {{/hasimages}}
 </div>
 {{#js}}
     require(['unilabeltype_imageboard/imageboardrenderer'],
