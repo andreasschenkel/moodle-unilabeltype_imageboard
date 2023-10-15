@@ -10,6 +10,10 @@ Form:
 
 CHANGELOG
 
+[v3.0.1] 2023101500:
+
+- move duplicate code to resize function
+
 [v3.0.0] 2023101400:
 
 - Hide scrollbars
