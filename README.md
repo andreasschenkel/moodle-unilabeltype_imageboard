@@ -12,7 +12,8 @@ CHANGELOG
 
 [v3.0.1] 2023101500:
 
-- move duplicate code to resize function
+- move duplicate code to resize function 
+- Make the imageboard_container just 20px larger than the imageboard.
 
 [v3.0.0] 2023101400:
 
