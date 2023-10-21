@@ -10,6 +10,12 @@ Form:
 
 CHANGELOG
 
+[v3.0.1] 2023101500:
+
+- move duplicate code to resize function 
+- Make the imageboard_container just 20px larger than the imageboard.
+- If targetwidth is not 0 then width of title is targetwidth of image.
+
 [v3.0.0] 2023101400:
 
 - Hide scrollbars
