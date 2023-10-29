@@ -84,6 +84,9 @@ class content_type extends \mod_unilabel\content_type {
         $numbers = array_combine(range(100, 1800, 50), range(100, 1800, 50));
         $mform->addElement('select', $prefix . 'canvasheight', get_string('canvasheight', 'unilabeltype_imageboard'), $numbers);
 
+        $mform->addElement('checkbox', $prefix . 'autoscale', get_string('autoscale', 'unilabeltype_imageboard'));
+        $mform->addHelpButton($prefix . 'autoscale', 'autoscale', 'unilabeltype_imageboard');
+
         $mform->addElement(
                 'filemanager',
                 $prefix . 'backgroundimage',
@@ -356,7 +359,8 @@ class content_type extends \mod_unilabel\content_type {
      * @return string
      */
     public function get_content($unilabel, $cm, \plugin_renderer_base $renderer) {
-        global $USER;
+        global $USER, $PAGE;
+
         if (!$unilabeltyperecord = $this->load_unilabeltype_record($unilabel->id)) {
             return '';
         } else {
@@ -397,6 +401,7 @@ class content_type extends \mod_unilabel\content_type {
             $helpergrids = [];
             $canvaswidth = $unilabeltyperecord->canvaswidth;
             $canvasheight = $unilabeltyperecord->canvasheight;
+            $autoscale = $unilabeltyperecord->autoscale;
 
             if ($capababilityforgrid) {
                 for ($y = 0; $y < $canvasheight; $y = $y + 50) {
@@ -414,8 +419,9 @@ class content_type extends \mod_unilabel\content_type {
                 'images' => $images,
                 'hasimages' => $hasimages,
                 'cmid' => $cm->id,
-                'canvaswidth' => $unilabeltyperecord->canvaswidth,
-                'canvasheight' => $unilabeltyperecord->canvasheight,
+                'canvaswidth' => $canvaswidth,
+                'canvasheight' => $canvasheight,
+                'autoscale' => $autoscale,
                 'backgroundimage' => $unilabeltyperecord->backgroundimage,
                 // 4. Add setting in function get_content.
                 'fontsize' => $unilabeltyperecord->fontsize,
@@ -425,6 +431,7 @@ class content_type extends \mod_unilabel\content_type {
                 'bordercolor' => $bordercolor,
                 'gridcolor' => $gridcolor,
                 'helpergrids' => $helpergrids,
+                'editing' => $PAGE->user_is_editing(),
             ];
         }
 
@@ -480,6 +487,7 @@ class content_type extends \mod_unilabel\content_type {
 
         $unilabeltyperecord->canvaswidth = $formdata->{$prefix . 'canvaswidth'};
         $unilabeltyperecord->canvasheight = $formdata->{$prefix . 'canvasheight'};
+        $unilabeltyperecord->autoscale = !empty($formdata->{$prefix . 'autoscale'});
 
         // 5. Add setting to save_content.
         $unilabeltyperecord->fontsize = $formdata->{$prefix . 'fontsize'};

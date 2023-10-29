@@ -16,49 +16,53 @@
 }}
 {{!
     @template unilabeltype_imageboard/imageboard
-    Template to show a bootstrap modal dialog.
+    Template to show an imageboard with images.
 
     Example context (json):
     {
-      "showintro": false,
-      "intro": "",
-      "images": [
-        {
-          "id": "9",
-          "imageboardid": "1",
-          "title": "",
-          "url": "http://localhost/mod/forum/view.php?id=136",
-          "xposition": "150",
-          "yposition": "100",
-          "targetwidth": "80",
-          "targetheight": "0",
-          "imageurl": "",
-          "nr": 0
-        },
-        {
-          "id": "10",
-          "imageboardid": "1",
-          "title": "",
-          "url": "",
-          "xposition": "400",
-          "yposition": "200",
-          "targetwidth": "0",
-          "targetheight": "0",
-          "imageurl": "http://localhost/image.png",
-          "nr": 1
-        }
-      ],
-      "hasimages": true,
-      "cmid": "140",
-      "canvaswidth": "500",
-      "autocanvaswidth": false,
-      "canvasheight": "600",
-      "autocanvasheight": false,
-      "backgroundimage": "",
-      "capababilityforgrid": true,
-      "showborders": true,
-      "bordercolor": "#2D57FA",
-      "gridcolor": "#B7009E"
+        "showintro": false,
+        "intro": "",
+        "images": [
+            {
+                "title": "",
+                "url": "http://localhost/mod/forum/view.php?id=136",
+                "xposition": "150",
+                "yposition": "100",
+                "targetwidth": "80",
+                "targetheight": "0",
+                "hastargetwidth": true,
+                "hastargetheight": true,
+                "fontsize": "12",
+                "imageurl": "http://localhost/image1.png",
+                "nr": 0
+            },
+            {
+                "title": "",
+                "url": "",
+                "xposition": "400",
+                "yposition": "200",
+                "targetwidth": "0",
+                "targetheight": "0",
+                "hastargetwidth": true,
+                "hastargetheight": true,
+                "fontsize": "12",
+                "imageurl": "http://localhost/image2.png",
+                "nr": 1
+            }
+        ],
+        "hasimages": true,
+        "titlebackgroundcolor": "#0000ff",
+        "cmid": "140",
+        "canvaswidth": "500",
+        "autoscale": false,
+        "canvasheight": "600",
+        "autocanvasheight": false,
+        "backgroundimage": "",
+        "capababilityforgrid": true,
+        "showborders": true,
+        "bordercolor": "#2D57FA",
+        "border": "4",
+        "gridcolor": "#B7009E"
     }
 }}
 <div id="unilabeltype-imageboard-container-{{cmid}}" class="unilabeltype-imageboard-container">
@@ -66,12 +70,11 @@
         {{{intro}}}
     {{/showintro}}
     <div class="unilabeltype-imageboard-controllbuttons">
-        {{#canvaswidth}}
-            <button id="unilabeltype-imageboard-resizer-{{cmid}}" class="btn unilabeltype-imageboard-resizer">{{#str}} buttonlabelresize, unilabeltype_imageboard {{/str}}</button>
-        {{/canvaswidth}}
         {{#capababilityforgrid}}
-            <button id="unilabeltype-imageboard-gridtoggler-{{cmid}}" class="btn unilabeltype-imageboard-gridtoggler">{{#str}}
-                buttonlabelhelpergrid, unilabeltype_imageboard {{/str}}</button>
+            <i class="fa fa-th fa-fw"></i>
+            <a href="#" id="unilabeltype-imageboard-gridtoggler-{{cmid}}">
+                {{#str}} buttonlabelhelpergridshow, unilabeltype_imageboard {{/str}}
+            </a>
         {{/capababilityforgrid}}
     </div>
 
@@ -83,91 +86,11 @@
                  height: {{canvasheight}}px;
                  background-size: cover;">
         {{#images}}
-            <div id="imageid_{{nr}}">
-                {{#url}}
-                <a href="{{url}}">
-                {{/url}}
-
-                {{#title}}
-                    <div style="position: absolute;
-                            z-index: 5;
-                            left: {{xposition}}px;
-                            top: calc({{yposition}}px - ({{fontsize}}px + 10px));
-                            color: #fff; background-color: {{titlebackgroundcolor}};
-                        {{#fontsize}}
-                        font-size: {{fontsize}}px;
-                                line-height: {{fontsize}}px;
-                                padding: 5px;
-                        {{/fontsize}}
-                        {{#targetwidth}}
-                            width: {{targetwidth}}px;
-                        {{/targetwidth}}
-                            ">
-                        {{title}}
-                    </div>
-                {{/title}}
-
-                {{#imageurl}}
-                    <div class="unilabel-imageboard-image" style="position: absolute;
-                            z-index: 5;
-                            left: {{xposition}}px;
-                            top:{{yposition}}px;
-                        {{#hastargetwidth}}width: {{targetwidth}}px; {{/hastargetwidth}}
-                        {{#hastargetheight}}height: {{targetheight}}px; {{/hastargetheight}}">
-
-                        <img src="{{imageurl}}" title="{{title}}" style="object-fit: contain;
-                                width: 100%;
-                                height: 100%;
-                            {{#showborders}} {{#border}}border: solid {{border}}px {{bordercolor}};{{/border}} {{/showborders}};">
-                    </div>
-                {{/imageurl}}
-
-                {{#url}}
-                </a>
-                {{/url}}
-            </div>
+            {{> unilabeltype_imageboard/image }}
         {{/images}}
 
         {{#capababilityforgrid}}
-            <div id="unilabeltype-imageboard-helpergrid-{{cmid}}" class="hidden">
-                {{#helpergrids}}
-                    <div style="position: absolute;
-                            left: {{x}}px;
-                            top: {{y}}px;
-                            width: 50px;
-                            height: 50px;
-                            border-right: solid 1px {{gridcolor}};
-                            border-bottom: solid 1px {{gridcolor}};
-                            z-index: 1;">
-                    </div>
-
-                    <!-- xAxis -->
-                    {{^y}}
-                        <div style="position: absolute;
-                                left: calc({{x}}px - 10px);
-                                top: -12px;
-                                color: #fff;
-                                text-shadow: 2px 2px #02023f;
-                                z-index: 1;">
-                            {{x}}
-                        </div>
-                    {{/y}}
-
-                    <!-- yAxis -->
-                    {{^x}}
-                        <div style="position: absolute;
-                                left: 0;
-                                top: calc({{y}}px - 12px);
-                                color: #fff;
-                                text-shadow: 2px 2px #02023f;
-                                z-index: 1;">
-                            {{y}}
-                        </div>
-                    {{/x}}
-
-                {{/helpergrids}}
-
-            </div>
+            {{> unilabeltype_imageboard/imagegrid }}
         {{/capababilityforgrid}}
 
     </div>
@@ -175,69 +98,17 @@
     <!-- List the used images or text -->
 
     {{#hasimages}}
-        <div class="unilabel-imageboard-list">
-            <p class="unilabel-imageboard-list-button">
-                <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#unilabel-imageboard-list{{cmid}}"
-                        aria-expanded="false" aria-controls="unilabel-imageboard-list{{cmid}}">
-                    {{#str}} buttonlabel, unilabeltype_imageboard {{/str}}
-                </button>
-            </p>
-            <div class="collapse unilabel-imageboard-list-collapsable" id="unilabel-imageboard-list{{cmid}}">
-                <div class="card card-body">
-                    {{#images}}
-                        {{#url}}
-                            {{#imageurl}}
-                                <a href="{{{url}}}">
-                                    <div class="row" style="margin-left:20px; max-width: 500px;">
-                                        <div class="unilabel-imageboard-list-nr">
-                                            {{nr}}
-                                        </div>
-                                        <div>
-                                            <img src="{{{imageurl}}}"
-                                                 width="40px"
-                                                 style="margin-right: 5px;"
-                                                 alt="{{title}}">
-                                            {{title}}
-                                        </div>
-                                    </div>
-                                </a>
-                            {{/imageurl}}
-                            {{^imageurl}}
-                                <a href="{{{url}}}">
-                                    <div class="row" style="margin-left:20px; max-width: 500px;">
-                                        <div class="unilabel-imageboard-list-nr">
-                                            {{nr}}
-                                        </div>
-                                        <div class="border" style="width: 40px; height: 40px; margin-right: 5px;">
-                                        </div>
-                                        <div class="unilabel-imageboard-list-title">
-                                            {{title}}
-                                        </div>
-                                    </div>
-                                </a>
-                            {{/imageurl}}
-                        {{/url}}
-                        {{^url}}
-                            <div class="row" style="margin-left:20px; max-width: 500px;">
-                                <div class="unilabel-imageboard-list-nr">
-                                    {{nr}}
-                                </div>
-                                <div>
-                                    <img src="{{{imageurl}}}" width="40" style="margin-right: 5px;" alt="{{title}}">
-                                    {{title}}
-                                </div>
-                            </div>
-                        {{/url}}
-                    {{/images}}
-                </div>
-            </div>
-        </div>
+        {{> unilabeltype_imageboard/imagelist }}
     {{/hasimages}}
 </div>
 {{#js}}
-    require(['unilabeltype_imageboard/imageboardrenderer'],
-    function(imageboardrenderer) {
-    imageboardrenderer.init({{cmid}}, {{canvaswidth}}, {{canvasheight}});
-    }
-    );
+    require(['unilabeltype_imageboard/imageboardrenderer'], function(imageboardrenderer) {
+        imageboardrenderer.init(
+            {{cmid}},
+            {{canvaswidth}},
+            {{canvasheight}},
+            {{#autoscale}}true{{/autoscale}}{{^autoscale}}false{{/autoscale}},
+            {{#editing}}true{{/editing}}{{^editing}}false{{/editing}}
+        );
+    });
 {{/js}}

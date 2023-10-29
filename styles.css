@@ -1,6 +1,5 @@
 .unilabel-content canvas[id^="unilabeltype-imageboard-canvas"] {
     margin: 10px;
-    border: solid 1px #555;
     box-shadow: 5px 5px 10px 0 #aaa;
 }
 .unilabel-imageboard-list .row {
@@ -14,20 +13,8 @@
 .unilabel-imageboard-list-title {
     margin: auto 10px;
 }
-.btn.unilabeltype-imageboard-gridtoggler,
-.btn.unilabeltype-imageboard-resizer {
-    margin-top: 5px;
-    margin-bottom: 5px;
-    border: solid 1px;
-    padding: 2px;
-    width: 90px;
-}
 .unilabeltype-imageboard-controllbuttons {
     margin-bottom: 38px;
-}
-
-.unilabel-imageboard-list-collapsable .card.card-body {
-    background-color: #eee;
 }
 
 /* ToDo: optimize hover-effect */
@@ -36,12 +23,10 @@ a .unilabel-imageboard-image:hover {
 }
 
 .unilabeltype-imageboard {
-    border: solid 1px #aaa;
     box-shadow: 0 0 10px #aaa;
 }
 
 .unilabeltype-imageboard-container {
-    border: solid 1px #aaa;
     padding: 10px;
     overflow: hidden; /* Hide scrollbars */
 }
