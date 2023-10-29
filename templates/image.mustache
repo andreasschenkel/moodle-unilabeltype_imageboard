@@ -38,7 +38,17 @@
     }
 }}
 
-<div id="imageid_{{nr}}">
+<div id="imageid_{{nr}}" style=" position: absolute;{{!
+                }}z-index: 5;{{!
+                }}left: {{xposition}}px;{{!
+                }}top: {{yposition}}px;{{!
+                }}{{#targetwidth}}{{!
+                }}width: {{targetwidth}}px;{{!
+                }}{{/targetwidth}}{{!
+                }}{{#hastargetheight}}{{!
+                }}height: {{targetheight}}px;{{!
+                }}{{/hastargetheight}}
+        ">
     {{#url}}
     <a href="{{{.}}}">
     {{/url}}
@@ -47,8 +57,7 @@
         {{#title}}
             <div class="rounded" style="position: absolute;{{!
                 }}z-index: 5;{{!
-                }}left: {{xposition}}px;{{!
-                }}top: calc({{yposition}}px - ({{fontsize}}px + 10px));{{!
+                }}top: calc(-{{fontsize}}px - 10px);{{!
                 }}color: #fff; background-color: {{titlebackgroundcolor}};{{!
                 }}{{#fontsize}}{{!
                     }}font-size: {{fontsize}}px;{{!
@@ -63,15 +72,12 @@
             </div>
         {{/title}}
 
-        <div class="unilabel-imageboard-image" style="position: absolute;{{!
+        <div class="unilabel-imageboard-image" style="position: relative;{{!
             }}z-index: 5;{{!
-            }}left: {{xposition}}px;{{!
-            }}top:{{yposition}}px;{{!
             }}{{#hastargetwidth}}width: {{targetwidth}}px; {{/hastargetwidth}}{{!
             }}{{#hastargetheight}}height: {{targetheight}}px; {{/hastargetheight}}{{!
             }}">
-            <img src="{{{.}}}" title="{{title}}" alt="{{title}}" style="object-fit: contain;{{!
-                }}width: 100%;{{!
+            <img src="{{{.}}}" title="{{title}}" alt="{{title}}" style="width: 100%;{{!
                 }}height: 100%;{{!
                 }}{{#showborders}}{{!
                     }}{{#border}}border: solid {{.}}px {{bordercolor}};{{/border}}{{!
