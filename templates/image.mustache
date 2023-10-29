@@ -53,7 +53,6 @@
     <a href="{{{.}}}">
     {{/url}}
 
-    {{#imageurl}}
         {{#title}}
             <div class="rounded" style="position: absolute;{{!
                 }}z-index: 5;{{!
@@ -67,11 +66,12 @@
                 }}{{#targetwidth}}{{!
                     }}width: {{targetwidth}}px;{{!
                 }}{{/targetwidth}}{{!
-                }}">
+                }}white-space: nowrap;">
                 {{title}}
             </div>
         {{/title}}
 
+    {{#imageurl}}
         <div class="unilabel-imageboard-image" style="position: relative;{{!
             }}z-index: 5;{{!
             }}{{#hastargetwidth}}width: {{targetwidth}}px; {{/hastargetwidth}}{{!
