@@ -35,7 +35,6 @@ $imageboardsettings[] = new admin_setting_configcheckbox('unilabeltype_imageboar
     true);
 
 $numbers = array_combine(range(100, 1800, 50), range(100, 1800, 50));
-$numbers = [0 => get_string('autocanvaswidth', 'unilabeltype_imageboard')] + $numbers;
 $imageboardsettings[] = new admin_setting_configselect('unilabeltype_imageboard/default_canvaswidth',
     get_string('default_canvaswidth', 'unilabeltype_imageboard'),
     get_string('default_canvaswidth_help', 'unilabeltype_imageboard'),

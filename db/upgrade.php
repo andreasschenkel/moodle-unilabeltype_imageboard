@@ -96,5 +96,20 @@ function xmldb_unilabeltype_imageboard_upgrade($oldversion) {
         upgrade_plugin_savepoint(true, 2023101200, 'unilabeltype', 'imageboard');
     }
 
+    if ($oldversion < 2023102900) {
+
+        // Define field autoscale to be added to unilabeltype_imageboard.
+        $table = new xmldb_table('unilabeltype_imageboard');
+        $field = new xmldb_field('autoscale', XMLDB_TYPE_INTEGER, '1', null, null, null, null, 'titlebackgroundcolor');
+
+        // Conditionally launch add field autoscale.
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+
+        // Imageboard savepoint reached.
+        upgrade_plugin_savepoint(true, 2023102900, 'unilabeltype', 'imageboard');
+    }
+
     return true;
 }

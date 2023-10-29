@@ -1,0 +1,87 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template unilabeltype_imageboard/image
+    Template to show an image on the imagebord.
+
+    Example context (json):
+    {
+        "title": "",
+        "url": "",
+        "xposition": "400",
+        "yposition": "200",
+        "targetwidth": "0",
+        "targetheight": "0",
+        "hastargetwidth": true,
+        "hastargetheight": true,
+        "fontsize": "12",
+        "titlebackgroundcolor": "#0000ff",
+        "imageurl": "http://localhost/image.png",
+        "nr": 1,
+        "showborders": true,
+        "bordercolor": "#2D57FA",
+        "border": "4"
+    }
+}}
+
+<div id="imageid_{{nr}}">
+    {{#url}}
+    <a href="{{{.}}}">
+    {{/url}}
+
+    {{#imageurl}}
+        {{#title}}
+            <div class="rounded" style="position: absolute;{{!
+                }}z-index: 5;{{!
+                }}left: {{xposition}}px;{{!
+                }}top: calc({{yposition}}px - ({{fontsize}}px + 10px));{{!
+                }}color: #fff; background-color: {{titlebackgroundcolor}};{{!
+                }}{{#fontsize}}{{!
+                    }}font-size: {{fontsize}}px;{{!
+                    }}line-height: {{fontsize}}px;{{!
+                    }}padding: 5px;{{!
+                }}{{/fontsize}}{{!
+                }}{{#targetwidth}}{{!
+                    }}width: {{targetwidth}}px;{{!
+                }}{{/targetwidth}}{{!
+                }}">
+                {{title}}
+            </div>
+        {{/title}}
+
+        <div class="unilabel-imageboard-image" style="position: absolute;{{!
+            }}z-index: 5;{{!
+            }}left: {{xposition}}px;{{!
+            }}top:{{yposition}}px;{{!
+            }}{{#hastargetwidth}}width: {{targetwidth}}px; {{/hastargetwidth}}{{!
+            }}{{#hastargetheight}}height: {{targetheight}}px; {{/hastargetheight}}{{!
+            }}">
+            <img src="{{{.}}}" title="{{title}}" alt="{{title}}" style="object-fit: contain;{{!
+                }}width: 100%;{{!
+                }}height: 100%;{{!
+                }}{{#showborders}}{{!
+                    }}{{#border}}border: solid {{.}}px {{bordercolor}};{{/border}}{{!
+                }}{{/showborders}};{{!
+                }}">
+        </div>
+    {{/imageurl}}
+
+    {{#url}}
+    </a>
+    {{/url}}
+</div>
+

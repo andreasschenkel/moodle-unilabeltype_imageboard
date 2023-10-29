@@ -26,12 +26,13 @@
 defined('MOODLE_INTERNAL') || die;
 
 $string['addmoreimages'] = 'Add more images';
-$string['autocanvaswidth'] = 'autocanvaswidth_todo';
+$string['autoscale'] = 'Auto scale';
+$string['autoscale_help'] = 'If you use autoscale the canvas is automatically scaled to the max width in the course page.<br>If it is deactivated, the canvas might be cut off to fit the course page.';
 $string['backgroundimage'] = 'Backgroundimage';
 $string['border'] = 'Border (px)';
-$string['buttonlabel'] = 'Imagelist:';
 $string['buttonlabelresize'] = 'Resize to fit';
-$string['buttonlabelhelpergrid'] = 'Show Grid';
+$string['buttonlabelhelpergridshow'] = 'Show Grid';
+$string['buttonlabelhelpergridhide'] = 'Hide Grid';
 $string['default_bordercolor'] = 'Default bordercolor';
 $string['default_bordercolor_desc'] = 'Default bordercolor of images';
 $string['canvaswidth'] = 'Witdh of canvas';
@@ -53,6 +54,7 @@ $string['default_titlebackgroundcolor_desc'] = 'Default backgroundcolor of image
 $string['fontsize_help'] = 'Fontsize of imagetitle';
 $string['height_help'] = 'If your pictures are of a different size, use the fixed height option. This scales all images to the same height. If your pictures have the same height, you can also use "auto height".';
 $string['image'] = 'Image';
+$string['imagelist'] = 'Imagelist';
 $string['imagenr'] = 'Image {$a}';
 $string['images'] = 'Images';
 $string['targetheight'] = 'Height=';

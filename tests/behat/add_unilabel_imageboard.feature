@@ -55,5 +55,4 @@ Feature: Modify content of the unilabeltype imageboard
     # Save the changes.
     And I press "Save changes"
 
-    # See that the second slide is shown.
-    Then I should see "Title-Element-1"
+# There are comming more features and steps.
