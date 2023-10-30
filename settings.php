@@ -64,10 +64,13 @@ $imageboardsettings[] = new admin_setting_configcolourpicker('unilabeltype_image
         get_string('default_titlebackgroundcolor_desc', 'unilabeltype_imageboard')
         , '#110099');
 
-$imageboardsettings[] = new admin_setting_configcheckbox('unilabeltype_imageboard/default_showborders',
-    get_string('default_showborders', 'unilabeltype_imageboard'),
-    get_string('default_showborders_desc', 'unilabeltype_imageboard'),
-    true);
+$numbers = array_combine(range(0, 10, 1), range(0, 10, 1));
+$imageboardsettings[] = new admin_setting_configselect('unilabeltype_imageboard/default_bordersize',
+        get_string('default_bordersize', 'unilabeltype_imageboard'),
+        get_string('default_bordersize_desc', 'unilabeltype_imageboard'),
+        1,
+        $numbers
+);
 
 $name = 'unilabeltype_imageboard/default_bordercolor';
 $title = get_string('default_bordercolor', 'unilabeltype_imageboard');

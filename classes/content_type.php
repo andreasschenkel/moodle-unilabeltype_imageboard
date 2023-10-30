@@ -229,6 +229,7 @@ class content_type extends \mod_unilabel\content_type {
         $repeatedoptions[$prefix . 'url']['helpbutton'] = ['url', 'unilabeltype_imageboard'];
         $repeatedoptions[$prefix . 'image']['type'] = PARAM_FILE;
         $repeatedoptions[$prefix . 'border']['type'] = PARAM_INT;
+        $repeatedoptions[$prefix . 'border']['default'] = $this->config->default_bordersize;
         $repeatedoptions[$prefix . 'position']['helpbutton'] = ['position', 'unilabeltype_imageboard'];
         $repeatedoptions[$prefix . 'targetsize']['helpbutton'] = ['targetsize', 'unilabeltype_imageboard'];
 
@@ -373,7 +374,6 @@ class content_type extends \mod_unilabel\content_type {
             $context = \context_module::instance($cm->id);
             $capababilityforgrid = has_capability('mod/unilabel:edit', $context, $USER->id, true);
 
-            $showborders = $this->config->default_showborders == '1';
             $bordercolor = $this->config->default_bordercolor ?? '#ff0000';
             $gridcolor = $this->config->default_gridcolor ?? '#ff0000';
 
@@ -422,7 +422,6 @@ class content_type extends \mod_unilabel\content_type {
                 'fontsize' => $unilabeltyperecord->fontsize,
                 'titlebackgroundcolor' => $unilabeltyperecord->titlebackgroundcolor,
                 'capababilityforgrid' => $capababilityforgrid,
-                'showborders' => $showborders,
                 'bordercolor' => $bordercolor,
                 'gridcolor' => $gridcolor,
                 'helpergrids' => $helpergrids,
