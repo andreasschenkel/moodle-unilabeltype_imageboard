@@ -22,7 +22,7 @@ export const init = (cmid, canvaswidth, canvasheight, autoscale, showgrid) => {
         // To accomplish this, we use the resizeObserver object.
 
         // The container we want be informed about its resize.
-        const moduleContainer = document.querySelector("#module-" + cmid + " div.unilabel-content");
+        const moduleContainer = document.querySelector("#module-" + cmid + " div.activity-item");
 
         // Now we create the resizeObserver object.
         const resizeObserver = new ResizeObserver(function() {
@@ -85,7 +85,9 @@ export const init = (cmid, canvaswidth, canvasheight, autoscale, showgrid) => {
      * @returns {*|number}
      */
     function getWidth(moduleContainer) {
-        return moduleContainer.offsetWidth;
+        let style = window.getComputedStyle(moduleContainer);
+        let xPadding = parseInt(style.paddingLeft) + parseInt(style.paddingRight);
+        return moduleContainer.clientWidth - xPadding;
     }
 
     /**

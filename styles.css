@@ -17,9 +17,8 @@
     margin-bottom: 38px;
 }
 
-/* ToDo: optimize hover-effect */
-.unilabeltype-imageboard a .unilabel-imageboard-image:hover,
-.unilabeltype-imageboard a .unilabel-imageboard-title:hover {
+.unilabeltype-imageboard a:hover .unilabel-imageboard-image,
+.unilabeltype-imageboard a:hover .unilabel-imageboard-title {
     box-shadow: 0 0 13px 0;
 }
 
