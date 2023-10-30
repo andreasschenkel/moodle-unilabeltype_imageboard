@@ -59,6 +59,11 @@ $imageboardsettings[] = new admin_setting_configselect('unilabeltype_imageboard/
         $numbers
 );
 
+$imageboardsettings[] = new admin_setting_configcolourpicker('unilabeltype_imageboard/default_titlecolor',
+        get_string('default_titlecolor', 'unilabeltype_imageboard'),
+        get_string('default_titlecolor_desc', 'unilabeltype_imageboard')
+        , '#fffffe');
+
 $imageboardsettings[] = new admin_setting_configcolourpicker('unilabeltype_imageboard/default_titlebackgroundcolor',
         get_string('default_titlebackgroundcolor', 'unilabeltype_imageboard'),
         get_string('default_titlebackgroundcolor_desc', 'unilabeltype_imageboard')

@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * This file keeps track of upgrades to the mootyper module
+ * This file keeps track of upgrades to the unilabeltype_imageboard
  *
  * Sometimes, changes between versions involve alterations to database
  * structures and other major things that may break installations. The upgrade
@@ -51,33 +51,33 @@ function xmldb_unilabeltype_imageboard_upgrade($oldversion) {
     // First example, some fields were added to install.xml on 2007/04/01.
 
     if ($oldversion < 2023080100) {
-        // Define field continuoustype to be added to mootyper.
+        // Define field border to be added to unilabeltype_imageboard.
         $table = new xmldb_table('unilabeltype_imageboard_img');
         $field = new xmldb_field('border', XMLDB_TYPE_INTEGER, '3', null, null, null, '0', 'targetheight');
 
-        // Conditionally launch add field continuoustype.
+        // Conditionally launch add field border.
         if (!$dbman->field_exists($table, $field)) {
             $dbman->add_field($table, $field);
         }
         upgrade_plugin_savepoint(true, 2023080100, 'unilabeltype', 'imageboard');
     }
     if ($oldversion < 2023092400) {
-        // Define field continuoustype to be added to mootyper.
+        // Define field fontsize to be added to unilabeltype_imageboard.
         $table = new xmldb_table('unilabeltype_imageboard');
         $field = new xmldb_field('fontsize', XMLDB_TYPE_INTEGER, '3', null, null, null, '0', 'canvasheight');
 
-        // Conditionally launch add field continuoustype.
+        // Conditionally launch add field fontsize.
         if (!$dbman->field_exists($table, $field)) {
             $dbman->add_field($table, $field);
         }
         upgrade_plugin_savepoint(true, 2023092400, 'unilabeltype', 'imageboard');
     }
     if ($oldversion < 2023092501) {
-        // Define field continuoustype to be added to mootyper.
+        // Define field titlebackgroundcolor to be added to unilabeltype_imageboard.
         $table = new xmldb_table('unilabeltype_imageboard');
         $field = new xmldb_field('titlebackgroundcolor', XMLDB_TYPE_CHAR, '255', null, null, null, '0', 'fontsize');
 
-        // Conditionally launch add field continuoustype.
+        // Conditionally launch add field titlebackgroundcolor.
         if (!$dbman->field_exists($table, $field)) {
             $dbman->add_field($table, $field);
         }
@@ -109,6 +109,18 @@ function xmldb_unilabeltype_imageboard_upgrade($oldversion) {
 
         // Imageboard savepoint reached.
         upgrade_plugin_savepoint(true, 2023102900, 'unilabeltype', 'imageboard');
+    }
+
+    if ($oldversion < 2023102901) {
+        // Define field titlecolor to be added to unilabeltype_imageboard.
+        $table = new xmldb_table('unilabeltype_imageboard');
+        $field = new xmldb_field('titlecolor', XMLDB_TYPE_CHAR, '255', null, null, null, '0', 'fontsize');
+
+        // Conditionally launch add field titlecolor.
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+        upgrade_plugin_savepoint(true, 2023102901, 'unilabeltype', 'imageboard');
     }
 
     return true;

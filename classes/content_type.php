@@ -118,6 +118,17 @@ class content_type extends \mod_unilabel\content_type {
         $numbers = array_combine(range(0, 36, 1), range(0, 36, 1));
         $mform->addElement('select', $prefix . 'fontsize', get_string('fontsize_help', 'unilabeltype_imageboard'), $numbers);
 
+        $titlecolor = '';
+        if (empty($unilabeltyperecord->titlecolor)) {
+            $titlecolor = $this->config->default_titlecolor ?? '';
+        } else {
+            $titlecolor = $unilabeltyperecord->titlecolor;
+        }
+        $this->add_colourpicker($mform,
+                $prefix . 'titlecolor',
+                get_string('titlecolor', 'unilabeltype_imageboard'),
+                $titlecolor);
+
         $titlebackgroundcolor = '';
         if (empty($unilabeltyperecord->titlebackgroundcolor)) {
             $titlebackgroundcolor = $this->config->default_titlebackgroundcolor ?? '';
@@ -276,6 +287,7 @@ class content_type extends \mod_unilabel\content_type {
             $data[$prefix . 'backgroundimage'] = 0;
             // 2. Set default data for the imageboard in general.
             $data[$prefix . 'fontsize'] = $this->config->default_fontsize ?? '12';
+            $data[$prefix . 'titlecolor'] = $this->config->default_titlecolor ?? '#fffffe';
             $data[$prefix . 'titlebackgroundcolor'] = $this->config->default_titlebackgroundcolor ?? '#aaaaaa';
             return $data;
         }
@@ -293,6 +305,7 @@ class content_type extends \mod_unilabel\content_type {
 
         // 3. Set the selected value.
         $data[$prefix . 'fontsize'] = $unilabeltyperecord->fontsize;
+        $data[$prefix . 'titlecolor'] = $unilabeltyperecord->titlecolor;
         $data[$prefix . 'titlebackgroundcolor'] = $unilabeltyperecord->titlebackgroundcolor;
 
         // Set default data for images.
@@ -420,6 +433,7 @@ class content_type extends \mod_unilabel\content_type {
                 'backgroundimage' => $unilabeltyperecord->backgroundimage,
                 // 4. Add setting in function get_content.
                 'fontsize' => $unilabeltyperecord->fontsize,
+                'titlecolor' => $unilabeltyperecord->titlecolor,
                 'titlebackgroundcolor' => $unilabeltyperecord->titlebackgroundcolor,
                 'capababilityforgrid' => $capababilityforgrid,
                 'bordercolor' => $bordercolor,
@@ -485,6 +499,7 @@ class content_type extends \mod_unilabel\content_type {
 
         // 5. Add setting to save_content.
         $unilabeltyperecord->fontsize = $formdata->{$prefix . 'fontsize'};
+        $unilabeltyperecord->titlecolor = $formdata->{$prefix . 'titlecolor'};
         $unilabeltyperecord->titlebackgroundcolor = $formdata->{$prefix . 'titlebackgroundcolor'};
 
         $fs = get_file_storage();
