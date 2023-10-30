@@ -104,6 +104,10 @@ function resize(cmid, canvaswidth, canvasheight) {
     } else {
         newcanvaswidth = (getWidth() - imageboard.getBoundingClientRect().left) - 20;
     }
+    // Do not make backgroundimage larger than the configured width
+    if (newcanvaswidth > canvaswidth) {
+        newcanvaswidth = canvaswidth;
+    }
 
     let widthfactor = newcanvaswidth / canvaswidth;
 
