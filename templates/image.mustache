@@ -26,8 +26,6 @@
         "yposition": "200",
         "targetwidth": "0",
         "targetheight": "0",
-        "hastargetwidth": true,
-        "hastargetheight": true,
         "fontsize": "12",
         "titlebackgroundcolor": "#0000ff",
         "imageurl": "http://localhost/image.png",
@@ -38,56 +36,38 @@
     }
 }}
 
-<div id="imageid_{{nr}}" style=" position: absolute;{{!
+<div id="imageid_{{nr}}" style="position: absolute;{{!
                 }}z-index: 5;{{!
                 }}left: {{xposition}}px;{{!
                 }}top: {{yposition}}px;{{!
-                }}{{#targetwidth}}{{!
-                }}width: {{targetwidth}}px;{{!
-                }}{{/targetwidth}}{{!
-                }}{{#hastargetheight}}{{!
-                }}height: {{targetheight}}px;{{!
-                }}{{/hastargetheight}}
-        ">
-    {{#url}}
-    <a href="{{{.}}}">
-    {{/url}}
-
+                }}{{#targetwidth}}width: {{.}}px;{{/targetwidth}}{{!
+                }}{{#targetheight}}height: {{.}}px;{{/targetheight}}{{!
+                }}">
+    {{#url}}<a href="{{{.}}}">{{/url}}
         {{#title}}
-            <div class="rounded" style="position: absolute;{{!
+            <div class="unilabel-imageboard-title rounded" style="position: absolute;{{!
                 }}z-index: 5;{{!
                 }}top: calc(-{{fontsize}}px - 10px);{{!
                 }}color: #fff; background-color: {{titlebackgroundcolor}};{{!
-                }}{{#fontsize}}{{!
-                    }}font-size: {{fontsize}}px;{{!
-                    }}line-height: {{fontsize}}px;{{!
-                    }}padding: 5px;{{!
-                }}{{/fontsize}}{{!
-                }}{{#targetwidth}}{{!
-                    }}width: {{targetwidth}}px;{{!
-                }}{{/targetwidth}}{{!
+                }}{{#fontsize}}font-size: {{.}}px;line-height: {{.}}px;padding: 5px;{{/fontsize}}{{!
                 }}white-space: nowrap;">
                 {{title}}
             </div>
         {{/title}}
-
-    {{#imageurl}}
-        <div class="unilabel-imageboard-image" style="position: relative;{{!
-            }}z-index: 5;{{!
-            }}{{#hastargetwidth}}width: {{targetwidth}}px; {{/hastargetwidth}}{{!
-            }}{{#hastargetheight}}height: {{targetheight}}px; {{/hastargetheight}}{{!
-            }}">
-            <img src="{{{.}}}" title="{{title}}" alt="{{title}}" style="width: 100%;{{!
-                }}height: 100%;{{!
-                }}{{#showborders}}{{!
-                    }}{{#border}}border: solid {{.}}px {{bordercolor}};{{/border}}{{!
-                }}{{/showborders}};{{!
+        {{#imageurl}}
+            <div class="unilabel-imageboard-image rounded" style="position: relative;{{!
+                }}z-index: 5;{{!
+                }}{{#targetwidth}}width: {{.}}px; {{/targetwidth}}{{!
+                }}{{#targetheight}}height: {{.}}px; {{/targetheight}}{{!
                 }}">
-        </div>
-    {{/imageurl}}
-
-    {{#url}}
-    </a>
-    {{/url}}
+                <img class="rounded" src="{{{.}}}" title="{{title}}" alt="{{title}}" style="width: 100%;{{!
+                    }}height: 100%;{{!
+                    }}{{#showborders}}{{!
+                        }}{{#border}}border: solid {{.}}px {{bordercolor}};{{/border}}{{!
+                    }}{{/showborders}};{{!
+                    }}">
+            </div>
+        {{/imageurl}}
+    {{#url}}</a>{{/url}}
 </div>
 

@@ -18,7 +18,8 @@
 }
 
 /* ToDo: optimize hover-effect */
-a .unilabel-imageboard-image:hover {
+.unilabeltype-imageboard a .unilabel-imageboard-image:hover,
+.unilabeltype-imageboard a .unilabel-imageboard-title:hover {
     box-shadow: 0 0 13px 0;
 }
 

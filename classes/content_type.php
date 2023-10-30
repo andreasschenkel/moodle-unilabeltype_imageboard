@@ -283,6 +283,7 @@ class content_type extends \mod_unilabel\content_type {
 
         $data[$prefix . 'canvaswidth'] = $unilabeltyperecord->canvaswidth;
         $data[$prefix . 'canvasheight'] = $unilabeltyperecord->canvasheight;
+        $data[$prefix . 'autoscale'] = $unilabeltyperecord->autoscale;
 
         // Hint: $draftitemid is set by the function file_prepare_draft_area().
         $draftitemidbackgroundimage = 0; // This is needed to create a new draftitemid.
@@ -384,12 +385,6 @@ class content_type extends \mod_unilabel\content_type {
                     $image->imageurl = $image->imageurl->out();
                 } else {
                     $image->imageurl = '';
-                }
-                if (!empty($image->targetwidth)) {
-                    $image->hastargetwidth = true;
-                }
-                if (!empty($image->targetheight)) {
-                    $image->hastargetheight = true;
                 }
                 if (!empty($image->border)) {
                     $image->border = $image->border;

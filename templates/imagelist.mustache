@@ -53,12 +53,12 @@
                     </div>
                     <div>
                         {{#imageurl}}
-                            <img src="{{{imageurl}}}" width="40" style="margin-right: 5px;" alt="{{title}}">
+                            <img class="rounded" src="{{{imageurl}}}" width="40" style="margin-right: 5px;" alt="{{title}}">
                         {{/imageurl}}
                         {{^imageurl}}
                             <i style="width: 40px;margin-right: 5px;" class="fa fa-picture-o fa-lg fa-fw"></i>
                         {{/imageurl}}
-                        {{#url}}<a href="{{{.}}}" {{^imageurl}} class="disabled"{{/imageurl}}>{{/url}}
+                        {{#url}}<a href="{{{.}}}" {{^imageurl}} class="dimmed"{{/imageurl}}>{{/url}}
                             {{title}}
                         {{#url}}</a>{{/url}}
                     </div>
