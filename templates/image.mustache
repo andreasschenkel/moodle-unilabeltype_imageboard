@@ -27,6 +27,7 @@
         "targetwidth": "0",
         "targetheight": "0",
         "fontsize": "12",
+        "titlecolor": "#00ff00",
         "titlebackgroundcolor": "#0000ff",
         "imageurl": "http://localhost/image.png",
         "nr": 1,
@@ -47,7 +48,7 @@
             <div class="unilabel-imageboard-title rounded" style="position: absolute;{{!
                 }}z-index: 5;{{!
                 }}top: calc(-{{fontsize}}px - 10px);{{!
-                }}color: #fff; background-color: {{titlebackgroundcolor}};{{!
+                }}color: {{titlecolor}}; background-color: {{titlebackgroundcolor}};{{!
                 }}{{#fontsize}}font-size: {{.}}px;line-height: {{.}}px;padding: 5px;{{/fontsize}}{{!
                 }}white-space: nowrap;">
                 {{title}}
@@ -61,7 +62,7 @@
                 }}">
                 <img class="rounded" src="{{{.}}}" title="{{title}}" alt="{{title}}" style="width: 100%;{{!
                     }}height: 100%;{{!
-                    }}{{#border}}border: solid {{.}}px {{bordercolor}};{{/border}}{{!
+                    }}{{#border}}border: solid {{.}}px {{titlebackgroundcolor}};{{/border}}{{!
                     }}">
             </div>
         {{/imageurl}}
