@@ -74,7 +74,7 @@ class restore_unilabeltype_imageboard_subplugin extends restore_subplugin {
      * Processes the unilabeltype_imageboard_img element
      * @param array $data
      */
-    public function process_unilabeltype_imageboard_img($data) {
+    public function process_unilabeltype_imageboard_image($data) {
         global $DB;
 
         $data = (object)$data;
