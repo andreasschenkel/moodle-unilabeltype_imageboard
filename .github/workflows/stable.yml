@@ -24,7 +24,7 @@ jobs:
           - 5432:5432
 
       mariadb:
-        image: mariadb:10.6.7
+        image: mariadb:10.6
         env:
           MYSQL_USER: 'root'
           MYSQL_ALLOW_EMPTY_PASSWORD: "true"
@@ -38,9 +38,9 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php: ['7.4', '8.0', '8.1']
+        php: ['8.0', '8.1']
         database: ['mariadb', 'pgsql']
-        moodlebranch: ['MOODLE_401_STABLE']
+        moodlebranch: ['MOODLE_401_STABLE', 'MOODLE_402_STABLE', 'MOODLE_403_STABLE']
         include:
           - node: 16.20
 
