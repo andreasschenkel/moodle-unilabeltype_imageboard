@@ -357,6 +357,30 @@ class content_type extends \mod_unilabel\content_type {
     }
 
     /**
+     * Validate all form values given in $data and returns an array with errors.
+     * It does the same as the validation method in moodle forms.
+     *
+     * @param array $errors
+     * @param array $data
+     * @param array $files
+     * @return array
+     */
+    public function form_validation($errors, $data, $files) {
+        $prefix = 'unilabeltype_imageboard_';
+
+        // Check the colour values.
+        $colourvaluestocheck = ['titlecolor', 'titlebackgroundcolor'];
+        foreach ($colourvaluestocheck as $cv) {
+            if (!empty($data[$prefix.$cv])) {
+                if (!\mod_unilabel\configcolourpicker_validation::validate_colourdata($data[$prefix.$cv])) {
+                    $errors[$prefix.$cv] = get_string('invalidvalue', 'mod_unilabel');
+                }
+            }
+        }
+        return $errors;
+    }
+
+    /**
      * Get the namespace of this content type
      *
      * @return string
@@ -698,31 +722,6 @@ class content_type extends \mod_unilabel\content_type {
      */
     public function is_active() {
         return !empty($this->config->active);
-    }
-
-    /**
-     * Add a colourpicker element into the settings form.
-     *
-     * @param \MoodleQuickForm $mform
-     * @param string $name
-     * @param string $label
-     * @param string $defaultvalue
-     * @return void
-     */
-    private function add_colourpicker($mform, $name, $label, $defaultvalue) {
-        global $PAGE;
-        $mform->addElement('hidden', $name);
-        $mform->setType($name, PARAM_TEXT);
-        $renderer = $PAGE->get_renderer('mod_unilabel');
-        $colourpickercontent = new \stdClass();
-        $colourpickercontent->iconurl = $renderer->image_url('i/colourpicker');
-        $colourpickercontent->inputname = $name;
-        $colourpickercontent->inputid = 'id_' . $name . '_colourpicker';
-        $colourpickercontent->label = $label;
-        $colourpickercontent->defaultvalue = $defaultvalue;
-        $colourpickerhtml = $renderer->render_from_template('unilabeltype_carousel/colourpicker', $colourpickercontent);
-        $mform->addElement('html', $colourpickerhtml);
-        $PAGE->requires->js_init_call('M.util.init_colour_picker', [$colourpickercontent->inputid, null]);
     }
 
 }
