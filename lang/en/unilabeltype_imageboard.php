@@ -27,7 +27,7 @@ defined('MOODLE_INTERNAL') || die;
 
 $string['addmoreimages'] = 'Add more images';
 $string['autoscale'] = 'Auto scale';
-$string['autoscale_help'] = 'The canvas is automatically scaled to the max width in the course page when using autoscale.<br>The canvas might be cut off to fit the course page when this is deactivated.';
+$string['autoscale_help'] = 'The canvas is automatically scaled to the max width in the course page when using autoscale.<br>It might be cut off to fit the course page when this is deactivated.';
 $string['backgroundimage'] = 'Backgroundimage';
 $string['border'] = 'Border (px)';
 $string['buttonlabelresize'] = 'Resize to fit';
