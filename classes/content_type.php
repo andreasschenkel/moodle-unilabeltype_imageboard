@@ -75,6 +75,13 @@ class content_type extends \mod_unilabel\content_type {
 
         $mform->addElement('advcheckbox', $prefix . 'showintro', get_string('showunilabeltext', 'unilabeltype_imageboard'));
 
+        $unilabel = $form->unilabel;
+        $ispreviewmode = true;
+        $cm = null;
+        $dataToRender = $this->get_data_to_render($unilabel, $cm, $ispreviewmode);
+        $renderedpreview = $OUTPUT->render_from_template('unilabeltype_imageboard/imageboard', $dataToRender);
+        $mform->addElement('html', $renderedpreview);
+
         $mform->addElement('header', $prefix . 'hdr', $this->get_name());
         $mform->addHelpButton($prefix . 'hdr', 'pluginname', 'unilabeltype_imageboard');
 
@@ -371,9 +378,9 @@ class content_type extends \mod_unilabel\content_type {
         // Check the colour values.
         $colourvaluestocheck = ['titlecolor', 'titlebackgroundcolor'];
         foreach ($colourvaluestocheck as $cv) {
-            if (!empty($data[$prefix.$cv])) {
-                if (!\mod_unilabel\configcolourpicker_validation::validate_colourdata($data[$prefix.$cv])) {
-                    $errors[$prefix.$cv] = get_string('invalidvalue', 'mod_unilabel');
+            if (!empty($data[$prefix . $cv])) {
+                if (!\mod_unilabel\configcolourpicker_validation::validate_colourdata($data[$prefix . $cv])) {
+                    $errors[$prefix . $cv] = get_string('invalidvalue', 'mod_unilabel');
                 }
             }
         }
@@ -398,79 +405,15 @@ class content_type extends \mod_unilabel\content_type {
      * @return string
      */
     public function get_content($unilabel, $cm, \plugin_renderer_base $renderer) {
-        global $USER, $PAGE;
-
+        global $OUTPUT;
         if (!$unilabeltyperecord = $this->load_unilabeltype_record($unilabel->id)) {
             return '';
         } else {
-            $intro = $this->format_intro($unilabel, $cm);
-            $showintro = !empty($unilabeltyperecord->showintro);
-
-            // Check if the user can edit the unilabel.
-            // Then there should be a 50x50px grid visible that can be help for better positioning the images.
-            $context = \context_module::instance($cm->id);
-            $capababilityforgrid = has_capability('mod/unilabel:edit', $context, $USER->id, true);
-
-            $bordercolor = $this->config->default_bordercolor ?? '#ff0000';
-            $gridcolor = $this->config->default_gridcolor ?? '#ff0000';
-
-            $images = [];
-            $hasimages = false;
-            foreach ($this->images as $image) {
-                $hasimages = true;
-                if ($image->imageurl != '') {
-                    $image->imageurl = $image->imageurl->out();
-                } else {
-                    $image->imageurl = '';
-                }
-                if (!empty($image->border)) {
-                    $image->border = $image->border;
-                }
-                $images[] = $image;
-            }
-
-            // Create a 50x50px helpergrid if $capababilityforgrid.
-            $helpergrids = [];
-            $canvaswidth = $unilabeltyperecord->canvaswidth;
-            $canvasheight = $unilabeltyperecord->canvasheight;
-            $autoscale = $unilabeltyperecord->autoscale;
-
-            if ($capababilityforgrid) {
-                for ($y = 0; $y < $canvasheight; $y = $y + 50) {
-                    for ($x = 0; $x < $canvaswidth; $x = $x + 50) {
-                        $helpergrid = [];
-                        $helpergrid['x'] = $x;
-                        $helpergrid['y'] = $y;
-                        $helpergrids[] = $helpergrid;
-                    }
-                }
-            }
-            $content = [
-                'showintro' => $showintro,
-                'intro' => $showintro ? $intro : '',
-                'images' => $images,
-                'hasimages' => $hasimages,
-                'cmid' => $cm->id,
-                'canvaswidth' => $canvaswidth,
-                'canvasheight' => $canvasheight,
-                'autoscale' => $autoscale,
-                'backgroundimage' => $unilabeltyperecord->backgroundimage,
-                // 4. Add setting in function get_content.
-                'fontsize' => $unilabeltyperecord->fontsize,
-                'titlecolor' => $unilabeltyperecord->titlecolor,
-                'titlebackgroundcolor' => $unilabeltyperecord->titlebackgroundcolor,
-                'capababilityforgrid' => $capababilityforgrid,
-                'bordercolor' => $bordercolor,
-                'gridcolor' => $gridcolor,
-                'helpergrids' => $helpergrids,
-                'editing' => $PAGE->user_is_editing(),
-            ];
+            $ispreviewmode = false;
+            $dataToRender = $this->get_data_to_render($unilabel, $cm, $ispreviewmode);
+            // Be able to create a json: $content_as_json = json_encode($content);.
+            $content = $OUTPUT->render_from_template('unilabeltype_imageboard/imageboard', $dataToRender);
         }
-
-        global $OUTPUT;
-        // Be able to create a json: $content_as_json = json_encode($content);.
-        $content = $OUTPUT->render_from_template('unilabeltype_imageboard/imageboard', $content);
-
         return $content;
     }
 
@@ -722,6 +665,98 @@ class content_type extends \mod_unilabel\content_type {
      */
     public function is_active() {
         return !empty($this->config->active);
+    }
+
+    /**
+     * Get the data that should be rendered.
+     *
+     * @param $unilabel
+     * @param $cm
+     * @throws \coding_exception
+     */
+    public function get_data_to_render($unilabel, $cm, $ispreviewmode): array {
+        global $PAGE, $USER;
+
+        $unilabeltyperecord = $this->load_unilabeltype_record($unilabel->id);
+        $cmid = 0;
+        $intro = '';
+        $showintro = false;
+        $capababilityforgrid = false;
+        // In previewmode $cm is null (do not yet know how to get $cm from the form).
+        // So we need to check if we are in previewmode and set needed variables.
+        if (!$ispreviewmode) {
+            $cmid = $cm->id;
+            $intro = $this->format_intro($unilabel, $cm);
+            // Do not show intro in preview mode.
+            $showintro = !empty($unilabeltyperecord->showintro);
+
+            // Check if the user can edit the unilabel.
+            // Then there should be a 50x50px grid visible that can be help for better positioning the images.
+            $context = \context_module::instance($cm->id);
+            $capababilityforgrid = has_capability('mod/unilabel:edit', $context, $USER->id, true);
+        } else {
+            $cmid = 0;
+            $intro = '';
+            $showintro = false;
+            $capababilityforgrid = true;
+        }
+        $bordercolor = $this->config->default_bordercolor ?? '#ff0000';
+        $gridcolor = $this->config->default_gridcolor ?? '#ff0000';
+
+        $images = [];
+        $hasimages = false;
+        foreach ($this->images as $image) {
+            $hasimages = true;
+            if ($image->imageurl != '') {
+                $image->imageurl = $image->imageurl->out();
+            } else {
+                $image->imageurl = '';
+            }
+            if (!empty($image->border)) {
+                $image->border = $image->border;
+            }
+            $images[] = $image;
+        }
+
+        // Create a 50x50px helpergrid if $capababilityforgrid.
+        $helpergrids = [];
+        $canvaswidth = $unilabeltyperecord->canvaswidth;
+        $canvasheight = $unilabeltyperecord->canvasheight;
+        $autoscale = $unilabeltyperecord->autoscale;
+
+        if ($capababilityforgrid) {
+            for ($y = 0; $y < $canvasheight; $y = $y + 50) {
+                for ($x = 0; $x < $canvaswidth; $x = $x + 50) {
+                    $helpergrid = [];
+                    $helpergrid['x'] = $x;
+                    $helpergrid['y'] = $y;
+                    $helpergrids[] = $helpergrid;
+                }
+            }
+        }
+        $dataToRender = [
+                'ispreviewmode' => $ispreviewmode,
+                'showintro' => $showintro,
+                'intro' => $showintro ? $intro : '',
+                'images' => $images,
+                'hasimages' => $hasimages,
+                'cmid' => $cmid,
+                'canvaswidth' => $canvaswidth,
+                'canvasheight' => $canvasheight,
+                'autoscale' => $autoscale,
+                'backgroundimage' => $unilabeltyperecord->backgroundimage,
+            // 4. Add setting in function get_content.
+                'fontsize' => $unilabeltyperecord->fontsize,
+                'titlecolor' => $unilabeltyperecord->titlecolor,
+                'titlebackgroundcolor' => $unilabeltyperecord->titlebackgroundcolor,
+                'capababilityforgrid' => $capababilityforgrid,
+                'bordercolor' => $bordercolor,
+                'gridcolor' => $gridcolor,
+                'helpergrids' => $helpergrids,
+                'editing' => $PAGE->user_is_editing(),
+        ];
+
+        return $dataToRender;
     }
 
 }

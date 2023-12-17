@@ -61,7 +61,12 @@
         "gridcolor": "#B7009E"
     }
 }}
-<div id="unilabeltype-imageboard-container-{{cmid}}" class="unilabeltype-imageboard-container">
+{{#ispreviewmode}}
+'<div id="imageboardpreview" style="border: solid 1px #3399ff; border-radius: 5px;">
+    Vorschau:'
+ {{/ispreviewmode}}
+
+    <div id="unilabeltype-imageboard-container-{{cmid}}" class="unilabeltype-imageboard-container">
     {{#showintro}}
         {{{intro}}}
     {{/showintro}}
@@ -98,6 +103,11 @@
         {{/hasimages}}
     </div>
 </div>
+
+{{#ispreviewmode}}
+    </div>
+{{/ispreviewmode}}
+
 {{#js}}
     require(['unilabeltype_imageboard/imageboardrenderer'], function(imageboardrenderer) {
         imageboardrenderer.init(
@@ -107,5 +117,9 @@
             {{#autoscale}}true{{/autoscale}}{{^autoscale}}false{{/autoscale}},
             {{#editing}}true{{/editing}}{{^editing}}false{{/editing}}
         );
+    });
+
+    require(['unilabeltype_imageboard/draganddrop'], function(draganddrop) {
+        draganddrop.init();
     });
 {{/js}}
