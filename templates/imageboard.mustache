@@ -112,8 +112,8 @@
     require(['unilabeltype_imageboard/imageboardrenderer'], function(imageboardrenderer) {
         imageboardrenderer.init(
             {{cmid}},
-            {{canvaswidth}},
-            {{canvasheight}},
+            '{{canvaswidth}}',
+            '{{canvasheight}}',
             {{#autoscale}}true{{/autoscale}}{{^autoscale}}false{{/autoscale}},
             {{#editing}}true{{/editing}}{{^editing}}false{{/editing}}
         );
