@@ -8,7 +8,12 @@ The code was copied and than adapted to be able to position images on a canvas i
 Form:  
 ![grafik](https://github.com/andreasschenkel/moodle-unilabeltype_imageboard/assets/31856043/9e6f8bbb-fd5f-4653-9085-9c5fe80bd6d5)
 
-CHANGELOG
+
+
+[v4.1.0] 2023122000:
+
+- Preview in editingmode after save and then editing again
+- Changes in input fields of the coordinates will update the position of images in preview
 
 [v3.0.1] 2023101500:
 
