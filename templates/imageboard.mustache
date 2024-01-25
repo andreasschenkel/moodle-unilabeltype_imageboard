@@ -63,51 +63,61 @@
         "gridcolor": "#B7009E"
     }
 }}
-<div id="unilabeltype-imageboard-container-{{cmid}}" class="unilabeltype-imageboard-container">
-    {{#showintro}}
-        {{{intro}}}
-    {{/showintro}}
+{{#ispreviewmode}}
+<div id="imageboardpreview" style="border: solid 1px #3399ff; border-radius: 5px;">
 
-    <div id="unilabeltype-imageboard-{{cmid}}"
-         class="unilabeltype-imageboard"
-         style="position: relative;
-                 background: url('{{backgroundimage}}');
-                 width: {{canvaswidth}}px;
-                 height: {{canvasheight}}px;
-                 background-size: cover;">
-        {{#images}}
-            {{> unilabeltype_imageboard/image }}
-        {{/images}}
+{{/ispreviewmode}}
+    <div id="unilabeltype-imageboard-container-{{cmid}}" class="unilabeltype-imageboard-container">
+        {{#showintro}}
+            {{{intro}}}
+        {{/showintro}}
 
-        {{#capababilityforgrid}}
-            {{> unilabeltype_imageboard/imagegrid }}
-        {{/capababilityforgrid}}
+        <div id="unilabeltype-imageboard-{{cmid}}"
+            class="unilabeltype-imageboard"
+            style="position: relative;
+                    background: url('{{backgroundimage}}');
+                    width: {{canvaswidth}}px;
+                    height: {{canvasheight}}px;
+                    background-size: cover;">
+            {{#images}}
+                {{> unilabeltype_imageboard/image }}
+            {{/images}}
 
+            {{#capababilityforgrid}}
+                {{> unilabeltype_imageboard/imagegrid }}
+            {{/capababilityforgrid}}
+
+        </div>
+
+        <!-- List the used images or text -->
+
+        <div class="unilabeltype-imageboard-controllbuttons d-flex flex-column mt-2">
+            {{#capababilityforgrid}}
+                <div class="unilabel-imageboard-gridtoggler">
+                    <a class="unilabeltype-imageboard-controllbutton" href="#" id="unilabeltype-imageboard-gridtoggler-{{cmid}}">
+                        <i class="fa fa-th fa-fw"></i> <span class="unilabeltype-imageboard-toggle-text">{{#str}} buttonlabelhelpergridshow, unilabeltype_imageboard {{/str}}</span>
+                    </a>
+                </div>
+            {{/capababilityforgrid}}
+            {{#hasimages}}
+                {{> unilabeltype_imageboard/imagelist }}
+            {{/hasimages}}
+        </div>
     </div>
-
-    <!-- List the used images or text -->
-
-    <div class="unilabeltype-imageboard-controllbuttons d-flex flex-column mt-2">
-        {{#capababilityforgrid}}
-            <div class="unilabel-imageboard-gridtoggler">
-                <a class="unilabeltype-imageboard-controllbutton" href="#" id="unilabeltype-imageboard-gridtoggler-{{cmid}}">
-                    <i class="fa fa-th fa-fw"></i> <span class="unilabeltype-imageboard-toggle-text">{{#str}} buttonlabelhelpergridshow, unilabeltype_imageboard {{/str}}</span>
-                </a>
-            </div>
-        {{/capababilityforgrid}}
-        {{#hasimages}}
-            {{> unilabeltype_imageboard/imagelist }}
-        {{/hasimages}}
-    </div>
+{{#ispreviewmode}}
 </div>
+{{/ispreviewmode}}
 {{#js}}
     require(['unilabeltype_imageboard/imageboardrenderer'], function(imageboardrenderer) {
         imageboardrenderer.init(
             {{cmid}},
-            {{canvaswidth}},
-            {{canvasheight}},
+            '{{canvaswidth}}',
+            '{{canvasheight}}',
             {{#autoscale}}true{{/autoscale}}{{^autoscale}}false{{/autoscale}},
             {{#editing}}true{{/editing}}{{^editing}}false{{/editing}}
         );
+    });
+    require(['unilabeltype_imageboard/draganddrop'], function(draganddrop) {
+        draganddrop.init({{ispreviewmode}});
     });
 {{/js}}

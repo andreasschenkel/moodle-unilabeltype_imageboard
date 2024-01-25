@@ -46,13 +46,24 @@ class content_type extends \mod_unilabel\content_type {
     /** @var \context $context */
     private $context;
 
+    /** @var \stdClass $config */
+    private $config;
+
+    /** @var string */
+    private $type;
+
+    /** @var string */
+    private $component;
+
     /**
      * Constructor
      *
      * @return void
      */
     public function __construct() {
-        $this->init_type(__NAMESPACE__);
+        $this->type = 'imageboard';
+        $this->component = 'unilabeltype_' . $this->type;
+        $this->config = get_config($this->component);
     }
 
     /**
@@ -323,6 +334,7 @@ class content_type extends \mod_unilabel\content_type {
             'targetwidth',
             'targetheight',
         ];
+        $myeditorelements = [];
 
         // Render the button to add elements.
         $btn = $OUTPUT->render_from_template('mod_unilabel/load_element_button', [
@@ -341,9 +353,11 @@ class content_type extends \mod_unilabel\content_type {
                 $this->type,
                 $formid,
                 $context->id,
+                $course->id,
                 $prefix,
                 $myelements,
-                $this->use_sortorder(), // Do not use drag and drop.
+                $myeditorelements,
+                false, // Do not use drag and drop.
             ]
         );
 
