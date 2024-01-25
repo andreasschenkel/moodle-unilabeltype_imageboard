@@ -149,6 +149,10 @@ class content_type extends \mod_unilabel\content_type {
         $pickerbutton = new \mod_unilabel\output\component\activity_picker_button($formid, $inputidbase);
         $mform->addElement('html', $OUTPUT->render($picker));
 
+
+
+
+
         $repeatarray = [];
         // If we want each repeated elment in a numbered group we add a header with '{no}' in its label.
         // This is replaced by the number of element.
@@ -219,6 +223,20 @@ class content_type extends \mod_unilabel\content_type {
                 get_string('url', 'unilabeltype_imageboard') . '-{no}',
                 ['size' => 50]
         );
+
+        $repeatarray[] = $mform->createElement(
+                'static',
+                $prefix.'activityname',
+                get_string('activityname', 'unilabeltype_imageboard'),
+                get_string('noactivity', 'unilabeltype_imageboard'),
+        );
+
+
+        $mform->addElement('html', $OUTPUT->render($picker));
+
+
+
+
         $repeatarray[] = $mform->createElement(
                 'static',
                 $prefix . 'activitypickerbutton',
@@ -243,6 +261,18 @@ class content_type extends \mod_unilabel\content_type {
         $repeatedoptions[$prefix . 'border']['default'] = $this->config->default_bordersize;
         $repeatedoptions[$prefix . 'position']['helpbutton'] = ['position', 'unilabeltype_imageboard'];
         $repeatedoptions[$prefix . 'targetsize']['helpbutton'] = ['targetsize', 'unilabeltype_imageboard'];
+
+
+
+
+        // Element to show the name of an activity.
+        $repeatedoptions[$prefix.'activityname']['type'] = PARAM_TEXT;
+        $repeatedoptions[$prefix.'activityname']['helpbutton'] = ['activityname', 'unilabeltype_imageboard'];
+        $repeatedoptions[$prefix.'activityname']['hideif'] = [$prefix.'activityfound', 'eq', 'false'];
+        $repeatedoptions[$prefix.'activityname']['disabledif'] = [$prefix.'activityfound', 'eq', 'true'];
+
+
+
 
         $defaultrepeatcount = 4; // The default count for images.
         $repeatcount = count($this->images);
@@ -327,6 +357,31 @@ class content_type extends \mod_unilabel\content_type {
             $elementname = $prefix . 'url[' . $index . ']';
             $data[$elementname] = $image->url;
 
+
+            $activitys = $this->get_linkable_activitys(get_course($cm->course));
+
+            // Check, if url is a link to an existing activity array.
+            $elementname = $prefix . 'activityname[' . $index . ']';
+            $data[$elementname] = get_string('noactivity', 'unilabeltype_imageboard');
+            //$elementname = $prefix . 'activityfound[' . $index . ']';
+            //$data[$elementname] = 'false';
+            foreach ($activitys as $key => $activity) {
+                if ($image->url == $key) {
+                    // To be able to use hideif
+                    //$elementname = $prefix . 'activityfound[' . $index . ']';
+                    //$data[$elementname] = 'true';
+
+                    $elementname = $prefix . 'activityname[' . $index . ']';
+                    $data[$elementname] = $activity;
+                    break;
+                }
+            }
+
+
+
+
+
+
             // Prepare the url field.
             $elementname = $prefix . 'xposition[' . $index . ']';
             $data[$elementname] = $image->xposition;
@@ -355,6 +410,63 @@ class content_type extends \mod_unilabel\content_type {
 
         return $data;
     }
+
+
+
+
+    /**
+     * Get an array of all activities in the course that have a view and can be accessed by an url.
+     *
+     * @param $course
+     * @return array
+     * @throws \coding_exception
+     * @throws \moodle_exception
+     */
+    public function get_linkable_activitys($course): array {
+        // Instead of a textfield to input an url now usw a dropdown that shows a list of all activitys in a course.
+        $activitys = [];
+        $info = get_fast_modinfo($course);
+        $coursemodules = $info->get_cms();
+        foreach ($coursemodules as $coursemodule) {
+            if (!$coursemodule->has_view()) {
+                continue;
+            }
+            // Check accessibility.
+            // ToDo: Optimize this check.
+            $visibilityindicator = '';
+            if ($coursemodule->is_stealth()) {
+                $visibilityindicator = get_string('indicatorisstealth', 'unilabeltype_imageboard');
+            } else {
+                if ($coursemodule->visible == 1) {
+                    // Visible means accessible.
+                    $visibilityindicator = get_string('indicatorvisible', 'unilabeltype_imageboard');
+                } else {
+                    // Not visible means not accessible.
+                    $visibilityindicator = get_string('indicatorhidden', 'unilabeltype_imageboard');;
+                }
+            }
+            $key = $coursemodule->name . ' ' . $visibilityindicator;
+            // Check if user has capability viewhiddenactivities if activity is not visible
+            if ($coursemodule->visible == 1 ||
+                    ($coursemodule->visible == 0 && has_capability('moodle/course:viewhiddenactivities', \context_course::instance($course->id)))
+            ) {
+                $activitys[$coursemodule->url->out()] = $key;
+            }
+        }
+        return $activitys;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
 
     /**
      * Validate all form values given in $data and returns an array with errors.

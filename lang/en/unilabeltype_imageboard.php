@@ -82,3 +82,14 @@ $string['url'] = 'Url';
 $string['url_help'] = 'The image becomes a clickable button linked to the defined url by defining an url.';
 $string['xposition'] = 'X';
 $string['yposition'] = 'Y';
+
+
+
+
+$string['indicatorisstealth'] = '(stealth - available but hidden)';
+$string['indicatorvisible'] = '(visible)';
+$string['indicatorhidden'] = '(hidden - not accessable)';
+$string['noactivity'] = '...';
+$string['activityname'] = 'Name of the activity';
+$string['activityname_help'] = 'If the URL belongs to an activity in this course then the activity name will be shown below the URL.';
+$string['noactivity'] = 'der link ist keine aktivität im kurs';
