@@ -68,7 +68,7 @@
     context_id={{context_id}} in dem die Bilder gespeichert sind/werden. Das steht in der Tabelle files in contextid<br>
     Id des Modules/Aktivität cmid=context_instanceid={{context_instanceid}}<br>
     http://localhost:8000/mod/unilabel/edit_content.php?cmid={{context_instanceid}}
-    <div class="border m-2 p-3" id="backgroundArea" style="position: relative; height: 500px;">
+    <div class="border" id="backgroundArea" style="position: relative;">
         Hier landet das Bild
     </div>
     jetzt noch javascript, dass aus dem Filemanager die URL der draftdatei liest
@@ -105,14 +105,26 @@
             input_targetwidth.addEventListener("focusout", function() {
                 console.log("event focusout");
                 const width = parseInt(input_targetwidth.value);
-                imageid.style.width = width + "px";
+                if (width != 0) {
+                    imageid.style.width = width + "px";
+                } else {
+                    imageid.style.width = "auto";
+                }
+
             });
 
             const input_targetheight = document.getElementById("id_unilabeltype_imageboard_targetheight_" + (i));
             input_targetheight.addEventListener("focusout", function() {
                 console.log("event focusout");
                 const height = parseInt(input_targetheight.value);
-                imageid.style.height = height + "px";
+                if (height != 0) {
+                    imageid.style.height = height + "px";
+                } else {
+                    imageid.style.height = "auto";
+                }
+
+
+
             });
         }
 
@@ -152,7 +164,7 @@
         backgroundArea.style.height = canvasheight + "px";
     }
     // Timeout notwendig, damit das Bild in der Draftarea "vorhanden" ist.  document.querySelector('#id_unilabeltype_imageboard_backgroundimage_fieldset .filemanager-container .realpreview');
-    setTimeout(displayBackgroundimage, 5000);
+    setTimeout(displayBackgroundimage, 3000);
 
     /**
      *
@@ -163,7 +175,7 @@
             displayImage(i);
         }
     }
-    setTimeout(displayAllImage, 3000);
+    setTimeout(displayAllImage, 9000);
 
 
     /**
@@ -174,20 +186,46 @@
         console.log("displayImage= " , number);
         let backgroundArea = document.getElementById('backgroundArea');
         // div erstellen oder TODO: bestehenden div finden und positionieren.
-        backgroundArea.innerHTML += "<div id='imageid_" + number + "' style='z-index: 5; position: absolute; height: 200px; width: 200px;'></div>";
-        const image = document.getElementById('imageid_' + number);
+        //backgroundArea.innerHTML += "<div id='imageid_" + number + "' style='z-index: 5; position: absolute; width: 100; height: 100px;'>" +
+        //        "</div>";
 
+        backgroundArea.innerHTML += "<div style='z-index: 5; position: absolute;'>" +
+                "<img src='' id='imageid_" + number + "' style='position: relative;'>" +
+                "</div>";
+        updateImage(number)
+    }
+
+
+
+    function updateImage(number) {
+        const image = document.getElementById('imageid_' + number);
+        console.log("-->> image ", image);
         // Werte für das image setzen
         let imagedata = getAllImagedataFromForm(number);
         image.style.background = 'blue';
-        image.style.backgroundSize = "100%";
-        image.style.backgroundImage = "url('" + imagedata['src'] + "')";
+        //// image.style.backgroundSize = "100%";
+        //image.style.backgroundImage = "url('" + imagedata['src'] + "')";
+        image.src = imagedata['src'];
+        console.log("-->> imagedata['src'] ", imagedata['src']);
+
         image.style.left = parseInt(imagedata['xposition']) + "px";
         image.style.top = parseInt(imagedata['yposition']) + "px";
         // Breite und Höhe
-        if (imagedata['targetwidth'] != 0) image.style.width = imagedata['targetwidth'] + "px";
-        if (imagedata['targetheight'] != 0) image.style.height = imagedata['targetheight'] + "px";
+        console.log("-->> // Breite und Höhe");
+        if (imagedata['targetwidth'] != 0)  {
+            console.log("-->> targetwidth ", imagedata['targetwidth'] );
+            image.style.width = imagedata['targetwidth'] + "px";
+        } else {
+            image.style.width = "auto";
+        }
+        if (imagedata['targetheight'] != 0) {
+            console.log("-->> targetheight ", imagedata['targetheight'] );
+            image.style.height = imagedata['targetheight'] + "px";
+        } else {
+            image.style.height = "auto";
+        }
     }
+
 
     /**
      * The form has inputfields with date. This function gets the value from the inputfield with the given idselector
@@ -224,12 +262,16 @@
         // Src der Draftfile ermitteln
         const imagetag = document.getElementById('id_unilabeltype_imageboard_image_' + number +'_fieldset').getElementsByTagName('img');
         let src = '';
+        console.log("imagetag", imagetag);
         if (imagetag.length && imagetag.length != 0) {
             src = imagetag[0].src;
             src = src.split('?')[0];
         }
         imagedata['src'] = src;
-        console.log("imagedata2", imagedata);
+        console.log("imagedataxxx", imagedata);
         return imagedata;
     }
+
+
+
 </script>
