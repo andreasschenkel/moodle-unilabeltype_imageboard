@@ -42,8 +42,11 @@ class imageboard_preview extends imageboard_view {
      * @param \stdClass $unilabel
      * @param \stdClass|null $cm The course_module record
      */
-    public function __construct($unilabel, $unilabeltype, $cm = null) {
+    public function __construct($unilabel, $unilabeltype, $cm = null, $context) {
         parent::__construct($unilabel, $unilabeltype, $cm);
+        // Store some context-Data. Todo: might can be removed after development.
+        $this->data->context_id = $context->id;
+        $this->data->context_instanceid = $context->instanceid;
 
         $this->data->ispreviewmode = true;
         $this->data->cmid = 0;

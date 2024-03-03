@@ -98,9 +98,6 @@ class content_type extends \mod_unilabel\content_type {
 
         $mform->addElement('advcheckbox', $prefix . 'showintro', get_string('showunilabeltext', $this->component));
 
-        $preview = new \unilabeltype_imageboard\output\imageboard_preview($form->unilabel, $this, null);
-        $mform->addElement('html', $OUTPUT->render($preview));
-
         $mform->addElement('header', $prefix . 'hdr', $this->get_name());
         $mform->addHelpButton($prefix . 'hdr', 'pluginname', $this->component);
 
@@ -347,6 +344,20 @@ class content_type extends \mod_unilabel\content_type {
             ]
         );
 
+        // Das Rendern der Vorschau erfolgt nun am Ender der Bilderliste, so dass beim Hinzufügen eines weiteren Bildes
+        // die Vorschau in der Regel in der Nähe der form-Felder des neuen Bildes liegt und man so die form-Felder
+        // gleichzeitig zur Vorschau sehen kann. Änderungen an z.B. der xPositon ist dann sofort in der Vorschau sichtbar.
+        // Ich habe die folgende Funktion um den Parameter $context ergänzt ... kann aber eventuell wieder weg.
+        $preview = new \unilabeltype_imageboard\output\imageboard_preview($form->unilabel, $this, null, $context);
+        $mform->addElement('html', $OUTPUT->render($preview));
+
+        // Nach dem Hinzufügen eines Bildes entsteht eine neue Draft-Datei und im DOM wird einiges ergänzt:
+        // <input value="611915990" name="unilabeltype_imageboard_backgroundimage" type="hidden" id="id_unilabeltype_imageboard_backgroundimage">
+        // also in files contextid=5, component=user, filearea=draft, filepath=????, idemid=611915990 also value,
+        // bzw.
+        // im filemanager mit id=id_unilabeltype_imageboard_backgroundimage_fieldset findet man die aktuelle
+        // draftfile-URL zum Hintergrundbild.
+        // Es ist "einfacher" an die Draft-URL über den filemanager z.B. über die id id_unilabeltype_imageboard_backgroundimage_fieldset zu gelangen.
     }
 
     /**
