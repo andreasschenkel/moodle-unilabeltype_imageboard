@@ -115,8 +115,16 @@
                 imageid.style.height = height + "px";
             });
         }
+
+        let add_element_button = document.querySelectorAll('[id^="button-mform1"]')[0];
+        console.log("add_element_button" , add_element_button);
+        add_element_button.addEventListener("click", function() {
+            console.log("event click at add_element_button");
+            // No we can get the new form input fields and register a focusout listener and in case of focus out we update the rendered image.
+            // Thus we have to add a new div without any content and whenever there is a focusout event we will update this.
+        });
     }
-    setTimeout(registerOurEventlistener, 20000);
+    setTimeout(registerOurEventlistener, 10000);
 
     /**
      *
