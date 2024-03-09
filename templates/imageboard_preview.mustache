@@ -91,9 +91,7 @@
                 // An element was added so we have to add a div for the image to the dom and wie need to register listener to the ne inputfieds of the element
                 const singleElements = document.querySelectorAll('[id^="fitem_id_unilabeltype_imageboard_title_"]');
                 let number =  singleElements.length;
-                console.log("button wurde geklickt");
                 addImageToDom(number-1);
-                console.log("image wurde hinzugefügt");
                 setTimeout (function () {
                     registerAllListenersForAllElements();
                 }, 1000);
@@ -110,14 +108,12 @@
 
 
     function registerAllListenersForAllElements() {
-        console.log("registerAllListenersForAllElements");
         // Third register listener for all images already exists
         const singleElements = document.querySelectorAll('[id^="fitem_id_unilabeltype_imageboard_title_"]');
         for (let i = 0; i < singleElements.length; i++) {
             let number = singleElements[i].getAttribute('id').split('fitem_id_unilabeltype_imageboard_title_')[1];
             registerAllListenersForSingleElement(number);
         }
-        console.log("registerAllListenersForAllElements fertig");
     }
 
     /**
@@ -125,42 +121,41 @@
      * @param number
      */
     function registerAllListenersForSingleElement(number) {
-        console.log("registerAllListenersForSingleElement_" + number);
         let imageid = document.getElementById('imageid_' + number);
+        const imagediv = document.getElementById('unilabel_imageboard_imagediv_' + number);
 
         const input_title = document.getElementById('id_unilabeltype_imageboard_title_' + (number));
         input_title.addEventListener("focusout", function() {
-            console.log("event focusout title");
+            console.log("focusout title");
             const title = input_title.value;
             if (title != "") {
                 imageid.title = title;
+                const imageidtitle = document.getElementById('imageidtitle_' + number);
+                imageidtitle.innerHTML = title;
+
             } else {
                 //imageid.title = "";
             }
         });
 
 
-
-
-
         // Eventlistener an das Inputfeld für die x-Koordinate anhängen
         const input_xposition = document.getElementById('id_unilabeltype_imageboard_xposition_' + (number));
         input_xposition.addEventListener("focusout", function() {
-            console.log("event focusout x");
             const x = parseInt(input_xposition.value);
-            imageid.style.left = x + "px";
+            imagediv.style.left = x + "px";
+            //imageid.style.left = x + "px";
         });
         const input_yposition = document.getElementById('id_unilabeltype_imageboard_yposition_' + (number));
         input_yposition.addEventListener("focusout", function() {
-            console.log("event focusout y");
             const y = parseInt(input_yposition.value);
-            imageid.style.top = y + "px";
+            imagediv.style.top = y + "px";
+            //imageid.style.top = y + "px";
         });
 
         // Eventlistener an das Inputfeld für die width anhängen
         const input_targetwidth = document.getElementById('id_unilabeltype_imageboard_targetwidth_' + (number));
         input_targetwidth.addEventListener("focusout", function() {
-            console.log("event focusout width");
             const width = parseInt(input_targetwidth.value);
             if (width != 0) {
                 imageid.style.width = width + "px";
@@ -172,7 +167,6 @@
 
         const input_targetheight = document.getElementById('id_unilabeltype_imageboard_targetheight_' + (number));
         input_targetheight.addEventListener("focusout", function() {
-            console.log("event focusout height");
             const height = parseInt(input_targetheight.value);
             if (height != 0) {
                 imageid.style.height = height + "px";
@@ -241,20 +235,13 @@
      *
      */
     function displayAllImage() {
-        console.log("--------------------------------------------");
-        console.log("--------     displayAllImage    ------------");
-        console.log("--------------------------------------------");
         const singleElements = document.querySelectorAll('[id^="fitem_id_unilabeltype_imageboard_image_"]');
         for (let i = 0; i < singleElements.length; i++) {
             let singleElement = singleElements[i].getAttribute('id');
-            console.log("singleElementid", singleElement);
             let number = singleElement.split('fitem_id_unilabeltype_imageboard_image_')[1];
-            console.log("-----------number", number);
             // check if ther exxists already a div
             const imageid = document.getElementById('imageid_' + number);
-            console.log("-----------imageid", imageid);
             if (imageid == null) {
-                console.log("-----------imageid", imageid);
                 // div does not exist so we need do add it do dom
                 addImageToDom(number);
             }
@@ -268,42 +255,42 @@
      * @param number
      */
     function addImageToDom(number) {
-        console.log("addImageToDom= ", number);
         let backgroundArea = document.getElementById('unilabel-imageboard-background-area');
         // div erstellen oder TODO: bestehenden div finden und positionieren.
         //backgroundArea.innerHTML += "<div id='imageid_" + number + "' style='z-index: 5; position: absolute; width: 100; height: 100px;'>" +
         //        "</div>";
 
         const imageid = document.getElementById('imageid_' + number);
-        console.log("-----------imageid", imageid);
         if (imageid == null) {
-            console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!   gibt es noch nicht");
             // div does not exist so we need do add it do dom
-            backgroundArea.innerHTML += "<div style='z-index: 5; position: absolute;'>" +
-                    "<img src='' id='imageid_" + number + "' style='position: relative;'>" +
-                    "</div>";
+            // hier später das template image nutzen!!!!
+            imagecontainer = "<div id='unilabel_imageboard_imagediv_" + number + "' style='z-index: 5; position: absolute;'>" +
+                "<div id='imageidtitle_" + number + "' class='unilabel-imageboard-title rounded' style='position: relative;'>Überschrift</div>" +
+                "<div><img src='' id='imageid_" + number + "' style='position: relative;'></div>" +
+                "</div>";
+            backgroundArea.innerHTML += backgroundArea.innerHTML + imagecontainer;
         } else {
-            console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!   gibt es schon");
         }
         refreshImage(number);
     }
 
 
     function refreshImage(number) {
-        console.log("function refreshImage");
-        console.log("-->> number ", number);
         if (!Array.isArray(number)) {
-            console.log("-->> number ", number);
             const image = document.getElementById('imageid_' + number);
-            console.log("-->> image ", image);
             // Werte für das image setzen
             let imagedata = getAllImagedataFromForm(number);
             image.style.background = 'blue';
             //// image.style.backgroundSize = "100%";
             //image.style.backgroundImage = "url('" + imagedata['src'] + "')";
             image.src = imagedata['src'];
-            image.style.left = parseInt(imagedata['xposition']) + "px";
-            image.style.top = parseInt(imagedata['yposition']) + "px";
+
+            const imagediv = document.getElementById('unilabel_imageboard_imagediv_' + number);
+            imagediv.style.left = parseInt(imagedata['xposition']) + "px";
+            imagediv.style.top = parseInt(imagedata['yposition']) + "px";
+
+            ////image.style.left = parseInt(imagedata['xposition']) + "px";
+            ////image.style.top = parseInt(imagedata['yposition']) + "px";
             // Breite und Höhe
             if (imagedata['targetwidth'] != 0) {
                 image.style.width = imagedata['targetwidth'] + "px";
@@ -323,11 +310,13 @@
 
             // ToDo: add title if not empty
             let title = imagedata['title'];
+            const imageidtitle = document.getElementById('imageidtitle_' + number);
+            imageidtitle.innerHTML = title;
 
         } else {
-            console.log("number ist ein array" , number);
-            console.log("number[0] ist ein array" , number[0]);
-            console.log("number[0].attributeName ist ein array" , number[0].attributeName);
+            //console.log("number ist ein array" , number);
+            //console.log("number[0] ist ein array" , number[0]);
+            //console.log("number[0].attributeName ist ein array" , number[0].attributeName);
             console.log("number[0].target ist ein array" , number[0].target);
             // ToDo: nur genau den einen enuen listener hinzufügen ...
             // hier schonaml ALLE
@@ -337,7 +326,6 @@
             setTimeout (function () {
                 displayAllImage();
             }, 1000);
-
         }
     }
 
@@ -370,7 +358,7 @@
         };
 
         let imagedata = [];
-        imagedata['title'] = document.getElementById(imageids.xposition).getAttribute('value');
+        imagedata['title'] = document.getElementById(imageids.title).getAttribute('value');
         imagedata['xposition'] = document.getElementById(imageids.xposition).getAttribute('value');
         imagedata['yposition'] = document.getElementById(imageids.yposition).getAttribute('value');
         imagedata['targetwidth'] = document.getElementById(imageids.targetwidth).getAttribute('value');
