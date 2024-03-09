@@ -71,10 +71,10 @@
 
 <script>
     /**
-     * Register eventlistener when focus out from input fields in order to trigger an update
+     * Register eventlistener to the all input fields of the form to register focus-out events from input fields in order to trigger a fresh of the preview.
      */
     function registerAllEventlistener() {
-        // First: When uploading an backgroundimage the backgroundimage of the backgroundimagediv must be updated.
+        // First: When uploading a backgroundimage the backgroundimage of the backgroundimagediv must be updated.
         let backgroundfileNode = document.getElementById('id_unilabeltype_imageboard_backgroundimage_fieldset');
         if (backgroundfileNode) {
             let observer = new MutationObserver(refreshBackgroundImage);
@@ -86,19 +86,25 @@
         add_element_button.addEventListener("click", function() {
             // No we can get the new form input fields and register a focusout listener and in case of focus out we update the rendered image.
             // Thus we have to add a new div without any content and whenever there is a focusout event we will update this.
-            // Third register listener for all images already exists
+            // Then register listener for all images already exists
             setTimeout (function () {
                 // An element was added so we have to add a div for the image to the dom and wie need to register listener to the ne inputfieds of the element
                 const singleElements = document.querySelectorAll('[id^="fitem_id_unilabeltype_imageboard_title_"]');
                 let number =  singleElements.length;
+                console.log("button wurde geklickt");
                 addImageToDom(number-1);
-                registerAllListenersForAllElements();
+                console.log("image wurde hinzugefügt");
+                setTimeout (function () {
+                    registerAllListenersForAllElements();
+                }, 1000);
             }, 1000);
 
         });
 
         // Third register listener for all images already exists
-        registerAllListenersForAllElements();
+        setTimeout (function () {
+            registerAllListenersForAllElements();
+        }, 1000);
     }
     setTimeout(registerAllEventlistener, 10000);
 
@@ -111,6 +117,7 @@
             let number = singleElements[i].getAttribute('id').split('fitem_id_unilabeltype_imageboard_title_')[1];
             registerAllListenersForSingleElement(number);
         }
+        console.log("registerAllListenersForAllElements fertig");
     }
 
     /**
@@ -234,13 +241,24 @@
      *
      */
     function displayAllImage() {
+        console.log("--------------------------------------------");
+        console.log("--------     displayAllImage    ------------");
+        console.log("--------------------------------------------");
         const singleElements = document.querySelectorAll('[id^="fitem_id_unilabeltype_imageboard_image_"]');
         for (let i = 0; i < singleElements.length; i++) {
             let singleElement = singleElements[i].getAttribute('id');
             console.log("singleElementid", singleElement);
             let number = singleElement.split('fitem_id_unilabeltype_imageboard_image_')[1];
             console.log("-----------number", number);
-            addImageToDom(number);
+            // check if ther exxists already a div
+            const imageid = document.getElementById('imageid_' + number);
+            console.log("-----------imageid", imageid);
+            if (imageid == null) {
+                console.log("-----------imageid", imageid);
+                // div does not exist so we need do add it do dom
+                addImageToDom(number);
+            }
+            refreshImage(number);
         }
     }
     setTimeout(displayAllImage, 9000);
@@ -256,9 +274,17 @@
         //backgroundArea.innerHTML += "<div id='imageid_" + number + "' style='z-index: 5; position: absolute; width: 100; height: 100px;'>" +
         //        "</div>";
 
-        backgroundArea.innerHTML += "<div style='z-index: 5; position: absolute;'>" +
-                "<img src='' id='imageid_" + number + "' style='position: relative;'>" +
-                "</div>";
+        const imageid = document.getElementById('imageid_' + number);
+        console.log("-----------imageid", imageid);
+        if (imageid == null) {
+            console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!   gibt es noch nicht");
+            // div does not exist so we need do add it do dom
+            backgroundArea.innerHTML += "<div style='z-index: 5; position: absolute;'>" +
+                    "<img src='' id='imageid_" + number + "' style='position: relative;'>" +
+                    "</div>";
+        } else {
+            console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!   gibt es schon");
+        }
         refreshImage(number);
     }
 
@@ -295,7 +321,6 @@
                 //image.title = "";
             }
 
-
             // ToDo: add title if not empty
             let title = imagedata['title'];
 
@@ -306,8 +331,13 @@
             console.log("number[0].target ist ein array" , number[0].target);
             // ToDo: nur genau den einen enuen listener hinzufügen ...
             // hier schonaml ALLE
-            registerAllListenersForAllElements();
-            displayAllImage();
+            setTimeout (function () {
+                registerAllListenersForAllElements();
+            }, 500);
+            setTimeout (function () {
+                displayAllImage();
+            }, 1000);
+
         }
     }
 
