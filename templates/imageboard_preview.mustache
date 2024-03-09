@@ -78,73 +78,98 @@
     /**
      * Register eventlistener when focus out from input fields in order to trigger an update
      */
-    function registerOurEventlistener() {
-        console.log("registerOurEventlistener");
-        const imageids = document.querySelectorAll('[id^="imageid_"]');
-        let i = 0;
-        console.log("imageids.length="+imageids.length);
-        for (i=0; i<imageids.length; i++) {
-            let imageid = imageids[i];
-            // Eventlistener an das Inputfeld für die x-Koordinate anhängen
-            const input_xposition = document.getElementById("id_unilabeltype_imageboard_xposition_" + (i));
-            input_xposition.addEventListener("focusout", function() {
-                console.log("event focusout");
-                const x = parseInt(input_xposition.value);
-                imageid.style.left = x + "px";
-            });
-            const input_yposition = document.getElementById("id_unilabeltype_imageboard_yposition_" + (i));
-            input_yposition.addEventListener("focusout", function() {
-                console.log("event focusout");
-                const y = parseInt(input_yposition.value);
-                imageid.style.top = y + "px";
-            });
-
-
-            // Eventlistener an das Inputfeld für die width anhängen
-            const input_targetwidth = document.getElementById("id_unilabeltype_imageboard_targetwidth_" + (i));
-            input_targetwidth.addEventListener("focusout", function() {
-                console.log("event focusout");
-                const width = parseInt(input_targetwidth.value);
-                if (width != 0) {
-                    imageid.style.width = width + "px";
-                } else {
-                    imageid.style.width = "auto";
-                }
-
-            });
-
-            const input_targetheight = document.getElementById("id_unilabeltype_imageboard_targetheight_" + (i));
-            input_targetheight.addEventListener("focusout", function() {
-                console.log("event focusout");
-                const height = parseInt(input_targetheight.value);
-                if (height != 0) {
-                    imageid.style.height = height + "px";
-                } else {
-                    imageid.style.height = "auto";
-                }
-            });
-        }
-
-        let add_element_button = document.querySelectorAll('[id^="button-mform1"]')[0];
-        console.log("add_element_button" , add_element_button);
-        add_element_button.addEventListener("click", function() {
-            console.log("event click at add_element_button");
-            // No we can get the new form input fields and register a focusout listener and in case of focus out we update the rendered image.
-            // Thus we have to add a new div without any content and whenever there is a focusout event we will update this.
-        });
-
-        // When uloading an backgroundimage the backgroundimage of the backgroundimagediv must be updated.
+    function registerAllEventlistener() {
+        // First: When uploading an backgroundimage the backgroundimage of the backgroundimagediv must be updated.
         let backgroundfileNode = document.getElementById('id_unilabeltype_imageboard_backgroundimage_fieldset');
         if (backgroundfileNode) {
             let observer = new MutationObserver(refreshBackgroundImage);
             observer.observe(backgroundfileNode, {attributes: true, childList: true, subtree: true});
         }
+
+        // Second add listener to the add image button for new added images.
+        let add_element_button = document.querySelectorAll('[id^="button-mform1"]')[0];
+        add_element_button.addEventListener("click", function() {
+            // No we can get the new form input fields and register a focusout listener and in case of focus out we update the rendered image.
+            // Thus we have to add a new div without any content and whenever there is a focusout event we will update this.
+            // Third register listener for all images already exists
+            setTimeout (function () {
+                // An element was added so we have to add a div for the image to the dom and wie need to register listener to the ne inputfieds of the element
+                const singleElements = document.querySelectorAll('[id^="fitem_id_unilabeltype_imageboard_title_"]');
+                let number =  singleElements.length;
+                addImageToDom(number-1);
+                registerAllListenersForAllElements();
+            }, 1000);
+
+        });
+
+        // Third register listener for all images already exists
+        registerAllListenersForAllElements();
     }
-    setTimeout(registerOurEventlistener, 10000);
+    setTimeout(registerAllEventlistener, 10000);
 
 
+    function registerAllListenersForAllElements() {
+        console.log("registerAllListenersForAllElements");
+        // Third register listener for all images already exists
+        const singleElements = document.querySelectorAll('[id^="fitem_id_unilabeltype_imageboard_title_"]');
+        for (let i = 0; i < singleElements.length; i++) {
+            let number = singleElements[i].getAttribute('id').split('fitem_id_unilabeltype_imageboard_title_')[1];
+            registerAllListenersForSingleElement(number);
+        }
+    }
 
+    /**
+     *
+     * @param number
+     */
+    function registerAllListenersForSingleElement(number) {
+        console.log("registerAllListenersForSingleElement_" + number);
+        let imageid = document.getElementById('imageid_' + number);
+        // Eventlistener an das Inputfeld für die x-Koordinate anhängen
+        const input_xposition = document.getElementById('id_unilabeltype_imageboard_xposition_' + (number));
+        input_xposition.addEventListener("focusout", function() {
+            console.log("event focusout x");
+            const x = parseInt(input_xposition.value);
+            imageid.style.left = x + "px";
+        });
+        const input_yposition = document.getElementById('id_unilabeltype_imageboard_yposition_' + (number));
+        input_yposition.addEventListener("focusout", function() {
+            console.log("event focusout y");
+            const y = parseInt(input_yposition.value);
+            imageid.style.top = y + "px";
+        });
 
+        // Eventlistener an das Inputfeld für die width anhängen
+        const input_targetwidth = document.getElementById('id_unilabeltype_imageboard_targetwidth_' + (number));
+        input_targetwidth.addEventListener("focusout", function() {
+            console.log("event focusout width");
+            const width = parseInt(input_targetwidth.value);
+            if (width != 0) {
+                imageid.style.width = width + "px";
+            } else {
+                imageid.style.width = "auto";
+            }
+
+        });
+
+        const input_targetheight = document.getElementById('id_unilabeltype_imageboard_targetheight_' + (number));
+        input_targetheight.addEventListener("focusout", function() {
+            console.log("event focusout height");
+            const height = parseInt(input_targetheight.value);
+            if (height != 0) {
+                imageid.style.height = height + "px";
+            } else {
+                imageid.style.height = "auto";
+            }
+        });
+
+        let imagefileNode = document.getElementById('fitem_id_unilabeltype_imageboard_image_' + (number));
+        if (imagefileNode) {
+            let observer = new MutationObserver(refreshImage);
+            observer.observe(imagefileNode, {attributes: true, childList: true, subtree: true});
+        }
+
+    }
 
 
     /**
@@ -154,13 +179,9 @@
         // previewimage vom filemanager id_unilabeltype_imageboard_backgroundimage_fieldset erhalten
         let filemanagerbackgroundimagefieldset = document.getElementById('id_unilabeltype_imageboard_backgroundimage_fieldset');
         let previewimage = filemanagerbackgroundimagefieldset.getElementsByClassName('realpreview');
+        let backgrounddiv = document.getElementById('unilabel-imageboard-background-area');
         if (previewimage.length > 0) {
-            console.log("------------------------------------------------");
-            console.log("previewimage" , previewimage);
-            let backgrounddiv = document.getElementById('unilabel-imageboard-background-area');
-            console.log("backgrounddiv" , backgrounddiv);
             let backgroundurl = previewimage[0].getAttribute('src').split('?')[0];
-            console.log("backgroundurl" , backgroundurl);
             // If the uploaded file reuses the filename of a previously uploaded image, they differ
             // only in the oid. So one has to append the oid to the url.
             if (previewimage[0].getAttribute('src').split('?')[1].includes('&oid=')) {
@@ -172,12 +193,12 @@
 
             const canvaswidthinput = document.getElementById('id_unilabeltype_imageboard_canvaswidth');
             let canvaswidthselected = canvaswidthinput.selectedOptions;
-            let canvaswidth =  canvaswidthselected[0].value;
+            let canvaswidth = canvaswidthselected[0].value;
             backgrounddiv.style.width = canvaswidth + "px";
 
             const canvasheightinput = document.getElementById('id_unilabeltype_imageboard_canvasheight');
             let canvasheightselected = canvasheightinput.selectedOptions;
-            let canvasheight =  canvasheightselected[0].value;
+            let canvasheight = canvasheightselected[0].value;
             backgrounddiv.style.height = canvasheight + "px";
         } else {
             // Image might be deleted so update the backroundidv and remove backgroundimage in preview;
@@ -189,26 +210,27 @@
     // Timeout notwendig, damit das Bild in der Draftarea "vorhanden" ist.  document.querySelector('#id_unilabeltype_imageboard_backgroundimage_fieldset .filemanager-container .realpreview');
     setTimeout(refreshBackgroundImage, 10000);
 
-
-
     /**
      *
      */
     function displayAllImage() {
-        const counter = (document.querySelectorAll('[id^="fgroup_id_unilabeltype_imageboard_position_"]').length)/2;
-        for ( let i=0; i<counter; i++ ) {
-            displayImage(i);
+        const singleElements = document.querySelectorAll('[id^="fitem_id_unilabeltype_imageboard_image_"]');
+        for (let i = 0; i < singleElements.length; i++) {
+            let singleElement = singleElements[i].getAttribute('id');
+            console.log("singleElementid", singleElement);
+            let number = singleElement.split('fitem_id_unilabeltype_imageboard_image_')[1];
+            console.log("-----------number", number);
+            addImageToDom(number);
         }
     }
     setTimeout(displayAllImage, 9000);
-
 
     /**
      *
      * @param number
      */
-    function displayImage(number) {
-        console.log("displayImage= " , number);
+    function addImageToDom(number) {
+        console.log("addImageToDom= ", number);
         let backgroundArea = document.getElementById('unilabel-imageboard-background-area');
         // div erstellen oder TODO: bestehenden div finden und positionieren.
         //backgroundArea.innerHTML += "<div id='imageid_" + number + "' style='z-index: 5; position: absolute; width: 100; height: 100px;'>" +
@@ -217,37 +239,45 @@
         backgroundArea.innerHTML += "<div style='z-index: 5; position: absolute;'>" +
                 "<img src='' id='imageid_" + number + "' style='position: relative;'>" +
                 "</div>";
-        updateImage(number)
+        refreshImage(number);
     }
 
 
-
-    function updateImage(number) {
-        const image = document.getElementById('imageid_' + number);
-        console.log("-->> image ", image);
-        // Werte für das image setzen
-        let imagedata = getAllImagedataFromForm(number);
-        image.style.background = 'blue';
-        //// image.style.backgroundSize = "100%";
-        //image.style.backgroundImage = "url('" + imagedata['src'] + "')";
-        image.src = imagedata['src'];
-        console.log("-->> imagedata['src'] ", imagedata['src']);
-
-        image.style.left = parseInt(imagedata['xposition']) + "px";
-        image.style.top = parseInt(imagedata['yposition']) + "px";
-        // Breite und Höhe
-        console.log("-->> // Breite und Höhe");
-        if (imagedata['targetwidth'] != 0)  {
-            console.log("-->> targetwidth ", imagedata['targetwidth'] );
-            image.style.width = imagedata['targetwidth'] + "px";
+    function refreshImage(number) {
+        console.log("function refreshImage");
+        console.log("-->> number ", number);
+        if (!Array.isArray(number)) {
+            console.log("-->> number ", number);
+            const image = document.getElementById('imageid_' + number);
+            console.log("-->> image ", image);
+            // Werte für das image setzen
+            let imagedata = getAllImagedataFromForm(number);
+            image.style.background = 'blue';
+            //// image.style.backgroundSize = "100%";
+            //image.style.backgroundImage = "url('" + imagedata['src'] + "')";
+            image.src = imagedata['src'];
+            image.style.left = parseInt(imagedata['xposition']) + "px";
+            image.style.top = parseInt(imagedata['yposition']) + "px";
+            // Breite und Höhe
+            if (imagedata['targetwidth'] != 0) {
+                image.style.width = imagedata['targetwidth'] + "px";
+            } else {
+                image.style.width = "auto";
+            }
+            if (imagedata['targetheight'] != 0) {
+                image.style.height = imagedata['targetheight'] + "px";
+            } else {
+                image.style.height = "auto";
+            }
         } else {
-            image.style.width = "auto";
-        }
-        if (imagedata['targetheight'] != 0) {
-            console.log("-->> targetheight ", imagedata['targetheight'] );
-            image.style.height = imagedata['targetheight'] + "px";
-        } else {
-            image.style.height = "auto";
+            console.log("number ist ein array" , number);
+            console.log("number[0] ist ein array" , number[0]);
+            console.log("number[0].attributeName ist ein array" , number[0].attributeName);
+            console.log("number[0].target ist ein array" , number[0].target);
+            // ToDo: nur genau den einen enuen listener hinzufügen ...
+            // hier schonaml ALLE
+            registerAllListenersForAllElements();
+            displayAllImage();
         }
     }
 
@@ -285,18 +315,15 @@
         imagedata['targeheight'] = document.getElementById(imageids.targetheight).getAttribute('value');
 
         // Src der Draftfile ermitteln
-        const imagetag = document.getElementById('id_unilabeltype_imageboard_image_' + number +'_fieldset').getElementsByTagName('img');
+        const imagetag = document.getElementById('id_unilabeltype_imageboard_image_' + number + '_fieldset').getElementsByTagName('img');
         let src = '';
-        console.log("imagetag", imagetag);
         if (imagetag.length && imagetag.length != 0) {
             src = imagetag[0].src;
             src = src.split('?')[0];
         }
         imagedata['src'] = src;
-        console.log("imagedataxxx", imagedata);
         return imagedata;
     }
-
 
 
 </script>
