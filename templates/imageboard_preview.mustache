@@ -68,7 +68,7 @@
     context_id={{context_id}} in dem die Bilder gespeichert sind/werden. Das steht in der Tabelle files in contextid<br>
     Id des Modules/Aktivität cmid=context_instanceid={{context_instanceid}}<br>
     http://localhost:8000/mod/unilabel/edit_content.php?cmid={{context_instanceid}}
-    <div class="border" id="backgroundArea" style="position: relative;">
+    <div class="border" id="unilabel-imageboard-background-area" style="position: relative;">
         Hier landet das Bild
     </div>
     jetzt noch javascript, dass aus dem Filemanager die URL der draftdatei liest
@@ -122,9 +122,6 @@
                 } else {
                     imageid.style.height = "auto";
                 }
-
-
-
             });
         }
 
@@ -135,36 +132,64 @@
             // No we can get the new form input fields and register a focusout listener and in case of focus out we update the rendered image.
             // Thus we have to add a new div without any content and whenever there is a focusout event we will update this.
         });
+
+        // When uloading an backgroundimage the backgroundimage of the backgroundimagediv must be updated.
+        let backgroundfileNode = document.getElementById('id_unilabeltype_imageboard_backgroundimage_fieldset');
+        if (backgroundfileNode) {
+            let observer = new MutationObserver(refreshBackgroundImage);
+            observer.observe(backgroundfileNode, {attributes: true, childList: true, subtree: true});
+        }
     }
     setTimeout(registerOurEventlistener, 10000);
 
+
+
+
+
+
     /**
-     *
+     * Sets the background image of the SVG to the current image in filemanager.
      */
-    function displayBackgroundimage() {
-        const image = document.getElementById('id_unilabeltype_imageboard_backgroundimage_fieldset').getElementsByTagName('img');
-        let src = '';
-        if (image.length && image.length != 0) {
-            src = image[0].src;
-            src = src.split('?')[0];
+    function refreshBackgroundImage() {
+        // previewimage vom filemanager id_unilabeltype_imageboard_backgroundimage_fieldset erhalten
+        let filemanagerbackgroundimagefieldset = document.getElementById('id_unilabeltype_imageboard_backgroundimage_fieldset');
+        let previewimage = filemanagerbackgroundimagefieldset.getElementsByClassName('realpreview');
+        if (previewimage.length > 0) {
+            console.log("------------------------------------------------");
+            console.log("previewimage" , previewimage);
+            let backgrounddiv = document.getElementById('unilabel-imageboard-background-area');
+            console.log("backgrounddiv" , backgrounddiv);
+            let backgroundurl = previewimage[0].getAttribute('src').split('?')[0];
+            console.log("backgroundurl" , backgroundurl);
+            // If the uploaded file reuses the filename of a previously uploaded image, they differ
+            // only in the oid. So one has to append the oid to the url.
+            if (previewimage[0].getAttribute('src').split('?')[1].includes('&oid=')) {
+                backgroundurl += '?oid=' + previewimage[0].getAttribute('src').split('&oid=')[1];
+            }
+            backgrounddiv.style.background = 'red'; // just to indicate changes during development.
+            backgrounddiv.style.backgroundSize = 'cover';
+            backgrounddiv.style.backgroundImage = "url('" + backgroundurl + "')";
+
+            const canvaswidthinput = document.getElementById('id_unilabeltype_imageboard_canvaswidth');
+            let canvaswidthselected = canvaswidthinput.selectedOptions;
+            let canvaswidth =  canvaswidthselected[0].value;
+            backgrounddiv.style.width = canvaswidth + "px";
+
+            const canvasheightinput = document.getElementById('id_unilabeltype_imageboard_canvasheight');
+            let canvasheightselected = canvasheightinput.selectedOptions;
+            let canvasheight =  canvasheightselected[0].value;
+            backgrounddiv.style.height = canvasheight + "px";
+        } else {
+            // Image might be deleted so update the backroundidv and remove backgroundimage in preview;
+            // ToDo    if (previewimage.length > 0) does not recognize when an image is deleted so we need a different condition!
+            backgrounddiv.style.background = 'green'; // just to indicate changes during development.
+            backgrounddiv.style.backgroundImage = "url('')";
         }
-        let backgroundArea = document.getElementById('backgroundArea');
-        backgroundArea.style.background = 'red';
-        backgroundArea.style.backgroundSize = 'cover';
-        backgroundArea.style.backgroundImage = "url('" + src + "')";
-
-        const canvaswidthinput = document.getElementById('id_unilabeltype_imageboard_canvaswidth');
-        let canvaswidthselected = canvaswidthinput.selectedOptions;
-        let canvaswidth =  canvaswidthselected[0].value;
-        backgroundArea.style.width = canvaswidth + "px";
-
-        const canvasheightinput = document.getElementById('id_unilabeltype_imageboard_canvasheight');
-        let canvasheightselected = canvasheightinput.selectedOptions;
-        let canvasheight =  canvasheightselected[0].value;
-        backgroundArea.style.height = canvasheight + "px";
     }
     // Timeout notwendig, damit das Bild in der Draftarea "vorhanden" ist.  document.querySelector('#id_unilabeltype_imageboard_backgroundimage_fieldset .filemanager-container .realpreview');
-    setTimeout(displayBackgroundimage, 3000);
+    setTimeout(refreshBackgroundImage, 10000);
+
+
 
     /**
      *
@@ -184,7 +209,7 @@
      */
     function displayImage(number) {
         console.log("displayImage= " , number);
-        let backgroundArea = document.getElementById('backgroundArea');
+        let backgroundArea = document.getElementById('unilabel-imageboard-background-area');
         // div erstellen oder TODO: bestehenden div finden und positionieren.
         //backgroundArea.innerHTML += "<div id='imageid_" + number + "' style='z-index: 5; position: absolute; width: 100; height: 100px;'>" +
         //        "</div>";
