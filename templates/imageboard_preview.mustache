@@ -63,13 +63,20 @@
         "gridcolor": "#B7009E"
     }
 }}
-<div id="imageboardpreview" style="border: solid 1px #3399ff; border-radius: 5px;">
+<div id="unilabel-imageboard-preview" style="border: solid 1px #3399ff; border-radius: 5px;">
     <div class="border" id="unilabel-imageboard-background-area" style="position: relative;">
         The preview will be placed here.
     </div>
 </div>
 
 <script>
+    // Timeout notwendig, damit das Bild in der Draftarea "vorhanden" ist.  document.querySelector('#id_unilabeltype_imageboard_backgroundimage_fieldset .filemanager-container .realpreview');
+    setTimeout(refreshBackgroundImage, 5000);
+    setTimeout(registerAllEventlistener, 6000);
+    // To show all images on pageload.
+    setTimeout(displayAllImage, 7000);
+
+
     /**
      * Register eventlistener to the all input fields of the form to register focus-out events from input fields in order to trigger a fresh of the preview.
      */
@@ -104,9 +111,10 @@
             registerAllListenersForAllElements();
         }, 1000);
     }
-    setTimeout(registerAllEventlistener, 10000);
 
-
+    /**
+     *
+     */
     function registerAllListenersForAllElements() {
         // Third register listener for all images already exists
         const singleElements = document.querySelectorAll('[id^="fitem_id_unilabeltype_imageboard_title_"]');
@@ -121,7 +129,7 @@
      * @param number
      */
     function registerAllListenersForSingleElement(number) {
-        let imageid = document.getElementById('imageid_' + number);
+        let imageid = document.getElementById('unilabel-imageboard-imageid_' + number);
         const imagediv = document.getElementById('unilabel_imageboard_imagediv_' + number);
 
         const input_title = document.getElementById('id_unilabeltype_imageboard_title_' + (number));
@@ -137,7 +145,6 @@
                 //imageid.title = "";
             }
         });
-
 
         // Eventlistener an das Inputfeld für die x-Koordinate anhängen
         const input_xposition = document.getElementById('id_unilabeltype_imageboard_xposition_' + (number));
@@ -180,9 +187,7 @@
             let observer = new MutationObserver(refreshImage);
             observer.observe(imagefileNode, {attributes: true, childList: true, subtree: true});
         }
-
     }
-
 
     /**
      * Sets the background image of the SVG to the current image in filemanager.
@@ -228,27 +233,30 @@
             backgrounddiv.style.height = canvasheight + "px";
         }
     }
-    // Timeout notwendig, damit das Bild in der Draftarea "vorhanden" ist.  document.querySelector('#id_unilabeltype_imageboard_backgroundimage_fieldset .filemanager-container .realpreview');
-    setTimeout(refreshBackgroundImage, 10000);
 
     /**
-     *
+     * Gets the number of ALL elements in the form and then adds a div for each element to the dom if not already exists.
+     * We need a timeout
      */
     function displayAllImage() {
         const singleElements = document.querySelectorAll('[id^="fitem_id_unilabeltype_imageboard_image_"]');
         for (let i = 0; i < singleElements.length; i++) {
+            // Todo: Skip removed elements that are still in the dom but hidden.
             let singleElement = singleElements[i].getAttribute('id');
             let number = singleElement.split('fitem_id_unilabeltype_imageboard_image_')[1];
-            // check if ther exxists already a div
-            const imageid = document.getElementById('imageid_' + number);
+            // Check if there exists already a div for this image.
+            const imageid = document.getElementById('unilabel-imageboard-imageid_' + number);
             if (imageid == null) {
-                // div does not exist so we need do add it do dom
+                // Div does not exist so we need do add it do dom.
                 addImageToDom(number);
+                // ToDo: Do we need a timeout to wait until the dic was added so that refresh can work correctly?
+                // see also refreshImage ... there is already a timeout
+                refreshImage(number);
+            } else {
+                refreshImage(number);
             }
-            refreshImage(number);
         }
     }
-    setTimeout(displayAllImage, 9000);
 
     /**
      *
@@ -256,28 +264,33 @@
      */
     function addImageToDom(number) {
         let backgroundArea = document.getElementById('unilabel-imageboard-background-area');
-        // div erstellen oder TODO: bestehenden div finden und positionieren.
-        //backgroundArea.innerHTML += "<div id='imageid_" + number + "' style='z-index: 5; position: absolute; width: 100; height: 100px;'>" +
-        //        "</div>";
-
-        const imageid = document.getElementById('imageid_' + number);
+        const imageid = document.getElementById('unilabel-imageboard-imageid_' + number);
         if (imageid == null) {
             // div does not exist so we need do add it do dom
             // hier später das template image nutzen!!!!
             imagecontainer = "<div id='unilabel_imageboard_imagediv_" + number + "' style='z-index: 5; position: absolute;'>" +
                 "<div id='imageidtitle_" + number + "' class='unilabel-imageboard-title rounded' style='position: relative;'>Überschrift</div>" +
-                "<div><img src='' id='imageid_" + number + "' style='position: relative;'></div>" +
+                "<div><img src='' id='unilabel-imageboard-imageid_" + number + "' style='position: relative;'></div>" +
                 "</div>";
-            backgroundArea.innerHTML += backgroundArea.innerHTML + imagecontainer;
+            backgroundArea.innerHTML = backgroundArea.innerHTML + imagecontainer;
+            refreshImage(number);
         } else {
+            // Div already exists so we need only an refresh.
+            refreshImage(number);
         }
-        refreshImage(number);
     }
 
-
+    /**
+     * If an image was uploaded or inputfields in the form changed then we need to refrech this image.
+     * @param number
+     */
     function refreshImage(number) {
+        // When there was an upload, then the number is NOT a number.
+        // ToDo: Do not yet know the best way how I will get the number in his case.
+        // For now if it is a number the normal refresh can be used and only ONE image will be refreshed.
+        // In the else code ther will be a refresh of ALL images until I can refactor this.
         if (!Array.isArray(number)) {
-            const image = document.getElementById('imageid_' + number);
+            const image = document.getElementById('unilabel-imageboard-imageid_' + number);
             // Werte für das image setzen
             let imagedata = getAllImagedataFromForm(number);
             image.style.background = 'blue';
@@ -312,7 +325,6 @@
             let title = imagedata['title'];
             const imageidtitle = document.getElementById('imageidtitle_' + number);
             imageidtitle.innerHTML = title;
-
         } else {
             //console.log("number ist ein array" , number);
             //console.log("number[0] ist ein array" , number[0]);
@@ -322,10 +334,10 @@
             // hier schonaml ALLE
             setTimeout (function () {
                 registerAllListenersForAllElements();
-            }, 500);
+            }, 300);
             setTimeout (function () {
                 displayAllImage();
-            }, 1000);
+            }, 600);
         }
     }
 
@@ -342,10 +354,10 @@
 
 
     /**
-     * Get all data from image that is stored in the form
+     * Get all data from image that is stored in the form and collects them in one array.
      *
-     * @param number
-     * @returns {*[]}
+     * @param {int} number of the image
+     * @returns {*[]} Array with the collected information that are set in the form for the image.
      */
     function getAllImagedataFromForm(number) {
         const imageids = {
