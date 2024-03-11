@@ -183,14 +183,14 @@
         input_border.addEventListener("focusout", function() {
             let colourpicker = document.getElementById('id_unilabeltype_imageboard_titlebackgroundcolor_colourpicker');
             if (colourpicker.value == '') {
-                colour = '#000000';
+                color = '#000000';
             } else {
-                colour = colourpicker.value;
+                color = colourpicker.value;
             }
 
             const border = parseInt(input_border.value);
             if (border != 0) {
-                imageid.style.border = border + "px solid " + colour;
+                imageid.style.border = border + "px solid " + color;
             } else {
                 imageid.style.border = "0";
             }
@@ -336,13 +336,13 @@
             }
             let colourpicker = document.getElementById('id_unilabeltype_imageboard_titlebackgroundcolor_colourpicker');
             if (colourpicker.value == '') {
-                colour = '#000000';
+                color = '#000000';
             } else {
-                colour = colourpicker.value;
+                color = colourpicker.value;
             }
             if (imagedata['border'] != 0) {
                 image.style.border = imagedata['border'] + "px solid";
-                image.style.borderColor = colour;
+                image.style.borderColor = color;
             } else {
                 image.style.border = "0";
             }
