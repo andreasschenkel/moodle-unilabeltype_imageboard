@@ -65,7 +65,6 @@
 }}
 <div id="unilabel-imageboard-preview" style="border: solid 1px #3399ff; border-radius: 5px;">
     <div class="border" id="unilabel-imageboard-background-area" style="position: relative;">
-        The preview will be placed here.
     </div>
 </div>
 
@@ -289,7 +288,7 @@
             if (imagedata['targetheight'] != 0) {
                 imageid.style.height = imagedata['targetheight'] + "px";
             } else {
-                image.style.height = "auto";
+                imageid.style.height = "auto";
             }
             if (imagedata['title'] != "") {
                 imageid.title = imagedata['title'];
