@@ -245,18 +245,27 @@
         let backgroundArea = document.getElementById('unilabel-imageboard-background-area');
         const imageid = document.getElementById('unilabel-imageboard-imageid_' + number);
         if (imageid == null) {
-            // div does not exist so we need do add it do dom
-            // hier später das template image nutzen!!!!
-            imagecontainer = "<div id='unilabel_imageboard_imagediv_" + number + "' style='z-index: 5; position: absolute;'>" +
-                "<div id='imageidtitle_" + number + "' class='unilabel-imageboard-title rounded' style='position: relative;'>Überschrift</div>" +
-                "<div><img src='' id='unilabel-imageboard-imageid_" + number + "' style='position: relative;'></div>" +
-                "</div>";
-            backgroundArea.innerHTML = backgroundArea.innerHTML + imagecontainer;
+            // This div does not exist so we need do add it do dom.
+            backgroundArea.innerHTML = backgroundArea.innerHTML + renderFromTemplate(number);
             refreshImage(number);
         } else {
-            // Div already exists so we need only an refresh.
+            // Div already exists so we need only to refresh the image.
             refreshImage(number);
         }
+    }
+
+    /**
+     * Renders the div for the image in preview.
+     *
+     * @param number
+     * @returns {string}
+     */
+    function renderFromTemplate(number) {
+        const imagedivashtml = "<div id='unilabel_imageboard_imagediv_" + number + "' style='z-index: 5; position: absolute;'>" +
+            "<div id='imageidtitle_" + number + "' class='unilabel-imageboard-title rounded' style='position: relative;'>Überschrift</div>" +
+            "<div><img src='' id='unilabel-imageboard-imageid_" + number + "' style='position: relative;'></div>" +
+            "</div>";
+        return imagedivashtml;
     }
 
     /**
