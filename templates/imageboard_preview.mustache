@@ -63,6 +63,7 @@
         "gridcolor": "#B7009E"
     }
 }}
+Preview
 <div id="unilabel-imageboard-preview" style="border: solid 1px #3399ff; border-radius: 5px;">
     <div class="border" id="unilabel-imageboard-background-area" style="position: relative;">
     </div>
@@ -70,10 +71,10 @@
 
 <script>
     // Timeout notwendig, damit das Bild in der Draftarea "vorhanden" ist.  document.querySelector('#id_unilabeltype_imageboard_backgroundimage_fieldset .filemanager-container .realpreview');
-    setTimeout(refreshBackgroundImage, 5000);
-    setTimeout(registerAllEventlistener, 6000);
+    setTimeout(refreshBackgroundImage, 3000);
+    setTimeout(registerAllEventlistener, 4000);
     // To show all images on pageload.
-    setTimeout(refreshAllImages, 7000);
+    setTimeout(refreshAllImages, 5000);
 
     /**
      * Register eventlistener to the all input fields of the form to register focus-out events from input fields in order to trigger a fresh of the preview.
@@ -84,6 +85,17 @@
         if (backgroundfileNode) {
             let observer = new MutationObserver(refreshBackgroundImage);
             observer.observe(backgroundfileNode, {attributes: true, childList: true, subtree: true});
+        }
+        // Also add listener for canvas size
+        let canvasx = document.getElementById('id_unilabeltype_imageboard_canvaswidth');
+        if (canvasx) {
+            let observer = new MutationObserver(refreshBackgroundImage);
+            observer.observe(canvasx, {attributes: true, childList: true, subtree: true});
+        }
+        let canvasy = document.getElementById('id_unilabeltype_imageboard_canvasheight');
+        if (canvasy) {
+            let observer = new MutationObserver(refreshBackgroundImage);
+            observer.observe(canvasy, {attributes: true, childList: true, subtree: true});
         }
 
         // Second add listener to the add image button for new added images.
@@ -126,9 +138,6 @@
      * @param number
      */
     function registerAllListenersForSingleElement(number) {
-        let imageid = document.getElementById('unilabel-imageboard-imageid_' + number);
-        const imagediv = document.getElementById('unilabel_imageboard_imagediv_' + number);
-
         const input_title = document.getElementById('id_unilabeltype_imageboard_title_' + (number));
         input_title.addEventListener("focusout", function() {
             refreshImage(number);
@@ -273,7 +282,6 @@
      * @param number
      */
     function refreshImage(number) {
-        console.log("refreshImage()" , number);
         // When there was an upload, then the number is NOT a number.
         // ToDo: Do not yet know the best way how I will get the number in his case.
         // For now if it is a number the normal refresh can be used and only ONE image will be refreshed.
