@@ -103,7 +103,6 @@
                     registerAllListenersForAllElements();
                 }, 1000);
             }, 1000);
-
         });
 
         // Third register listener for all images already exists
@@ -146,17 +145,16 @@
         });
 
         // Eventlistener an das Inputfeld für die x-Koordinate anhängen
+        // Here the position of imagediv is set, not the position of the image itself, but the image is in the div.
         const input_xposition = document.getElementById('id_unilabeltype_imageboard_xposition_' + (number));
         input_xposition.addEventListener("focusout", function() {
             const x = parseInt(input_xposition.value);
             imagediv.style.left = x + "px";
-            //imageid.style.left = x + "px";
         });
         const input_yposition = document.getElementById('id_unilabeltype_imageboard_yposition_' + (number));
         input_yposition.addEventListener("focusout", function() {
             const y = parseInt(input_yposition.value);
             imagediv.style.top = y + "px";
-            //imageid.style.top = y + "px";
         });
 
         // Eventlistener an das Inputfeld für die width anhängen
@@ -403,7 +401,7 @@
         imagedata['xposition'] = document.getElementById(imageids.xposition).getAttribute('value');
         imagedata['yposition'] = document.getElementById(imageids.yposition).getAttribute('value');
         imagedata['targetwidth'] = document.getElementById(imageids.targetwidth).getAttribute('value');
-        imagedata['targeheight'] = document.getElementById(imageids.targetheight).getAttribute('value');
+        imagedata['targetheight'] = document.getElementById(imageids.targetheight).getAttribute('value');
 
         // Src der Draftfile ermitteln
         const imagetag = document.getElementById('id_unilabeltype_imageboard_image_' + number + '_fieldset').getElementsByTagName('img');
