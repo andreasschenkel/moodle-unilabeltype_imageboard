@@ -74,8 +74,7 @@
     setTimeout(refreshBackgroundImage, 5000);
     setTimeout(registerAllEventlistener, 6000);
     // To show all images on pageload.
-    setTimeout(displayAllImage, 7000);
-
+    setTimeout(refreshAllImages, 7000);
 
     /**
      * Register eventlistener to the all input fields of the form to register focus-out events from input fields in order to trigger a fresh of the preview.
@@ -252,7 +251,7 @@
      * Gets the number of ALL elements in the form and then adds a div for each element to the dom if not already exists.
      * We need a timeout
      */
-    function displayAllImage() {
+    function refreshAllImages() {
         const singleElements = document.querySelectorAll('[id^="fitem_id_unilabeltype_imageboard_image_"]');
         for (let i = 0; i < singleElements.length; i++) {
             // Todo: Skip removed elements that are still in the dom but hidden.
@@ -362,7 +361,7 @@
                 registerAllListenersForAllElements();
             }, 300);
             setTimeout (function () {
-                displayAllImage();
+                refreshAllImages();
             }, 600);
         }
     }
