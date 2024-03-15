@@ -270,9 +270,13 @@ Preview
      * @returns {string}
      */
     function renderFromTemplate(number) {
-        const imagedivashtml = "<div id='unilabel_imageboard_imagediv_" + number + "' style='z-index: 5; position: absolute;'>" +
-            "<div id='imageidtitle_" + number + "' class='unilabel-imageboard-title rounded' style='position: relative;'>Überschrift</div>" +
-            "<div><img src='' id='unilabel-imageboard-imageid_" + number + "' style='position: relative;'></div>" +
+        const imagedivashtml =
+            "<div id='unilabel_imageboard_imagediv_" + number + "' style='z-index: 5; position: absolute;'>" +
+                "<div id='imageidtitle_" + number + "' class='unilabel-imageboard-title rounded' style='position: relative;'>Überschrift" +
+                "</div>" +
+                "<div id='imageidimage_" + number + "'>" +
+                    "<img src='' id='unilabel-imageboard-imageid_" + number + "' style='position: relative;'>" +
+                "</div>" +
             "</div>";
         return imagedivashtml;
     }
