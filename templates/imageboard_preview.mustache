@@ -76,6 +76,80 @@ Preview
     // To show all images on pageload.
     setTimeout(refreshAllImages, 5000);
 
+    var activeItem = null;
+    var activeNumber = null;
+    var itemToMove = null;
+    var canvas = null;
+    listener();
+
+    function listener() {
+        console.log("listener");
+        setTimeout(function() {
+            canvas = document.getElementById("unilabel-imageboard-background-area");
+            canvas.addEventListener("mousedown", dragStart, false);
+            canvas.addEventListener("mousemove", drag, false);
+            canvas.addEventListener("mouseup", dragEnd, false);
+        }, 1000);
+
+    }
+
+    function dragStart(event) {
+        console.log("dragStart");
+        if (event.target.classList.contains('image')) {
+            event.preventDefault();
+            activeItem = event.target;
+            activeNumber = event.target.getAttribute('id').split('unilabel-imageboard-imageid_')[1];
+            itemToMove = document.getElementById('unilabel_imageboard_imagediv_' + activeNumber);
+            var position = canvas.getBoundingClientRect();
+            var offsetLeft = position.left;
+            var offsetTop = position.top;
+            if (activeItem) {
+                itemToMove.style.left = Math.round(event.clientX - offsetLeft) + "px";
+                itemToMove.style.top = Math.round(event.clientY - offsetTop) + "px";
+            }
+        } else {
+            console.log("no image selected");
+        }
+    }
+
+    function drag(event) {
+        //event.preventDefault();
+        console.log("drag");
+        if (activeItem) {
+            var position = canvas.getBoundingClientRect();
+            var offsetLeft = position.left;
+            var offsetTop = position.top;
+            itemToMove.style.left = Math.round(event.clientX - offsetLeft) + "px";
+            itemToMove.style.top = Math.round(event.clientY - offsetTop) + "px";
+            // Change the inputfield
+            const input_xposition = document.getElementById('id_unilabeltype_imageboard_xposition_' + (activeNumber));
+            const input_yposition = document.getElementById('id_unilabeltype_imageboard_yposition_' + (activeNumber));
+            input_xposition.value = Math.round(event.clientX - offsetLeft);
+            input_yposition.value = Math.round(event.clientY - offsetTop);
+        }
+    }
+
+    function dragEnd(event) {
+        //event.preventDefault();
+        console.log("dragEnd");
+        if (activeItem) {
+            var position = canvas.getBoundingClientRect();
+            var offsetLeft = position.left;
+            var offsetTop = position.top;
+            itemToMove.style.left = Math.round(event.clientX - offsetLeft) + "px";
+            itemToMove.style.top = Math.round(event.clientY - offsetTop) + "px";
+
+            // Change the inputfield
+            const input_xposition = document.getElementById('id_unilabeltype_imageboard_xposition_' + (activeNumber));
+            const input_yposition = document.getElementById('id_unilabeltype_imageboard_yposition_' + (activeNumber));
+            input_xposition.value = Math.round(event.clientX - offsetLeft);
+            input_yposition.value = Math.round(event.clientY - offsetTop);
+            activeItem = null;
+            activeNumber = null;
+        }
+    }
+
+
     /**
      * Register eventlistener to the all input fields of the form to register focus-out events from input fields in order to trigger a fresh of the preview.
      */
@@ -104,19 +178,19 @@ Preview
             // No we can get the new form input fields and register a focusout listener and in case of focus out we update the rendered image.
             // Thus we have to add a new div without any content and whenever there is a focusout event we will update this.
             // Then register listener for all images already exists
-            setTimeout (function () {
+            setTimeout(function() {
                 // An element was added so we have to add a div for the image to the dom and wie need to register listener to the ne inputfieds of the element
                 const singleElements = document.querySelectorAll('[id^="fitem_id_unilabeltype_imageboard_title_"]');
-                let number =  singleElements.length;
-                addImageToDom(number-1);
-                setTimeout (function () {
+                let number = singleElements.length;
+                addImageToDom(number - 1);
+                setTimeout(function() {
                     registerAllListenersForAllElements();
                 }, 1000);
             }, 1000);
         });
 
         // Third register listener for all images already exists
-        setTimeout (function () {
+        setTimeout(function() {
             registerAllListenersForAllElements();
         }, 1000);
     }
@@ -271,13 +345,13 @@ Preview
      */
     function renderFromTemplate(number) {
         const imagedivashtml =
-            "<div id='unilabel_imageboard_imagediv_" + number + "' style='z-index: 5; position: absolute;'>" +
+                "<div id='unilabel_imageboard_imagediv_" + number + "' style='z-index: 5; position: absolute;'>" +
                 "<div id='imageidtitle_" + number + "' class='unilabel-imageboard-title rounded' style='position: relative;'>Überschrift" +
                 "</div>" +
                 "<div id='imageidimage_" + number + "'>" +
-                    "<img src='' id='unilabel-imageboard-imageid_" + number + "' style='position: relative;'>" +
+                "<img class='image' src='' id='unilabel-imageboard-imageid_" + number + "' style='position: relative;'>" +
                 "</div>" +
-            "</div>";
+                "</div>";
         return imagedivashtml;
     }
 
@@ -337,13 +411,13 @@ Preview
             //console.log("number ist ein array" , number);
             //console.log("number[0] ist ein array" , number[0]);
             //console.log("number[0].attributeName ist ein array" , number[0].attributeName);
-            console.log("number[0].target ist ein array" , number[0].target);
+            console.log("number[0].target ist ein array", number[0].target);
             // ToDo: nur genau den einen enuen listener hinzufügen ...
             // hier schonaml ALLE
-            setTimeout (function () {
+            setTimeout(function() {
                 registerAllListenersForAllElements();
             }, 300);
-            setTimeout (function () {
+            setTimeout(function() {
                 refreshAllImages();
             }, 600);
         }
