@@ -13,10 +13,13 @@ export const init = () => {
     setTimeout(registerAllEventlistener, 4000);
     // To show all images on pageload.
     setTimeout(refreshAllImages, 5000);
-
+    // Store some data about the selected image that is moved.
     var activeItem = null;
     var activeNumber = null;
+    // itemToMove is the div that the selected image is inside. We do NOT move the image we move the div.
     var itemToMove = null;
+    var xoffset = 0;
+    var yoffset = 0;
     var canvas = null;
     listener();
 
@@ -39,7 +42,8 @@ export const init = () => {
      * @param {event} event
      */
     function dragStart(event) {
-        ////console.log("dragStart");
+        console.log("dragStart");
+        console.log("event", event);
         if (event.target.classList.contains('image')) {
             event.preventDefault();
             activeItem = event.target;
@@ -48,9 +52,15 @@ export const init = () => {
             var position = canvas.getBoundingClientRect();
             var offsetLeft = position.left;
             var offsetTop = position.top;
+            xoffset = event.layerX;
+            yoffset = event.layerY;
+            console.log("event.clientX - offsetLeft - xoffset", event.clientX, offsetLeft, xoffset);
+            console.log("event.clientY - offsetTop - yoffset", event.clientY, offsetTop, yoffset);
+            var xposition = event.clientX - offsetLeft - xoffset;
+            var yposition = event.clientY - offsetTop - yoffset;
             if (activeItem) {
-                itemToMove.style.left = Math.round(event.clientX - offsetLeft) + "px";
-                itemToMove.style.top = Math.round(event.clientY - offsetTop) + "px";
+                itemToMove.style.left = Math.round(xposition) + "px";
+                itemToMove.style.top = Math.round(yposition) + "px";
             }
         } else {
             ///console.log("no image selected");
@@ -63,18 +73,30 @@ export const init = () => {
      */
     function drag(event) {
         //event.preventDefault();
-        /////console.log("drag");
-        if (activeItem) {
+        console.log("drag");
+        console.log("event", event);
+        if (event.target.classList.contains('image') && activeItem) {
             var position = canvas.getBoundingClientRect();
+            console.log("position", position);
             var offsetLeft = position.left;
             var offsetTop = position.top;
-            itemToMove.style.left = Math.round(event.clientX - offsetLeft) + "px";
-            itemToMove.style.top = Math.round(event.clientY - offsetTop) + "px";
+            //var xoffset = event.target.clientWidth / 2;
+            //var yoffset = event.target.clientHeight / 2;
+            var xposition = event.clientX - offsetLeft - xoffset;
+            var yposition = event.clientY - offsetTop - yoffset;
+            if (xposition < 0) {
+                xposition = 0;
+            }
+            if (yposition < 0) {
+                yposition = 0;
+            }
+            itemToMove.style.left = Math.round(xposition) + "px";
+            itemToMove.style.top = Math.round(yposition) + "px";
             // Change the inputfield
             const input_xposition = document.getElementById('id_unilabeltype_imageboard_xposition_' + (activeNumber));
             const input_yposition = document.getElementById('id_unilabeltype_imageboard_yposition_' + (activeNumber));
-            input_xposition.value = Math.round(event.clientX - offsetLeft);
-            input_yposition.value = Math.round(event.clientY - offsetTop);
+            input_xposition.value = Math.round(xposition);
+            input_yposition.value = Math.round(yposition);
         }
     }
 
@@ -84,19 +106,30 @@ export const init = () => {
      */
     function dragEnd(event) {
         //event.preventDefault();
-        //// console.log("dragEnd");
+        console.log("----dragEnd");
+        console.log("event", event);
         if (activeItem) {
             var position = canvas.getBoundingClientRect();
             var offsetLeft = position.left;
             var offsetTop = position.top;
-            itemToMove.style.left = Math.round(event.clientX - offsetLeft) + "px";
-            itemToMove.style.top = Math.round(event.clientY - offsetTop) + "px";
+            //var xoffset = event.target.clientWidth / 2;
+            //var yoffset = event.target.clientHeight / 2;
+            var xposition = event.clientX - offsetLeft - xoffset;
+            var yposition = event.clientY - offsetTop - yoffset;
+            if (xposition < 0) {
+                xposition = 0;
+            }
+            if (yposition < 0) {
+                yposition = 0;
+            }
+            itemToMove.style.left = Math.round(xposition) + "px";
+            itemToMove.style.top = Math.round(yposition) + "px";
 
             // Change the inputfield
             const input_xposition = document.getElementById('id_unilabeltype_imageboard_xposition_' + (activeNumber));
             const input_yposition = document.getElementById('id_unilabeltype_imageboard_yposition_' + (activeNumber));
-            input_xposition.value = Math.round(event.clientX - offsetLeft);
-            input_yposition.value = Math.round(event.clientY - offsetTop);
+            input_xposition.value = Math.round(xposition);
+            input_yposition.value = Math.round(yposition);
             activeItem = null;
             activeNumber = null;
         }
