@@ -86,10 +86,10 @@ export const init = () => {
             itemToMove.style.left = Math.round(xposition) + "px";
             itemToMove.style.top = Math.round(yposition) + "px";
             // Change the inputfield
-            const input_xposition = document.getElementById('id_unilabeltype_imageboard_xposition_' + (activeNumber));
-            const input_yposition = document.getElementById('id_unilabeltype_imageboard_yposition_' + (activeNumber));
-            input_xposition.value = Math.round(xposition);
-            input_yposition.value = Math.round(yposition);
+            const inputPositionX = document.getElementById('id_unilabeltype_imageboard_xposition_' + (activeNumber));
+            const inputPositionY = document.getElementById('id_unilabeltype_imageboard_yposition_' + (activeNumber));
+            inputPositionX.value = Math.round(xposition);
+            inputPositionY.value = Math.round(yposition);
         }
     }
 
@@ -119,10 +119,10 @@ export const init = () => {
             itemToMove.style.top = Math.round(yposition) + "px";
 
             // Change the inputfield
-            const input_xposition = document.getElementById('id_unilabeltype_imageboard_xposition_' + (activeNumber));
-            const input_yposition = document.getElementById('id_unilabeltype_imageboard_yposition_' + (activeNumber));
-            input_xposition.value = Math.round(xposition);
-            input_yposition.value = Math.round(yposition);
+            const inputPositionX = document.getElementById('id_unilabeltype_imageboard_xposition_' + (activeNumber));
+            const inputPositionY = document.getElementById('id_unilabeltype_imageboard_yposition_' + (activeNumber));
+            inputPositionX.value = Math.round(xposition);
+            inputPositionY.value = Math.round(yposition);
             activeItem = null;
             activeNumber = null;
         }

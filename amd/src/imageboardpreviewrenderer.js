@@ -86,12 +86,12 @@ export const init = () => {
 
         // Eventlistener an das Inputfeld für die x-Koordinate anhängen
         // Here the position of imagediv is set, not the position of the image itself, but the image is in the div.
-        const input_xposition = document.getElementById('id_unilabeltype_imageboard_xposition_' + (number));
-        input_xposition.addEventListener("focusout", function() {
+        const inputPositionX = document.getElementById('id_unilabeltype_imageboard_xposition_' + (number));
+        inputPositionX.addEventListener("focusout", function() {
             refreshImage(number);
         });
-        const input_yposition = document.getElementById('id_unilabeltype_imageboard_yposition_' + (number));
-        input_yposition.addEventListener("focusout", function() {
+        const inputPositionY = document.getElementById('id_unilabeltype_imageboard_yposition_' + (number));
+        inputPositionY.addEventListener("focusout", function() {
             refreshImage(number);
         });
 
