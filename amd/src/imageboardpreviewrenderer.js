@@ -9,10 +9,10 @@
 export const init = () => {
     // Timeout notwendig, damit das Bild in der Draftarea "vorhanden" ist.
     // document.querySelector('#id_unilabeltype_imageboard_backgroundimage_fieldset .filemanager-container .realpreview');
-    setTimeout(refreshBackgroundImage, 3000);
-    setTimeout(registerAllEventlistener, 4000);
+    setTimeout(refreshBackgroundImage, 2000);
+    setTimeout(registerAllEventlistener, 2500);
     // To show all images on pageload.
-    setTimeout(refreshAllImages, 5000);
+    setTimeout(refreshAllImages, 2500);
 
     /**
      * Register eventlistener to the all input fields of the form to register
