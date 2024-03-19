@@ -105,8 +105,6 @@ export const init = () => {
             var position = canvas.getBoundingClientRect();
             var offsetLeft = position.left;
             var offsetTop = position.top;
-            //var xoffset = event.target.clientWidth / 2;
-            //var yoffset = event.target.clientHeight / 2;
             var xposition = event.clientX - offsetLeft - xoffset;
             var yposition = event.clientY - offsetTop - yoffset;
             if (xposition < 0) {
