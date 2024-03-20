@@ -15,6 +15,13 @@ export const init = () => {
     var xoffset = 0;
     var yoffset = 0;
     var canvas = null;
+    var activewidth = null;
+    var activeheight = null;
+
+    var canvaswidth = 950;
+    var canvasheight = 400;
+
+
     listener();
 
     /**
@@ -41,6 +48,10 @@ export const init = () => {
             event.preventDefault();
             activeItem = event.target;
             activeNumber = event.target.getAttribute('id').split('unilabel-imageboard-imageid_')[1];
+            activewidth = event.target.style.width.split('px')[0];
+            // ToDo: height auto needs different code
+            activewidth = event.target.style.width.split('px')[0];
+            activeheight = event.target.style.height.split('px')[0];
             itemToMove = document.getElementById('unilabel_imageboard_imagediv_' + activeNumber);
             var position = canvas.getBoundingClientRect();
             var offsetLeft = position.left;
@@ -65,16 +76,12 @@ export const init = () => {
      * @param {event} event
      */
     function drag(event) {
-        //event.preventDefault();
-        console.log("drag");
+        //event.preventDefault();;
         console.log("event", event);
         if (event.target.classList.contains('image') && activeItem) {
             var position = canvas.getBoundingClientRect();
-            console.log("position", position);
             var offsetLeft = position.left;
             var offsetTop = position.top;
-            //var xoffset = event.target.clientWidth / 2;
-            //var yoffset = event.target.clientHeight / 2;
             var xposition = event.clientX - offsetLeft - xoffset;
             var yposition = event.clientY - offsetTop - yoffset;
             if (xposition < 0) {
@@ -82,6 +89,13 @@ export const init = () => {
             }
             if (yposition < 0) {
                 yposition = 0;
+            }
+
+            if (xposition >= canvaswidth - activewidth) {
+                xposition = canvaswidth - activewidth;
+            }
+            if (yposition >= canvasheight - activeheight) {
+                yposition = canvasheight - activeheight;
             }
             itemToMove.style.left = Math.round(xposition) + "px";
             itemToMove.style.top = Math.round(yposition) + "px";
@@ -113,6 +127,12 @@ export const init = () => {
             if (yposition < 0) {
                 yposition = 0;
             }
+            if (xposition >= canvaswidth - activewidth) {
+                xposition = canvaswidth - activewidth;
+            }
+            if (yposition >= canvasheight - activeheight) {
+                yposition = canvasheight - activeheight;
+            }
             itemToMove.style.left = Math.round(xposition) + "px";
             itemToMove.style.top = Math.round(yposition) + "px";
 
@@ -126,4 +146,3 @@ export const init = () => {
         }
     }
 };
-
