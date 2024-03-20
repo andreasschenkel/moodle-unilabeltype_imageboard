@@ -61,8 +61,8 @@
                 }}{{#targetwidth}}width: {{.}}px; {{/targetwidth}}{{!
                 }}{{#targetheight}}height: {{.}}px; {{/targetheight}}{{!
                 }}">
-                <img class="rounded" src="{{{.}}}" title="{{title}}" alt="{{title}}" style="width: 100%;{{!
-                    }}height: 100%;{{!
+                <img class="rounded" src="{{{.}}}" title="{{title}}" alt="{{title}}" style="{{#targetwidth}}width: 100%; {{/targetwidth}}{{!
+                    }}{{#targetheight}}height: 100%; {{/targetheight}}{{!
                     }}{{#border}}border: solid {{.}}px {{titlebackgroundcolor}};{{/border}}{{!
                     }}">
             </div>
