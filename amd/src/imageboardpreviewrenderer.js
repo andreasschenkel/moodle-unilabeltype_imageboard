@@ -13,12 +13,39 @@ export const init = () => {
     setTimeout(registerAllEventlistener, 2500);
     // To show all images on pageload.
     setTimeout(refreshAllImages, 2500);
-
+    /**
+     *
+     * @param {event} event
+     */
+    function oneListenerForAllPositionInput(event) {
+        console.log("oneListenerForAllPositionInput", event);
+        // Check if event is focus out.
+        if (event.type === 'focusout') {
+            console.log("event.target", event.target);
+            var dummyAttribute = event.target.getAttribute('id');
+            var xPositionInput = dummyAttribute.split('id_unilabeltype_imageboard_xposition_')[1];
+            if (xPositionInput) {
+                // Target ist inputfeld xposition so we have tu update the image
+                refreshImage(xPositionInput);
+            }
+            var yPositionInput = dummyAttribute.split('id_unilabeltype_imageboard_yposition_')[1];
+            if (yPositionInput) {
+                // Target ist inputfeld xposition so we have tu update the image
+                refreshImage(yPositionInput);
+            }
+        }
+    }
     /**
      * Register eventlistener to the all input fields of the form to register
      * focus-out events from input fields in order to trigger a fresh of the preview.
      */
     function registerAllEventlistener() {
+
+        //var region = document.getElementById('region');
+        var mform = document.querySelectorAll('[id^="mform"]')[0];
+        // We register a listener to the mform and use the bubble-event-feature.
+        mform.addEventListener("focusout", oneListenerForAllPositionInput, false);
+
         // First: When uploading a backgroundimage the backgroundimage of the backgroundimagediv must be updated.
         let backgroundfileNode = document.getElementById('id_unilabeltype_imageboard_backgroundimage_fieldset');
         if (backgroundfileNode) {
@@ -81,17 +108,6 @@ export const init = () => {
     function registerAllListenersForSingleElement(number) {
         const input_title = document.getElementById('id_unilabeltype_imageboard_title_' + (number));
         input_title.addEventListener("focusout", function() {
-            refreshImage(number);
-        });
-
-        // Eventlistener an das Inputfeld für die x-Koordinate anhängen
-        // Here the position of imagediv is set, not the position of the image itself, but the image is in the div.
-        const inputPositionX = document.getElementById('id_unilabeltype_imageboard_xposition_' + (number));
-        inputPositionX.addEventListener("focusout", function() {
-            refreshImage(number);
-        });
-        const inputPositionY = document.getElementById('id_unilabeltype_imageboard_yposition_' + (number));
-        inputPositionY.addEventListener("focusout", function() {
             refreshImage(number);
         });
 
