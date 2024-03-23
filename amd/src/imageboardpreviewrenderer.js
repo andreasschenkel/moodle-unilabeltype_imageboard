@@ -22,7 +22,14 @@ export const init = () => {
         // Check if event is focus out.
         if (event.type === 'focusout') {
             console.log("event.target", event.target);
+
             var dummyAttribute = event.target.getAttribute('id');
+            var titleInput = dummyAttribute.split('id_unilabeltype_imageboard_title_')[1];
+            if (titleInput) {
+                // Target ist inputfeld xposition so we have tu update the image
+                refreshImage(xPositionInput);
+            }
+
             var xPositionInput = dummyAttribute.split('id_unilabeltype_imageboard_xposition_')[1];
             if (xPositionInput) {
                 // Target ist inputfeld xposition so we have tu update the image
@@ -33,6 +40,10 @@ export const init = () => {
                 // Target ist inputfeld xposition so we have tu update the image
                 refreshImage(yPositionInput);
             }
+
+
+
+
         }
     }
     /**
@@ -106,11 +117,6 @@ export const init = () => {
      * @param {int} number
      */
     function registerAllListenersForSingleElement(number) {
-        const input_title = document.getElementById('id_unilabeltype_imageboard_title_' + (number));
-        input_title.addEventListener("focusout", function() {
-            refreshImage(number);
-        });
-
         // Eventlistener an das Inputfeld für die width anhängen
         const input_targetwidth = document.getElementById('id_unilabeltype_imageboard_targetwidth_' + (number));
         input_targetwidth.addEventListener("focusout", function() {
