@@ -13,8 +13,8 @@ export const init = () => {
     // ItemToMove is the div that the selected image is inside. We do NOT move the image we move the div.
     selectedImage.itemToMove = null;
     // ToDo: Add documentation about xoffset?
-    selectedImage.xoffset = 0;
-    selectedImage.yoffset = 0;
+    selectedImage.eventlayerX = 0;
+    selectedImage.eventlayerY = 0;
     selectedImage.width = null;
     selectedImage.height = null;
 
@@ -51,8 +51,8 @@ export const init = () => {
             selectedImage.width = event.target.style.width.split('px')[0];
             selectedImage.height = event.target.style.height.split('px')[0];
             selectedImage.itemToMove = document.getElementById('unilabel_imageboard_imagediv_' + selectedImage.number);
-            selectedImage.xoffset = event.layerX;
-            selectedImage.yoffset = event.layerY;
+            selectedImage.eventlayerX = event.layerX;
+            selectedImage.eventlayerY = event.layerY;
         }
     }
 
@@ -89,6 +89,7 @@ export const init = () => {
             const inputPositionY = document.getElementById('id_unilabeltype_imageboard_yposition_' + (selectedImage.number));
             inputPositionX.value = xposition;
             inputPositionY.value = yposition;
+            // Reset saved image data
             selectedImage.number = null;
         }
     }
@@ -99,9 +100,8 @@ export const init = () => {
      * @returns {number}
      */
     function calculateXposition(event) {
-        var position = canvas.getBoundingClientRect();
-        var offsetLeft = position.left;
-        var xposition = event.clientX - offsetLeft - selectedImage.xoffset - 1;
+        var canvasboundings = canvas.getBoundingClientRect();
+        var xposition = event.clientX - canvasboundings.left - selectedImage.eventlayerX - 1;
         if (xposition < 0) {
             xposition = 0;
         }
@@ -117,9 +117,8 @@ export const init = () => {
      * @returns {number}
      */
     function calculateYposition(event) {
-        var position = canvas.getBoundingClientRect();
-        var offsetTop = position.top;
-        var yposition = event.clientY - offsetTop - selectedImage.yoffset - 1;
+        var canvasboundings = canvas.getBoundingClientRect();
+        var yposition = event.clientY - canvasboundings.top - selectedImage.eventlayerY - 1;
         if (yposition < 0) {
             yposition = 0;
         }
