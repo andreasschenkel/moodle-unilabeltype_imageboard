@@ -88,9 +88,6 @@ export const init = () => {
                 const singleElements = document.querySelectorAll('[id^="fitem_id_unilabeltype_imageboard_title_"]');
                 let number = singleElements.length;
                 addImageToDom(number - 1);
-                setTimeout(function() {
-                    registerAllListenersForAllElements();
-                }, 1000);
             }, 1000);
         });
 
