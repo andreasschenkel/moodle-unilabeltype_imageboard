@@ -13,49 +13,95 @@ export const init = () => {
     setTimeout(registerAllEventlistener, 2500);
     // To show all images on pageload.
     setTimeout(refreshAllImages, 2500);
+
     /**
      *
      * @param {event} event
      */
-    function oneListenerForAllPositionInput(event) {
-        console.log("oneListenerForAllPositionInput", event);
-        // Check if event is focus out.
-        if (event.type === 'focusout') {
-            console.log("event.target", event.target);
+    function oneListenerForAllInputFocusout(event) {
+        console.log("oneListenerForAllInputFocusout", event);
+        // The following events will be recognized and depending on the type we do the jobs.
+        // 1. event: focusout (xpositioninput, yositioninput, title, ...)
+        // 2. event: click (add element button)
+        console.log("event.target", event.target);
 
-            var dummyAttribute = event.target.getAttribute('id');
-            var titleInput = dummyAttribute.split('id_unilabeltype_imageboard_title_')[1];
-            if (titleInput) {
-                // Target ist inputfeld xposition so we have tu update the image
-                refreshImage(xPositionInput);
-            }
+        var dummyAttribute = event.target.getAttribute('id');
+        var titleInput = dummyAttribute.split('id_unilabeltype_imageboard_title_')[1];
+        if (titleInput) {
+            console.log("titleInput", titleInput);
+            // Target ist inputfeld xposition so we have tu update the image
+            refreshImage(titleInput);
+            return;
+        }
 
-            var xPositionInput = dummyAttribute.split('id_unilabeltype_imageboard_xposition_')[1];
-            if (xPositionInput) {
-                // Target ist inputfeld xposition so we have tu update the image
-                refreshImage(xPositionInput);
-            }
-            var yPositionInput = dummyAttribute.split('id_unilabeltype_imageboard_yposition_')[1];
-            if (yPositionInput) {
-                // Target ist inputfeld xposition so we have tu update the image
-                refreshImage(yPositionInput);
-            }
+        var xPositionInput = dummyAttribute.split('id_unilabeltype_imageboard_xposition_')[1];
+        console.log("xPositionInput", xPositionInput);
+        if (xPositionInput) {
+            // Target ist inputfeld xposition so we have tu update the image
+            refreshImage(xPositionInput);
+            return;
+        }
 
+        var yPositionInput = dummyAttribute.split('id_unilabeltype_imageboard_yposition_')[1];
+        console.log("yPositionInput", yPositionInput);
+        if (yPositionInput) {
+            // Target ist inputfeld yposition so we have tu update the image
+            refreshImage(yPositionInput);
+            return;
+        }
 
+        var targetwidth = dummyAttribute.split('id_unilabeltype_imageboard_targetwidth_')[1];
+        console.log("targetwidth", targetwidth);
+        if (targetwidth) {
+            refreshImage(targetwidth);
+            return;
+        }
 
+        var targetheight = dummyAttribute.split('id_unilabeltype_imageboard_targetheight_')[1];
+        console.log("targetheight", targetheight);
+        if (targetheight) {
+            refreshImage(targetheight);
+            return;
+        }
 
+        var border = dummyAttribute.split('id_unilabeltype_imageboard_border_')[1];
+        console.log("border", border);
+        if (border) {
+            refreshImage(border);
+            return;
+        }
+        console.log('');
+    }
+
+    /**
+     *
+     * @param {event} event
+     */
+    function oneListenerForAllInputClick(event) {
+        var dummyAttribute = event.target.getAttribute('id');
+        var mform = dummyAttribute.split('button-mform1')[1];
+        if (mform) {
+            setTimeout(function() {
+                // An element was added so we have to add a div for the image to the dom.
+                let singleElements = document.querySelectorAll('[id^="fitem_id_unilabeltype_imageboard_title_"]');
+                let number = singleElements.length;
+                addImageToDom(number - 1);
+            }, 500);
         }
     }
+
     /**
      * Register eventlistener to the all input fields of the form to register
      * focus-out events from input fields in order to trigger a fresh of the preview.
      */
     function registerAllEventlistener() {
-
-        //var region = document.getElementById('region');
         var mform = document.querySelectorAll('[id^="mform"]')[0];
-        // We register a listener to the mform and use the bubble-event-feature.
-        mform.addEventListener("focusout", oneListenerForAllPositionInput, false);
+        // We register one listener per eventtype to the mform and use the bubble-event-feature to check out
+        // the target of an event.
+        // All focusout events will be handeled by oneListenerForAllInputFocusout.
+        mform.addEventListener("focusout", oneListenerForAllInputFocusout, false);
+        // All click events will be handeled by oneListenerForAllInputClick.
+        mform.addEventListener("click", oneListenerForAllInputClick, false);
 
         // First: When uploading a backgroundimage the backgroundimage of the backgroundimagediv must be updated.
         let backgroundfileNode = document.getElementById('id_unilabeltype_imageboard_backgroundimage_fieldset');
@@ -73,67 +119,6 @@ export const init = () => {
         if (canvasy) {
             let observer = new MutationObserver(refreshBackgroundImage);
             observer.observe(canvasy, {attributes: true, childList: true, subtree: true});
-        }
-
-        // Second add listener to the add image button for new added images.
-        let add_element_button = document.querySelectorAll('[id^="button-mform1"]')[0];
-        add_element_button.addEventListener("click", function() {
-            // No we can get the new form input fields and register a focusout listener
-            // and in case of focus out we update the rendered image.
-            // Thus we have to add a new div without any content and whenever there is a focusout event we will update this.
-            // Then register listener for all images already exists
-            setTimeout(function() {
-                // An element was added so we have to add a div for the image
-                // to the dom and wie need to register listener to the ne inputfieds of the element
-                const singleElements = document.querySelectorAll('[id^="fitem_id_unilabeltype_imageboard_title_"]');
-                let number = singleElements.length;
-                addImageToDom(number - 1);
-            }, 1000);
-        });
-
-        // Third register listener for all images already exists
-        setTimeout(function() {
-            registerAllListenersForAllElements();
-        }, 1000);
-    }
-
-    /**
-     *
-     */
-    function registerAllListenersForAllElements() {
-        // Third register listener for all images already exists
-        const singleElements = document.querySelectorAll('[id^="fitem_id_unilabeltype_imageboard_title_"]');
-        for (let i = 0; i < singleElements.length; i++) {
-            let number = singleElements[i].getAttribute('id').split('fitem_id_unilabeltype_imageboard_title_')[1];
-            registerAllListenersForSingleElement(number);
-        }
-    }
-
-    /**
-     * Registers to every input field a listener do find focusout events andthen call refreshimage().
-     * @param {int} number
-     */
-    function registerAllListenersForSingleElement(number) {
-        // Eventlistener an das Inputfeld für die width anhängen
-        const input_targetwidth = document.getElementById('id_unilabeltype_imageboard_targetwidth_' + (number));
-        input_targetwidth.addEventListener("focusout", function() {
-            refreshImage(number);
-        });
-
-        const input_targetheight = document.getElementById('id_unilabeltype_imageboard_targetheight_' + (number));
-        input_targetheight.addEventListener("focusout", function() {
-            refreshImage(number);
-        });
-
-        const input_border = document.getElementById('id_unilabeltype_imageboard_border_' + (number));
-        input_border.addEventListener("focusout", function() {
-            refreshImage(number);
-        });
-
-        let imagefileNode = document.getElementById('fitem_id_unilabeltype_imageboard_image_' + (number));
-        if (imagefileNode) {
-            let observer = new MutationObserver(refreshImage);
-            observer.observe(imagefileNode, {attributes: true, childList: true, subtree: true});
         }
     }
 
@@ -211,14 +196,24 @@ export const init = () => {
      * @param {int} number
      */
     function addImageToDom(number) {
+        console.log("addImageToDom" + number);
         let backgroundArea = document.getElementById('unilabel-imageboard-background-area');
         const imageid = document.getElementById('unilabel-imageboard-imageid_' + number);
         if (imageid === null) {
+            console.log('div fehlt noch im dom ' + imageid);
             // This div does not exist so we need do add it do dom.
             backgroundArea.innerHTML = backgroundArea.innerHTML + renderFromTemplate(number);
+            // add an obverser to be aple to update if imge is uloaded
+            let imagefileNode = document.getElementById('fitem_id_unilabeltype_imageboard_image_' + (number));
+            if (imagefileNode) {
+                let observer = new MutationObserver(refreshImage);
+                observer.observe(imagefileNode, {attributes: true, childList: true, subtree: true});
+            }
             refreshImage(number);
         } else {
-            // Div already exists so we need only to refresh the image.
+            console.log('div existiert ' + number);
+            // Div already exists so we need only to refresh the image because we only uploaded a new image
+            // to an already existing div.
             refreshImage(number);
         }
     }
@@ -236,7 +231,8 @@ export const init = () => {
             " style='position: relative;'>Überschrift" +
             "</div>" +
             "<div id='imageidimage_" + number + "'>" +
-            "<img class='image' src='' id='unilabel-imageboard-imageid_" + number + "' style='position: relative;'>" +
+            "<img class='image' src='' id='unilabel-imageboard-imageid_" +
+            number + "' style='position: relative; min-width: 100px; min-height: 100px; background-color: #f00;'>" +
             "</div>" +
             "</div>";
         return imagedivashtml;
@@ -301,28 +297,11 @@ export const init = () => {
             //console.log("number[0] ist ein array" , number[0]);
             //console.log("number[0].attributeName ist ein array" , number[0].attributeName);
             //////console.log("number[0].target ist ein array", number[0].target);
-            // ToDo: nur genau den einen enuen listener hinzufügen ...
-            // hier schonaml ALLE
-            setTimeout(function() {
-                registerAllListenersForAllElements();
-            }, 300);
             setTimeout(function() {
                 refreshAllImages();
             }, 600);
         }
     }
-
-
-    /**
-     * The form has inputfields with date. This function gets the value from the inputfield with the given idselector
-     *
-     * @param {string} idselector 'id_unilabeltype_imageboard_yposition_' + number
-     * @returns {string}
-     */
-   /// function getValueFromForm(idselector) {
-   ///     return document.getElementById(idselector).getAttribute('value');
-   /// }
-
 
     /**
      * Get all data from image that is stored in the form and collects them in one array.
@@ -331,6 +310,7 @@ export const init = () => {
      * @returns {*[]} Array with the collected information that are set in the form for the image.
      */
     function getAllImagedataFromForm(number) {
+        console.log("getAllImagedataFromForm number= " + number);
         let imageids = {
             title: 'id_unilabeltype_imageboard_title_' + number,
             xposition: 'id_unilabeltype_imageboard_xposition_' + number,
@@ -342,6 +322,7 @@ export const init = () => {
         };
 
         let imagedata = [];
+        console.log("document.getElementById(imageids.title)", document.getElementById(imageids.title));
         imagedata['title'] = document.getElementById(imageids.title).value;
         imagedata['xposition'] = document.getElementById(imageids.xposition).value;
         imagedata['yposition'] = document.getElementById(imageids.yposition).value;
@@ -362,4 +343,3 @@ export const init = () => {
         return imagedata;
     }
 };
-
